@@ -1,0 +1,48 @@
+# OS / system files
+.DS_Store
+Thumbs.db
+
+# Environment / secrets
+.env
+.env.*
+*.key
+*.pem
+*.crt
+secrets/
+credentials/
+
+# Logs and temp files
+*.log
+tmp/
+temp/
+
+# Data exports (DO NOT COMMIT)
+*.csv
+*.tsv
+*.xlsx
+*.xls
+*.pdf
+
+# Screenshots / images (evidence kept offline)
+*.png
+*.jpg
+*.jpeg
+*.gif
+screenshots/
+evidence/
+
+# Analytics / tracking exports
+reports/
+exports/
+verizon/
+google-ads/
+call-logs/
+
+# Node / build artifacts (future-proofing)
+node_modules/
+dist/
+build/
+.cache/
+
+# Cloudflare local files
+.wrangler/
