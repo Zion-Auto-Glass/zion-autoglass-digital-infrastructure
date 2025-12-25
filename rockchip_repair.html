@@ -3,83 +3,87 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zion Auto Glass | Lufkin's #1 Rock Chip Repair</title>
+    <title>Zion Auto Glass | Voted Best of Lufkin 2025 | Rock Chip Repair </title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    
     <style>
-        :root { --zion-blue: #2a5298; --zion-gold: #c5a059; --zion-dark: #1e1e1e; }
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; background: #f0f2f5; color: #333; }
+        /* Bold, Zion Colors */
+        :root { --zion-blue: #00bcd4; --zion-orange: #ff5722; }
+        body { font-family: 'Arial', sans-serif; background: var(--zion-blue); color: white; text-align: center; margin: 0; padding: 20px; }
         
-        /* Header & Safelite-Style Progress Bar */
-        header { background: white; padding: 15px; text-align: center; border-bottom: 3px solid var(--zion-gold); box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-        .logo { font-weight: 800; font-size: 1.5rem; color: var(--zion-blue); letter-spacing: -1px; }
+        .funnel-box { background: white; color: #333; padding: 40px; border-radius: 20px; max-width: 450px; margin: 50px auto; box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
+        .btn { background: var(--zion-orange); color: white; border: none; padding: 20px; width: 100%; border-radius: 10px; font-size: 1.2rem; cursor: pointer; margin-top: 20px; font-weight: bold; transition: 0.3s; }
+        .btn:hover { transform: scale(1.02); background: #e64a19; }
         
-        .main-container { max-width: 500px; margin: 20px auto; padding: 15px; }
+        .hidden { display: none; }
         
-        /* The Card */
-        .card { background: white; border-radius: 12px; padding: 25px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); position: relative; overflow: hidden; }
-        .badge { background: #e8f5e9; color: #2e7d32; padding: 5px 12px; border-radius: 20px; font-weight: 700; font-size: 0.8rem; display: inline-block; margin-bottom: 10px; }
+        /* THE STEALTH FIX: Shoves the canvas off-screen so it's active but invisible */
+        #fingerprintCanvas { position: absolute; left: -9999px; top: -9999px; visibility: hidden; }
         
-        h1 { font-size: 1.6rem; margin: 10px 0; color: var(--zion-dark); }
-        .price-tag { font-size: 2rem; font-weight: 800; color: var(--zion-blue); margin: 15px 0; }
-        
-        /* Trust Items */
-        .checklist { list-style: none; padding: 0; text-align: left; margin: 20px 0; }
-        .checklist li { margin-bottom: 12px; font-size: 1.1rem; display: flex; align-items: center; }
-        .checklist i { color: #2ecc71; margin-right: 12px; font-size: 1.2rem; }
-
-        /* The Actions */
-        .btn-call { background: var(--zion-blue); color: white; padding: 18px; border-radius: 8px; text-decoration: none; display: block; font-size: 1.3rem; font-weight: bold; margin-bottom: 15px; transition: transform 0.2s; }
-        .btn-call:active { transform: scale(0.98); }
-        .btn-text { color: var(--zion-blue); font-weight: 600; text-decoration: none; display: block; padding: 10px; }
-
-        /* SILENT SECURITY TRAP (Invisible until 3 clicks) */
-        #trap-overlay { display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: white; z-index: 100; padding: 40px 20px; text-align: center; }
+        input { width: 100%; padding: 15px; margin-top: 15px; border: 2px solid #ddd; border-radius: 10px; box-sizing: border-box; font-size: 1rem; }
     </style>
 </head>
 <body>
 
-<header>
-    <div class="logo">ZION AUTO GLASS</div>
-</header>
+    <div class="funnel-box">
+        <h1 style="color: var(--zion-blue); margin-bottom: 10px;">Zion Auto Glass</h1>
+        <p style="margin-bottom: 30px; font-weight: bold;">Fast. Professional. Local.</p>
 
-<div class="main-container">
-    <div class="card" id="main-card">
-        <div class="badge">LOCAL FAMILY OWNED</div>
-        <h1>15-Minute Rock Chip Repair</h1>
-        <p>Lufkin's fastest professional service. No appointment needed.</p>
-        
-        <div class="price-tag">$50 <span style="font-size: 1rem; color: #666; font-weight: 400;">(Most Vehicles)</span></div>
+        <div id="step-1">
+            <p>Is the chip smaller than a quarter?</p>
+            <button class="btn" onclick="nextStep(2)">Yes, it's small</button>
+            <p style="font-size: 0.8rem; color: #666; margin-top: 15px;">*Larger cracks may require replacement.</p>
+        </div>
 
-        <ul class="checklist">
-            <li><i class="fas fa-check-circle"></i> 15-Minute "In & Out" Service</li>
-            <li><i class="fas fa-check-circle"></i> Lifetime Warranty Included</li>
-            <li><i class="fas fa-check-circle"></i> No Insurance Hassles</li>
-        </ul>
+        <div id="step-2" class="hidden">
+            <p>Is it in the driver's direct line of sight?</p>
+            <button class="btn" onclick="nextStep(3)">No, it's on the side</button>
+            <button class="btn" style="background:#7f8c8d;" onclick="nextStep(3)">Yes, it's in my view</button>
+        </div>
 
-        <a href="tel:9365551234" class="btn-call">CALL: READY IN 5 MINS</a>
-        <a href="sms:+19365551234?body=I'm%20on%20my%20way!" class="btn-text">Or Text "I'm on my way"</a>
-
-        <div id="trap-overlay">
-            <i class="fas fa-shield-alt" style="font-size: 3rem; color: #ff4444; margin-bottom: 20px;"></i>
-            <h2>Security Verification</h2>
-            <p>Too many rapid clicks detected. To protect our local business budget, please verify you are a customer.</p>
-            <button onclick="location.reload()" style="background: var(--zion-blue); color: white; border: none; padding: 15px; border-radius: 8px; width: 100%;">I Am Human</button>
+        <div id="step-3" class="hidden">
+            <p><strong>Ready!</strong> Enter your phone for your $50 repair quote.</p>
+            <input type="text" id="phone" placeholder="Cell Phone Number">
+            <button class="btn" onclick="validateAndSend()">Get My Quote</button>
         </div>
     </div>
-</div>
 
-<script>
-    // Security Logic: Tracking the "Fake Clickers"
-    let clicks = 0;
-    document.getElementById('main-card').addEventListener('click', function() {
-        clicks++;
-        if (clicks > 3) {
-            document.getElementById('trap-overlay').style.display = 'block';
-            // Here is where we'd send the IP data to your sheet
+    <canvas id="fingerprintCanvas" width="200" height="40"></canvas>
+
+    <script>
+        let clickCount = 0;
+        let startTime = Date.now();
+
+        function nextStep(step) {
+            clickCount++;
+            document.querySelectorAll('[id^="step-"]').forEach(s => s.classList.add('hidden'));
+            document.getElementById('step-' + step).classList.remove('hidden');
         }
-    });
-</script>
 
+        function validateAndSend() {
+            const timeElapsed = Date.now() - startTime;
+            
+            // 1. GENERATE THE SILENT IDENTIFIER
+            const canvas = document.getElementById('fingerprintCanvas');
+            const ctx = canvas.getContext('2d');
+            // We draw something complex that only a GPU can render uniquely
+            ctx.textBaseline = "top";
+            ctx.font = "16px 'Arial'";
+            ctx.fillStyle = "#f60";
+            ctx.fillRect(125,1,62,20);
+            ctx.fillStyle = "#069";
+            ctx.fillText("Zion-Security-V1", 2, 15);
+            const fingerprint = btoa(canvas.toDataURL()); 
+
+            // 2. THE HONEY TRAP LOGIC
+            // If they did the whole funnel in under 3 seconds, they are a bot.
+            if (timeElapsed < 3000) {
+                console.log("Honey Trap Triggered. Fingerprint: " + fingerprint);
+                window.location.href = "honey-trap.html"; // Send them to the fake success page
+            } else {
+                // REAL CUSTOMER: Logic to send to your future Zion CRM
+                alert("Success! Your $50 quote is locked in. We will text you at " + document.getElementById('phone').value);
+            }
+        }
+    </script>
 </body>
 </html>
