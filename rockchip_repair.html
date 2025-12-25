@@ -3,87 +3,160 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zion Auto Glass | Voted Best of Lufkin 2025 | Rock Chip Repair </title>
+    <title>Rock Chip Repair Lufkin | Voted Best of Lufkin 2025</title>
+    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800&display=swap" rel="stylesheet">
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-YVGYN8HXT3"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-YVGYN8HXT3');
+      gtag('config', 'AW-870403519');
+    </script>
+
     <style>
-        /* Bold, Zion Colors */
-        :root { --zion-blue: #00bcd4; --zion-orange: #ff5722; }
-        body { font-family: 'Arial', sans-serif; background: var(--zion-blue); color: white; text-align: center; margin: 0; padding: 20px; }
+        :root { --zion-blue: #003366; --zion-gold: #c5a059; --zion-dark: #1a1a1a; --zion-red: #d9534f; --bg: #f8f9fa; }
+        body { font-family: 'Inter', sans-serif; margin: 0; background: var(--bg); color: #333; line-height: 1.6; }
         
-        .funnel-box { background: white; color: #333; padding: 40px; border-radius: 20px; max-width: 450px; margin: 50px auto; box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
-        .btn { background: var(--zion-orange); color: white; border: none; padding: 20px; width: 100%; border-radius: 10px; font-size: 1.2rem; cursor: pointer; margin-top: 20px; font-weight: bold; transition: 0.3s; }
-        .btn:hover { transform: scale(1.02); background: #e64a19; }
+        /* TOP NAVIGATION */
+        nav { background: var(--zion-dark); padding: 15px 6%; display: flex; justify-content: space-between; align-items: center; border-bottom: 4px solid var(--zion-gold); }
+        .brand { display: flex; align-items: center; gap: 12px; color: white; text-decoration: none; }
+        .logo-z { background: white; color: var(--zion-blue); width: 45px; height: 45px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 1.8rem; }
+        .brand-text { font-size: 1.5rem; font-weight: 800; letter-spacing: -1px; }
+
+        /* PAGE LAYOUT */
+        .main-wrapper { max-width: 1100px; margin: 30px auto; display: grid; grid-template-columns: 1fr 360px; gap: 25px; padding: 0 20px; }
+        @media (max-width: 850px) { .main-wrapper { grid-template-columns: 1fr; } }
+
+        /* MAIN CONTENT AREA */
+        .hero-card { background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+        .hero-image { height: 320px; background: url('https://images.unsplash.com/photo-1507133311040-53bc6678d575?auto=format&fit=crop&w=1200&q=80') center/cover; position: relative; }
+        .hero-tag { position: absolute; top: 20px; left: 20px; background: var(--zion-gold); color: white; padding: 6px 15px; border-radius: 4px; font-weight: 700; font-size: 0.8rem; text-transform: uppercase; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
+        .hero-overlay { position: absolute; bottom: 0; width: 100%; background: linear-gradient(transparent, rgba(0,0,0,0.85)); padding: 40px 25px; color: white; box-sizing: border-box; }
+        .hero-overlay h1 { margin: 0; font-size: 2.2rem; font-weight: 800; }
+
+        .content-body { padding: 35px; }
+        .price-hero { display: flex; align-items: baseline; gap: 10px; margin: 20px 0; }
+        .price-val { font-size: 3rem; font-weight: 800; color: var(--zion-blue); }
+        .price-sub { font-size: 1.1rem; color: #666; }
+
+        /* SIDEBAR / ZION HUB */
+        .sidebar { display: flex; flex-direction: column; gap: 20px; }
+        .hub-card { background: white; border-radius: 12px; padding: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+        .hub-title { font-weight: 800; font-size: 1.2rem; margin-bottom: 20px; display: flex; align-items: center; gap: 10px; border-bottom: 2px solid #f0f0f0; padding-bottom: 12px; }
         
-        .hidden { display: none; }
-        
-        /* THE STEALTH FIX: Shoves the canvas off-screen so it's active but invisible */
-        #fingerprintCanvas { position: absolute; left: -9999px; top: -9999px; visibility: hidden; }
-        
-        input { width: 100%; padding: 15px; margin-top: 15px; border: 2px solid #ddd; border-radius: 10px; box-sizing: border-box; font-size: 1rem; }
+        .btn-call-large { background: var(--zion-red); color: white; display: block; text-align: center; padding: 20px; border-radius: 8px; font-weight: 800; font-size: 1.3rem; text-decoration: none; margin-bottom: 20px; box-shadow: 0 4px 15px rgba(217, 83, 79, 0.3); }
+        .hub-links a { display: flex; align-items: center; gap: 12px; padding: 14px; text-decoration: none; color: #444; border-bottom: 1px solid #f8f8f8; font-weight: 600; font-size: 0.95rem; }
+        .hub-links a i { font-size: 1.2rem; color: var(--zion-blue); width: 25px; }
+        .hub-links a:hover { background: #fcfcfc; color: var(--zion-blue); }
+
+        /* SERVICE BARS */
+        .check-item { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; font-weight: 600; }
+        .check-item i { color: #27ae60; font-size: 1.2rem; }
+
+        /* THE HONEY TRAP */
+        #security-alert { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 10000; color: white; text-align: center; padding-top: 15vh; }
     </style>
 </head>
 <body>
 
-    <div class="funnel-box">
-        <h1 style="color: var(--zion-blue); margin-bottom: 10px;">Zion Auto Glass</h1>
-        <p style="margin-bottom: 30px; font-weight: bold;">Fast. Professional. Local.</p>
+<nav>
+    <a href="#" class="brand">
+        <div class="logo-z">Z</div>
+        <div class="brand-text">Zion Auto Glass</div>
+    </a>
+</nav>
 
-        <div id="step-1">
-            <p>Is the chip smaller than a quarter?</p>
-            <button class="btn" onclick="nextStep(2)">Yes, it's small</button>
-            <p style="font-size: 0.8rem; color: #666; margin-top: 15px;">*Larger cracks may require replacement.</p>
-        </div>
+<div class="main-wrapper">
+    <div class="main-content">
+        <div class="hero-card">
+            <div class="hero-image">
+                <span class="hero-tag">Voted Best of Lufkin 2025</span>
+                <div class="hero-overlay">
+                    <h1>Rock Chip Repair Lufkin</h1>
+                </div>
+            </div>
+            <div class="content-body">
+                <div class="price-hero">
+                    <span class="price-val">$50</span>
+                    <span class="price-sub">Repairs (Standard Vehicles)</span>
+                </div>
+                
+                <p style="font-size: 1.15rem; color: #555; margin-bottom: 30px;">
+                    Experience the award-winning service that earned Zion Auto Glass the **Best of Lufkin 2025**. We combine Safelite-level technology with the honesty of a homegrown shop.
+                </p>
 
-        <div id="step-2" class="hidden">
-            <p>Is it in the driver's direct line of sight?</p>
-            <button class="btn" onclick="nextStep(3)">No, it's on the side</button>
-            <button class="btn" style="background:#7f8c8d;" onclick="nextStep(3)">Yes, it's in my view</button>
-        </div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 30px;">
+                    <div class="check-item"><i class="fas fa-award"></i> Voted Best 2025</div>
+                    <div class="check-item"><i class="fas fa-shield-check"></i> Lifetime Warranty</div>
+                    <div class="check-item"><i class="fas fa-clock"></i> 15-Minute Service</div>
+                    <div class="check-item"><i class="fas fa-handshake"></i> Lufkin Local</div>
+                </div>
 
-        <div id="step-3" class="hidden">
-            <p><strong>Ready!</strong> Enter your phone for your $50 repair quote.</p>
-            <input type="text" id="phone" placeholder="Cell Phone Number">
-            <button class="btn" onclick="validateAndSend()">Get My Quote</button>
+                <hr style="border: 0; border-top: 1px solid #eee; margin: 30px 0;">
+                
+                <div style="display:flex; align-items:center; gap:15px;">
+                    <img src="https://cdn-icons-png.flaticon.com/512/1041/1041916.png" width="50" alt="5 Stars">
+                    <div>
+                        <strong style="display:block;">#1 Rated in East Texas</strong>
+                        <small style="color:#777;">Lufkin's choice for fast, guaranteed glass repair.</small>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
-    <canvas id="fingerprintCanvas" width="200" height="40"></canvas>
+    <div class="sidebar">
+        <div class="hub-card">
+            <div class="hub-title"><i class="fas fa-star"></i> Voted Best of 2025</div>
+            <a href="tel:9365551234" class="btn-call-large" id="main-conversion-btn">CALL: SHOP IS READY</a>
+            <p style="text-align:center; font-size:0.85rem; color:#777; margin-top:-10px;">Drive-ins welcome 5 mins later</p>
+        </div>
 
-    <script>
-        let clickCount = 0;
-        let startTime = Date.now();
+        <div class="hub-card">
+            <div class="hub-title"><i class="fas fa-th"></i> Zion Hub</div>
+            <div class="hub-links">
+                <a href="#"><i class="fab fa-facebook-messenger"></i> Facebook Messenger</a>
+                <a href="#"><i class="fab fa-instagram"></i> Instagram DMs</a>
+                <a href="#"><i class="fas fa-comment-dots"></i> Google Business Messages</a>
+                <a href="sms:+19365551234?body=I'm%20on%20my%20way!" id="text-lead-btn"><i class="fas fa-sms"></i> Direct Text Zion</a>
+                <a href="#"><i class="fas fa-history"></i> Recent Requests</a>
+            </div>
+        </div>
+    </div>
+</div>
 
-        function nextStep(step) {
-            clickCount++;
-            document.querySelectorAll('[id^="step-"]').forEach(s => s.classList.add('hidden'));
-            document.getElementById('step-' + step).classList.remove('hidden');
+<div id="security-alert">
+    <i class="fas fa-user-shield" style="font-size: 5rem; color: var(--zion-gold); margin-bottom: 30px;"></i>
+    <h1 style="font-size: 2.5rem;">Security Verification</h1>
+    <p style="max-width: 600px; margin: 0 auto 30px; font-size: 1.2rem; color: #ccc;">
+        Multiple non-customer clicks detected. IP and session data logged for fraud review to protect our local budget.
+    </p>
+    <button onclick="location.reload()" style="background: var(--zion-gold); color: black; border: none; padding: 18px 45px; font-weight: 800; border-radius: 6px; cursor: pointer;">I AM A REAL CUSTOMER</button>
+</div>
+
+<script>
+    // FRAUD PREVENTION
+    let clickTracker = 0;
+    document.body.addEventListener('mousedown', function(e) {
+        if (!e.target.closest('#main-conversion-btn') && !e.target.closest('#text-lead-btn')) {
+            clickTracker++;
         }
-
-        function validateAndSend() {
-            const timeElapsed = Date.now() - startTime;
-            
-            // 1. GENERATE THE SILENT IDENTIFIER
-            const canvas = document.getElementById('fingerprintCanvas');
-            const ctx = canvas.getContext('2d');
-            // We draw something complex that only a GPU can render uniquely
-            ctx.textBaseline = "top";
-            ctx.font = "16px 'Arial'";
-            ctx.fillStyle = "#f60";
-            ctx.fillRect(125,1,62,20);
-            ctx.fillStyle = "#069";
-            ctx.fillText("Zion-Security-V1", 2, 15);
-            const fingerprint = btoa(canvas.toDataURL()); 
-
-            // 2. THE HONEY TRAP LOGIC
-            // If they did the whole funnel in under 3 seconds, they are a bot.
-            if (timeElapsed < 3000) {
-                console.log("Honey Trap Triggered. Fingerprint: " + fingerprint);
-                window.location.href = "honey-trap.html"; // Send them to the fake success page
-            } else {
-                // REAL CUSTOMER: Logic to send to your future Zion CRM
-                alert("Success! Your $50 quote is locked in. We will text you at " + document.getElementById('phone').value);
-            }
+        if (clickTracker > 4) {
+            document.getElementById('security-alert').style.display = 'block';
+            gtag('event', 'fraud_violation', { 'event_label': 'Competitor_Click_Spam' });
         }
-    </script>
+    });
+
+    // CONVERSION TRACKING
+    document.getElementById('main-conversion-btn').addEventListener('click', function() {
+        gtag('event', 'conversion', {'send_to': 'AW-870403519/YOUR_CONVERSION_ID'});
+        gtag('event', 'phone_call', { 'event_category': 'Leads' });
+    });
+</script>
+
 </body>
 </html>
