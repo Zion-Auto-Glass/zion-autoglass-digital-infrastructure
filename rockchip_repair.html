@@ -3,119 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rock Chip Repair Lufkin | Zion Auto Glass | 15-Min Service</title>
-
+    <title>Zion Auto Glass | 15-Minute Rock Chip Repair</title>
+    
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-YVGYN8HXT3"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
       gtag('config', 'G-YVGYN8HXT3');
-      gtag('config', 'AW-870403519');
     </script>
 
     <style>
-        :root { --zion-gold: #c5a059; --zion-dark: #121212; --zion-green: #2ecc71; }
-        body { background: var(--zion-dark); color: white; font-family: 'Segoe UI', sans-serif; text-align: center; padding: 15px; margin: 0; }
-        .funnel-container { max-width: 480px; margin: auto; border: 1px solid #333; padding: 20px; border-radius: 20px; background: #1a1a1a; position: relative; overflow: hidden; min-height: 520px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
-        
-        /* UI Elements */
-        canvas { border: 2px solid var(--zion-gold); border-radius: 15px; width: 100%; cursor: crosshair; background: rgba(255,255,255,0.05); margin: 15px 0; }
-        .btn-call { background: var(--zion-green); color: white; padding: 18px; border: none; font-weight: bold; border-radius: 10px; width: 100%; display: block; text-decoration: none; font-size: 1.3rem; box-shadow: 0 4px 15px rgba(46, 204, 113, 0.3); }
-        .warranty-badge { color: var(--zion-gold); font-weight: bold; font-size: 0.9rem; letter-spacing: 1px; text-transform: uppercase; margin-top: 10px; display: block; }
-        
-        /* THE HONEY TRAP OVERLAY */
-        #honey-trap { display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 999; padding: 40px 20px; box-sizing: border-box; }
-        .warning { color: #ff4444; font-size: 1.4rem; font-weight: bold; text-transform: uppercase; margin-bottom: 15px; }
-        .log-display { background: #111; color: #00ff00; font-family: monospace; padding: 15px; border-radius: 5px; font-size: 0.8rem; text-align: left; border: 1px solid #333; line-height: 1.5; }
+        body { background-color: #f4f4f4; color: #333; font-family: 'Helvetica', Arial, sans-serif; margin: 0; padding: 0; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
+        .card { background: white; width: 90%; max-width: 400px; padding: 30px; border-radius: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); text-align: center; border-top: 8px solid #c5a059; }
+        h1 { color: #1a1a1a; margin-bottom: 5px; font-size: 1.8rem; }
+        .tagline { color: #c5a059; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 20px; display: block; }
+        .highlight-box { background: #fdf9f0; border: 1px solid #e9dcb9; padding: 15px; border-radius: 10px; margin-bottom: 25px; }
+        .feature { display: block; margin: 8px 0; font-size: 1.1rem; font-weight: 500; }
+        .btn-call { background: #2ecc71; color: white; padding: 20px; border-radius: 12px; text-decoration: none; display: block; font-size: 1.4rem; font-weight: bold; box-shadow: 0 4px 12px rgba(46,204,113,0.3); margin-bottom: 15px; }
+        .warranty { font-size: 0.85rem; color: #777; font-style: italic; }
     </style>
 </head>
 <body>
 
-<div class="funnel-container">
-    <h2 style="color: var(--zion-gold); margin: 0;">ZION AUTO GLASS</h2>
-    <p style="color: #888; margin-top: 5px;">Lufkin's Rapid Repair Center</p>
+<div class="card">
+    <h1>ZION AUTO GLASS</h1>
+    <span class="tagline">Lufkin's Best Repair</span>
+
+    <div class="highlight-box">
+        <span class="feature">⚡ 15-Minute Service</span>
+        <span class="feature">🛠️ Drive-Ins Welcome</span>
+        <span class="feature">💰 Most Repairs Only $50</span>
+    </div>
+
+    <p style="font-size: 1.1rem; margin-bottom: 25px;">Ready in 5 minutes? Give us a call and head over!</p>
+
+    <a href="tel:9365551234" class="btn-call">CALL: (936) 555-1234</a>
     
-    <div id="ui-content">
-        <p style="margin-bottom: 5px;">Tap the location of the chip:</p>
-        <canvas id="windshieldMap" width="500" height="250"></canvas>
-        
-        <div id="repairHub" style="display:none; animation: fadeIn 0.5s;">
-            <h3 style="margin: 10px 0;">15-MINUTE DRIVE-IN REPAIR</h3>
-            <span class="warranty-badge">✓ Lifetime Warranty Included</span>
-            <p style="font-size: 0.9rem; color: #bbb; margin: 10px 0;">Most repairs only $50. Ready in 5 mins?</p>
-            
-            <a href="tel:9365551234" class="btn-call" id="leadButton">
-                CALL: SHOP IS READY
-            </a>
-            
-            <p style="margin-top: 15px;">
-                <a href="sms:+19365551234?body=I%20am%20on%20my%20way%20to%20the%20shop!" style="color: var(--zion-gold); font-size: 0.9rem;">
-                    Or Text: "I'm on my way"
-                </a>
-            </p>
-        </div>
-    </div>
+    <a href="sms:+19365551234?body=I'm%20on%20my%20way%20to%20the%20shop!" style="color: #666; text-decoration: none; font-size: 0.9rem;">Or Text: "I'm on my way"</a>
 
-    <div id="honey-trap">
-        <div class="warning">Security Alert</div>
-        <p>Unusual clicking behavior detected. Your IP and session data have been logged for fraud review.</p>
-        <div class="log-display">
-            > TRACKING_ID: <span id="log-id">...</span><br>
-            > SOURCE_IP: <span id="log-ip">...</span><br>
-            > STATUS: FLAG_SUSPICIOUS<br>
-            > REASON: REPETITIVE_AD_CLICKING
-        </div>
-        <p style="margin-top:20px; font-size: 0.8rem; color: #666;">This data is submitted to Google Ads Security.</p>
-        <button onclick="location.reload()" style="background:#222; color:white; border:none; padding:10px; width:100%; border-radius:5px;">I am a real customer</button>
-    </div>
+    <hr style="border: 0; border-top: 1px solid #eee; margin: 25px 0;">
+    <span class="warranty">Backed by our Lifetime Warranty against spreading.</span>
 </div>
-
-<script>
-    const canvas = document.getElementById('windshieldMap');
-    const ctx = canvas.getContext('2d');
-    const trap = document.getElementById('honey-trap');
-    let clickCount = 0;
-
-    // 1. Fetch IP for the "Evidence Locker"
-    fetch('https://api.ipify.org?format=json')
-        .then(res => res.json())
-        .then(data => {
-            document.getElementById('log-ip').innerText = data.ip;
-            document.getElementById('log-id').innerText = Math.random().toString(36).substr(2, 9).toUpperCase();
-        });
-
-    // 2. Draw Windshield Grid
-    ctx.strokeStyle = '#c5a059'; ctx.lineWidth = 4;
-    ctx.strokeRect(50, 40, 400, 170);
-
-    // 3. Logic: Click to show repair, 3+ clicks to show TRAP
-    canvas.addEventListener('click', function(e) {
-        clickCount++;
-        
-        if (clickCount > 2) {
-            trap.style.display = 'block';
-            gtag('event', 'security_violation', { 'event_label': 'Bot_Spam' });
-        } else {
-            // Visual feedback
-            const rect = canvas.getBoundingClientRect();
-            const x = (e.clientX - rect.left) * (canvas.width / rect.width);
-            const y = (e.clientY - rect.top) * (canvas.height / rect.height);
-            ctx.fillStyle = '#ff4444';
-            ctx.beginPath(); ctx.arc(x, y, 10, 0, Math.PI*2); ctx.fill();
-            
-            // Show lead hub
-            document.getElementById('repairHub').style.display = 'block';
-            gtag('event', 'chip_marked', { 'event_category': 'Engagement' });
-        }
-    });
-
-    // 4. Conversion Tracking
-    document.getElementById('leadButton').addEventListener('click', function() {
-        gtag('event', 'conversion', {'send_to': 'AW-870403519/YOUR_LABEL'});
-        gtag('event', 'phone_call_click', { 'event_category': 'Lead' });
-    });
-</script>
 
 </body>
 </html>
