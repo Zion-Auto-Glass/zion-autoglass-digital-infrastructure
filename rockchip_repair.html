@@ -1,1 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rock Chip Repair Lufkin | Zion Auto Glass | $50 Mobile</title>
+    <meta name="description" content="Instant Rock Chip Repair in Lufkin. Zion Auto Glass $50 Mobile Service. Interactive damage mapping.">
 
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-YVGYN8HXT3"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-YVGYN8HXT3', { 'send_page_view': true }); // Analytics
+      gtag('config', 'AW-870403519'); // Ads Conversion ID
+    </script>
+
+    <style>
+        :root { --zion-gold: #c5a059; --zion-dark: #121212; --card: #1a1a1a; }
+        body { background: var(--zion-dark); color: white; font-family: 'Segoe UI', Roboto, sans-serif; margin: 0; padding: 15px; text-align: center; }
+        .funnel-container { max-width: 500px; margin: auto; border: 1px solid #333; padding: 25px; border-radius: 20px; background: var(--card); position: relative; overflow: hidden; box-shadow: 0 10px 40px rgba(0,0,0,0.8); min-height: 500px; }
+        
+        canvas { border: 2px solid var(--zion-gold); border-radius: 15px; background: rgba(255,255,255,0.05); width: 100%; cursor: crosshair; transition: all 0.3s; }
+        
+        .result-box { display: none; background: #222; padding: 20px; border-radius: 10px; border-left: 5px solid var(--zion-gold); margin: 20px 0; }
+        .btn-call { background: var(--zion-gold); color: black; padding: 20px; border: none; font-weight: bold; border-radius: 8px; width: 100%; font-size: 1.2rem; cursor: pointer; text-decoration: none; display: block; box-shadow: 0 5px 15px rgba(197, 160, 89, 0.3); }
+        .quarter-ref { width: 50px; height: 50px; border: 2px dashed #888; border-radius: 50%; display: inline-block; vertical-align: middle; margin-right: 10px; }
+
+        /* THE HONEY TRAP */
+        #honey-trap { display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 999; padding: 40px 20px; box-sizing: border-box; }
+        .warning { color: #ff4444; font-size: 1.5rem; font-weight: bold; text-transform: uppercase; margin-bottom: 20px; }
+        .log-display { background: #111; color: #00ff00; font-family: 'Courier New', monospace; padding: 15px; border-radius: 5px; font-size: 0.75rem; text-align: left; line-height: 1.4; border: 1px solid #333; }
+    </style>
+</head>
+<body>
+
+<div class="funnel-container">
+    <h2 style="color: var(--zion-gold); letter-spacing: 2px; margin-bottom: 5px;">ZION AUTO GLASS</h2>
+    
+    <div id="ui-content">
+        <p style="color: #888; font-size: 0.9rem;">Interactive Damage Diagnostic</p>
+        <div id="step1">
+            <h3 style="margin-bottom: 10px;">Tap where the rock hit:</h3>
+            <canvas id="windshieldMap" width="500" height="250"></canvas>
+        </div>
+
+        <div id="repairHub" class="result-box">
+            <h3 style="color: var(--zion-gold);">REPAIRABLE DETECTED</h3>
+            <p><div class="quarter-ref"></div> Smaller than a quarter? <strong>$50 Total.</strong></p>
+            <a href="tel:9365551234" class="btn-call" id="leadButton">TEXT PHOTO FOR REPAIR</a>
+        </div>
+
+        <div style="margin-top: 30px; border-top: 1px solid #333; padding-top: 20px;">
+            <p><strong>Sound of Safety™ Comparison</strong></p>
+            <div style="display: flex; gap: 10px; justify-content: center;">
+                <button onclick="playAudio('safe')" style="background: #333; color: white; padding: 12px; width: 48%; border-radius: 5px; border: 1px solid #555; cursor: pointer;">Safe Glass</button>
+                <button onclick="playAudio('danger')" style="background: #442222; color: #ff8888; padding: 12px; width: 48%; border-radius: 5px; border: 1px solid #663333; cursor: pointer;">DANGER CLICK</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="honey-trap">
+        <div class="warning">Security Verification</div>
+        <p>Multiple interactions detected from this IP. Activity has been logged for fraud review.</p>
+        <div class="log-display">
+            > SOURCE_IP: <span id="log-ip">FETCHING...</span><br>
+            > GCLID: <span id="log-gclid">DETECTING...</span><br>
+            > INTERACTION_COUNT: <span id="log-clicks">0</span><br>
+            > STATUS: FLAG_SUSPICIOUS_BEHAVIOR<br>
+            > LOCATION: LUFKIN_SURROUNDING_AREA
+        </div>
+        <p style="margin-top:20px; font-size: 0.8rem; color: #666;">If you are a customer, please refresh or call us directly.</p>
+        <button onclick="location.reload()" style="background: var(--zion-gold); color: black; border: none; padding: 10px 20px; font-weight: bold; border-radius: 5px; cursor: pointer;">I AM A CUSTOMER</button>
+    </div>
+</div>
+
+<script>
+    const canvas = document.getElementById('windshieldMap');
+    const ctx = canvas.getContext('2d');
+    const hub = document.getElementById('repairHub');
+    const trap = document.getElementById('honey-trap');
+    
+    let clickCount = 0;
+    let visitorData = {
+        ip: "0.0.0.0",
+        gclid: new URLSearchParams(window.location.search).get('gclid') || "ORGANIC_SEARCH",
+        ua: navigator.userAgent
+    };
+
+    // 1. Grab IP Address for the Log
+    fetch('https://api.ipify.org?format=json')
+        .then(res => res.json())
+        .then(data => {
+            visitorData.ip = data.ip;
+            document.getElementById('log-ip').innerText = data.ip;
+            document.getElementById('log-gclid').innerText = visitorData.gclid;
+        });
+
+    // 2. Draw Windshield UI
+    ctx.strokeStyle = '#c5a059'; ctx.lineWidth = 4; ctx.lineJoin = 'round';
+    ctx.beginPath();
+    ctx.moveTo(60, 40); ctx.lineTo(440, 40); ctx.lineTo(470, 210); ctx.lineTo(30, 210);
+    ctx.closePath(); ctx.stroke();
+
+    // 3. Security & Interaction Logic
+    function reportAggression(type) {
+        document.getElementById('log-clicks').innerText = clickCount;
+        gtag('event', 'security_violation', {
+            'event_category': 'FraudPrevention',
+            'event_label': visitorData.ip,
+            'click_depth': clickCount,
+            'interaction_type': type
+        });
+    }
+
+    canvas.addEventListener('click', function(e) {
+        clickCount++;
+        if (clickCount > 2) {
+            trap.style.display = 'block';
+            reportAggression('canvas_spam');
+            return;
+        }
+
+        const rect = canvas.getBoundingClientRect();
+        const x = (e.clientX - rect.left) * (canvas.width / rect.width);
+        const y = (e.clientY - rect.top) * (canvas.height / rect.height);
+
+        ctx.fillStyle = '#ff4444';
+        ctx.beginPath(); ctx.arc(x, y, 10, 0, Math.PI * 2); ctx.fill();
+        hub.style.display = 'block';
+
+        gtag('event', 'legit_interaction', { 'event_label': 'chip_marked' });
+    });
+
+    document.getElementById('leadButton').addEventListener('click', function(e) {
+        clickCount++;
+        if (clickCount > 2) {
+            e.preventDefault();
+            trap.style.display = 'block';
+            reportAggression('lead_button_spam');
+        } else {
+            // FIRE THE ACTUAL CONVERSION
+            gtag('event', 'generate_lead', { 'event_category': 'RockChip', 'event_label': visitorData.ip });
+            gtag('event', 'conversion', {'send_to': 'AW-870403519/YOUR_LABEL'}); 
+        }
+    });
+
+    function playAudio(type) {
+        gtag('event', 'audio_interaction', { 'type': type });
+        alert("Audio coming soon: Comparison
