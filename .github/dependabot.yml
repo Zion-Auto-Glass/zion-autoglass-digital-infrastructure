@@ -1,0 +1,13 @@
+version: 2
+updates:
+# This tracks the "machinery" of your GitHub repository
+- package-ecosystem: "github-actions"
+directory: "/"
+schedule:
+interval: "weekly"
+
+# This tracks your web files (even if it's just basic HTML for now)
+- package-ecosystem: "npm"
+directory: "/"
+schedule:
+interval: "weekly"
