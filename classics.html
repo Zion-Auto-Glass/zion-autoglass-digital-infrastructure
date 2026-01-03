@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Zion Classics | Restoration</title>
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-870403519"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','AW-870403519');</script>
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+<style>
+  :root { --primary: #8B0000; }
+  body { font-family: "Georgia", serif; background-image: url('https://m.zionautoglass.com/MainPageClassicChevyTruck.jpg'); background-size: cover; min-height: 100vh; padding: 20px; }
+  .container { max-width: 500px; margin: 0 auto; background: rgba(255,255,255,0.96); padding: 30px; border-radius: 4px; box-shadow: 0 10px 40px rgba(0,0,0,0.8); border-top: 5px solid var(--primary); }
+  h1 { text-align: center; color: #1a1a1a; margin-top: 0; }
+  input, select, textarea { width: 100%; padding: 12px; margin-bottom: 12px; border: 1px solid #ccc; box-sizing: border-box; }
+  button { width: 100%; background: var(--primary); color: white; padding: 16px; border: none; font-weight: bold; cursor: pointer; text-transform: uppercase; }
+  .website-field { position: absolute; left: -9999px; }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <img src="https://m.zionautoglass.com/zionlogo.jpg" alt="Zion Auto Glass" style="display:block; margin:0 auto 10px; max-width:200px;">
+  <h1>Classic Restoration</h1>
+  <form id="zionForm">
+    <input type="hidden" name="funnel_source" value="Classic Car">
+    <input type="hidden" name="user_ip" id="user_ip">
+    <div class="website-field"><input type="text" id="honey_trap" name="website_url"></div>
+
+    <input type="text" name="firstName" placeholder="First Name" required>
+    <input type="text" name="lastName" placeholder="Last Name" required>
+    <input type="tel" name="phone" placeholder="Phone" required>
+    <input type="email" name="email" placeholder="Email" required>
+    
+    <div style="display:flex; gap:10px;">
+      <input type="text" name="year" placeholder="Year (e.g. 1967)" required>
+      <input type="text" name="make" placeholder="Make (e.g. Chevy)" required>
+    </div>
+    <input type="text" name="final_model" placeholder="Model (e.g. Camaro SS)" required>
+    
+    <select name="glassPart" required>
+      <option value="">-- Service Needed --</option>
+      <option value="Windshield Restoration">Windshield Replacement / Seal</option>
+      <option value="Back Glass">Rear Window</option>
+      <option value="Full Restoration">Full Glass Restoration</option>
+      <option value="Custom Flat">Custom Flat Glass</option>
+    </select>
+    <textarea name="ws_service" placeholder="Project Notes (Rubber gaskets? Chrome trim?)" required></textarea>
+
+    <div class="cf-turnstile" data-sitekey="0x4AAAAAACKSYELy5eRYB9gy" data-theme="light" style="margin-bottom: 15px;"></div>
+
+    <button type="submit" id="submitBtn">Request Quote</button>
+  </form>
+</div>
+
+<script>
+  const scriptURL = 'https://script.google.com/macros/s/AKfycbzy3anFgwk-7c1UFr9J0Qb8D4h5awGmVlsLjW_uAs0qRfusgJQSqsQllQk0FZtTTR0l/exec';
+  // Capture IP for Backend Security
+  fetch('https://api.ipify.org?format=json').then(r=>r.json()).then(d=>document.getElementById('user_ip').value=d.ip);
+
+  document.getElementById('zionForm').onsubmit = (e) => {
+    e.preventDefault();
+    if(document.getElementById('honey_trap').value !== "") return;
+    
+    document.getElementById('submitBtn').innerText = "Processing..."; document.getElementById('submitBtn').disabled = true;
+    const fd = new FormData(e.target);
+    fetch(scriptURL, { method: 'POST', body: fd, mode: 'no-cors' })
+    .then(() => { sessionStorage.setItem('zion_submission_valid', 'true'); window.location.href = 'thankyou.html'; })
+    .catch(() => alert("Error. Call 936-707-7105"));
+  };
+</script>
+</body>
+</html>
