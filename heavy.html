@@ -3,74 +3,159 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Zion Heavy Glass | Equipment</title>
+<title>Heavy Equipment Glass | Zion Auto Glass</title>
+
 <script async src="https://www.googletagmanager.com/gtag/js?id=AW-870403519"></script>
-<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','AW-870403519');</script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'AW-870403519');
+</script>
 <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+
 <style>
-  :root { --urgent: #ff9900; --dark: #111; --primary: #004aad; }
-  body { font-family: "Roboto", sans-serif; background-color: #222; color: #fff; padding: 20px; text-align: center; }
-  .container { max-width: 500px; margin: 0 auto; background: #fff; color: #333; padding: 25px; border-radius: 8px; border-top: 6px solid var(--urgent); }
-  input, select, textarea { width: 100%; padding: 12px; margin-bottom: 10px; border: 2px solid #ddd; box-sizing: border-box; }
-  button { width: 100%; background: var(--urgent); padding: 15px; font-weight: 900; border: none; cursor: pointer; text-transform: uppercase; font-size: 1.1rem; }
-  .website-field { position: absolute; left: -9999px; }
-  .address-text { color: #555; font-size: 0.9rem; margin-top:10px; }
+  /* --- THEME: INDUSTRIAL & RUGGED --- */
+  :root { 
+    --primary: #37474f; /* Gunmetal Grey */
+    --caution: #ffc107; /* Industrial Yellow */
+    --red: #d32f2f; 
+    --glass-bg: rgba(255, 255, 255, 0.96); 
+    --shadow: 0 20px 50px rgba(0,0,0,0.6);
+  }
+  
+  body { 
+    font-family: -apple-system, BlinkMacSystemFont, "Roboto Condensed", "Segoe UI", sans-serif; 
+    margin: 0; padding: 0; color: #1a1a1a;
+    background-image: url('https://m.zionautoglass.com/MainPageClassicChevyTruck.jpg'); 
+    background-size: cover; background-position: center; background-attachment: fixed;
+    min-height: 100vh;
+  }
+
+  .main-wrapper { display: flex; flex-direction: column; align-items: center; padding: 20px; padding-top: 40px; }
+  
+  .container { 
+    width: 100%; max-width: 550px; 
+    background: var(--glass-bg); 
+    padding: 30px; border-radius: 8px; 
+    box-shadow: var(--shadow); 
+    border-bottom: 8px solid var(--caution); 
+    margin-bottom: 40px; position: relative;
+  }
+
+  .logo-img { max-width: 250px; width: 100%; display: block; margin: 0 auto 20px; }
+  
+  h2.form-header { 
+    text-align: center; color: var(--primary); 
+    margin-top: 0; margin-bottom: 25px; 
+    font-family: "Impact", "Roboto Condensed", sans-serif; 
+    font-size: 1.8rem; text-transform: uppercase; letter-spacing: 1px;
+    border-bottom: 4px solid var(--primary); padding-bottom: 10px;
+  }
+
+  input, select, textarea { 
+    width: 100%; padding: 15px; margin-bottom: 15px; 
+    border: 2px solid #999; border-radius: 4px; 
+    font-size: 16px; font-weight: 700; background: #f5f5f5;
+  }
+  input:focus, select:focus { border-color: var(--primary); background: #fff; outline: none; }
+  
+  label { font-weight: 900; font-size: 0.9rem; text-transform: uppercase; display: block; margin-bottom: 5px; color: var(--primary); }
+  .row { display: flex; gap: 15px; } .col { flex: 1; } .hidden { display: none; }
+
+  .upload-box { 
+    background: #fff8e1; border: 2px dashed var(--caution); 
+    padding: 20px; text-align: center; margin: 20px 0;
+  }
+
+  button[type="submit"] { 
+    width: 100%; background: var(--primary); color: var(--caution); 
+    padding: 20px; border: none; 
+    font-size: 1.4rem; font-weight: 900; border-radius: 4px; cursor: pointer; margin-top: 10px; 
+    text-transform: uppercase; letter-spacing: 1px;
+    border-bottom: 4px solid #000;
+  }
+  button:hover { background: #263238; top: 2px; }
+
+  @media (min-width: 900px) { .main-wrapper { flex-direction: row; justify-content: center; gap: 60px; } }
 </style>
 </head>
 <body>
 
-<div class="container">
-  <img src="https://m.zionautoglass.com/zionlogo.jpg" alt="Zion Auto Glass" style="max-width:200px;">
-  <h1>Heavy Equipment Glass</h1>
-  
-  <form id="zionForm">
-    <input type="hidden" name="funnel_source" value="Heavy Equipment">
-    <input type="hidden" name="user_ip" id="user_ip">
-    <div class="website-field"><input type="text" id="honey_trap" name="website_url"></div>
-
-    <input type="text" name="firstName" placeholder="First Name" required>
-    <input type="text" name="lastName" placeholder="Last Name" required>
-    <input type="tel" name="phone" placeholder="Phone" required>
-    <input type="email" name="email" placeholder="Email" required>
+<div class="main-wrapper">
+  <div class="container">
+    <img src="https://m.zionautoglass.com/zionlogo.jpg" alt="Zion Auto Glass" class="logo-img">
+    <h2 class="form-header">Heavy Equipment & RV</h2>
     
-    <label style="display:block;text-align:left;font-weight:bold;margin-top:10px;">Machine Details</label>
-    <select name="make" required>
-      <option value="">Type (e.g. Excavator)</option>
-      <option value="Tractor">Tractor</option><option value="Excavator">Excavator</option><option value="Skid Steer">Skid Steer</option><option value="Backhoe">Backhoe</option><option value="Semi Truck">Semi Truck</option>
-    </select>
-    <input type="text" name="final_model" placeholder="Brand (e.g. CAT / John Deere)" required>
-    <input type="text" name="year" placeholder="Model Number (e.g. 320G)" required>
-    <input type="text" name="glassPart" placeholder="Glass Needed (e.g. Door, Windshield)" required>
-    <textarea name="ws_service" placeholder="Job Site Location / Notes" required></textarea>
+    <form id="zionForm">
+      <input type="hidden" name="gclid" id="gclid">
+      <input type="hidden" name="user_ip" id="user_ip">
+      <input type="hidden" name="glassPart" value="Heavy Equipment">
+      <div style="position:absolute; left:-9999px;"><input type="text" id="honey_trap" name="website_url" tabindex="-1"></div>
+      
+      <input type="hidden" name="fileData" id="fileData">
+      <input type="hidden" name="mimeType" id="mimeType">
+      <input type="hidden" name="fileName" id="fileName">
+      
+      <div class="row">
+        <div class="col"><label>Contact Name</label><input type="text" name="firstName" required></div>
+        <div class="col"><label>Company</label><input type="text" name="company_name" placeholder="Optional"></div>
+      </div>
+      <label>Job Site / Mobile Phone</label><input type="tel" name="phone" required>
+      <label>Email</label><input type="email" name="email" id="emailInput" onchange="validateEmail()" required>
+      <div id="emailError" class="hidden" style="color:var(--red); margin-top:-10px; margin-bottom:10px;">Invalid Email</div>
+      <label>Job Site Zip Code</label><input type="tel" name="zip" required>
 
-    <div class="cf-turnstile" data-sitekey="0x4AAAAAACKSYELy5eRYB9gy" data-theme="light" style="margin-bottom: 10px;"></div>
+      <hr style="border:0; border-top:4px solid #ddd; margin: 25px 0;">
 
-    <button type="submit" id="submitBtn">Request Quote</button>
-    
-    <div class="address-text">
-        <strong>1500 Atkinson Drive, Lufkin, TX 75901</strong><br>
-        <span style="color:var(--primary); font-weight:bold;">1-936-707-7105</span>
-    </div>
-  </form>
+      <label>Equipment Type</label>
+      <select name="bodyStyle" required>
+          <option value="">-- Select Type --</option>
+          <option value="Excavator">Excavator</option>
+          <option value="Bulldozer">Bulldozer / Loader</option>
+          <option value="Semi Truck">Semi / 18-Wheeler</option>
+          <option value="Crane">Crane / Lift</option>
+          <option value="Skid Steer">Skid Steer</option>
+          <option value="RV">RV / Motorhome</option>
+          <option value="Bus">Bus</option>
+          <option value="Other">Other</option>
+      </select>
+      
+      <div class="row">
+          <div class="col"><label>Make</label><input type="text" name="make" placeholder="e.g. CAT, Deere, Peterbilt" required></div>
+          <div class="col"><label>Model #</label><input type="text" name="model" placeholder="e.g. 320EL, 389" required></div>
+      </div>
+
+      <label>Glass Description</label>
+      <textarea name="notes" placeholder="Describe the glass (e.g., Lower front windshield, Door glass left side, Curved or Flat?)" style="height:100px; font-family:sans-serif;"></textarea>
+      
+      <div class="upload-box">
+          <label style="color:#f57f17; font-size:1rem;">📷 PHOTO REQUIRED FOR QUOTE</label>
+          <p style="font-size:0.9rem; color:#555; margin-bottom:15px;">Heavy equipment glass varies greatly. Please upload a clear photo of the damaged glass or the opening.</p>
+          <input type="file" id="photoInput" accept="image/*" capture="environment" onchange="handleFile(this)" style="background:#fff; border:1px solid #ccc;">
+      </div>
+
+      <div class="cf-turnstile" data-sitekey="0x4AAAAAACKSYELy5eRYB9gy" data-theme="light"></div>
+      
+      <button type="submit" id="submitBtn">REQUEST SITE QUOTE</button>
+      
+      <p style="text-align:center; font-size:0.75rem; color:#888; margin-top:15px;">
+          Secure 256-bit SSL Encrypted Submission <br>
+          <a href="privacy.html" target="_blank" style="color:#888; text-decoration:underline;">Privacy Policy</a>
+      </p>
+
+    </form>
+  </div>
 </div>
 
 <script>
+  // --- UPDATED HEAVY BRAINS (With Photo Handler) ---
   const scriptURL = 'https://script.google.com/macros/s/AKfycbzy3anFgwk-7c1UFr9J0Qb8D4h5awGmVlsLjW_uAs0qRfusgJQSqsQllQk0FZtTTR0l/exec';
-  // Capture IP for Backend Security
-  fetch('https://api.ipify.org?format=json').then(r=>r.json()).then(d=>document.getElementById('user_ip').value=d.ip);
 
-  document.getElementById('zionForm').onsubmit = (e) => {
-    e.preventDefault();
-    if(document.getElementById('honey_trap').value !== "") return;
-    
-    document.getElementById('submitBtn').innerText = "Sending..."; document.getElementById('submitBtn').disabled = true;
-    const fd = new FormData(e.target);
-    
-    // Post to Google Script (It handles the VPN Check)
-    fetch(scriptURL, { method: 'POST', body: fd, mode: 'no-cors' })
-    .then(() => { sessionStorage.setItem('zion_submission_valid', 'true'); window.location.href = 'thankyou.html'; })
-    .catch(() => alert("Error. Call 936-707-7105"));
-  };
-</script>
-</body>
-</html>
+  // 1. FILE HANDLER (Prepares photo for Google Script)
+  function handleFile(input) {
+      if (input.files && input.files[0]) {
+          const file = input.files[0];
+          const reader = new FileReader();
+          reader.onload = function(e) {
+              const base64 = e.target.result.split(',')
