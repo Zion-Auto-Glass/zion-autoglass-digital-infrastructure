@@ -18,7 +18,8 @@
 <style>
   :root { --primary: #004aad; --red: #e60000; --glass: rgba(255, 255, 255, 0.95); }
   body { 
-    font-family: -apple-system, system-ui, sans-serif; margin: 0; padding: 0; color: #333;
+    font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; 
+    margin: 0; padding: 0; color: #333;
     background-image: url('https://m.zionautoglass.com/MainPageClassicChevyTruck.jpg');
     background-size: cover; background-position: center; background-attachment: fixed;
     min-height: 100vh;
@@ -28,15 +29,24 @@
   .info-box { width: 100%; max-width: 480px; background: rgba(0, 0, 0, 0.85); color: white; padding: 25px; border-radius: 12px; text-align: center; border: 1px solid rgba(255,255,255,0.2); z-index: 1; }
   .logo-img { max-width: 260px; width: 100%; display: block; margin: 0 auto 15px; }
   
+  /* INPUTS */
   input, select { width: 100%; padding: 14px; margin-bottom: 12px; border: 2px solid var(--primary); border-radius: 8px; box-sizing: border-box; font-size: 16px; font-weight: 700; color: #000; }
   label { font-weight: 700; font-size: 0.8rem; text-transform: uppercase; display: block; margin-bottom: 5px; color: var(--primary); }
   .row { display: flex; gap: 10px; } .col { flex: 1; } .hidden { display: none; }
   .options-box { background: #f0f7ff; padding: 15px; border-radius: 8px; border: 1px solid #cce4ff; margin-bottom: 15px; }
   
-  .website-field { position: absolute; left: -9999px; } /* HONEYPOT */
+  /* RADIO BUTTONS */
+  .radio-group { display: flex; gap: 10px; margin-bottom: 10px; }
+  .radio-label { flex: 1; text-align: center; background: white; border: 2px solid #ddd; padding: 10px; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 0.9rem; }
+  .radio-label input { display: none; }
+  .radio-label.selected { border-color: var(--primary); background: #e6f0ff; color: var(--primary); }
+
+  /* SUBMIT BUTTON */
+  button[type="submit"] { width: 100%; background: var(--red); color: white; padding: 18px; border: none; font-size: 1.2rem; font-weight: bold; border-radius: 8px; cursor: pointer; margin-top: 10px; }
+  button:disabled { background: #ccc; cursor: not-allowed; }
   
-  button[type="submit"] { width: 100%; background: var(--red); color: white; padding: 18px; border: none; font-size: 1.2rem; font-weight: bold; border-radius: 8px; cursor: pointer; margin-top: 15px; }
-  
+  .website-field { position: absolute; left: -9999px; }
+
   @media (min-width: 900px) { .main-wrapper { flex-direction: row; justify-content: center; align-items: flex-start; gap: 40px; padding-top: 50px; } }
 </style>
 </head>
@@ -64,7 +74,7 @@
       <hr style="border:0; border-top:1px solid #eee; margin: 15px 0;">
 
       <div class="row">
-        <div class="col"><label>Year</label><select id="year" name="year" required><option value="">Year</option></select></div>
+        <div class="col"><label>Year</label><select id="year" name="year" required><option value="">Loading...</option></select></div>
         <div class="col"><label>Make</label>
           <select id="make" name="make" required>
             <option value="">Select Make</option>
@@ -78,17 +88,84 @@
       <label>Body Style</label>
       <select name="bodyStyle" required>
         <option value="">-- Select Body Style --</option>
-        <option value="Sedan (4 Door)">Sedan (4 Door)</option><option value="Coupe (2 Door)">Coupe (2 Door)</option><option value="SUV">SUV</option><option value="Truck Crew Cab">Truck Crew Cab</option><option value="Truck Ext Cab">Truck Ext Cab</option><option value="Truck Reg Cab">Truck Reg Cab</option>
+        <option value="Sedan">Sedan (4 Door)</option><option value="Coupe">Coupe (2 Door)</option><option value="SUV">SUV</option><option value="Truck Crew">Truck Crew Cab</option><option value="Truck Ext">Truck Ext Cab</option><option value="Truck Reg">Truck Reg Cab</option>
       </select>
 
-      <label>Service Required</label>
+      <label style="margin-top:10px;">Service Required</label>
       <select id="glassPart" name="glassPart" required>
-        <option value="Windshield">Windshield</option><option value="Back Glass">Back Glass</option><option value="Door Glass">Door Glass</option><option value="Vent/Quarter">Vent/Quarter</option><option value="Sunroof">Sunroof</option><option value="Other">Other</option>
+        <option value="">-- Select Service --</option>
+        <option value="Windshield">Windshield</option>
+        <option value="Back Glass">Back Glass</option>
+        <option value="Door Glass">Door Glass</option>
+        <option value="Vent/Quarter">Vent/Quarter</option>
+        <option value="Sunroof">Sunroof</option>
+        <option value="Other">Other</option>
       </select>
       
       <div id="windshieldOptions" class="hidden options-box">
-         <label>Service Type</label><select name="ws_service"><option value="Replacement">Replacement</option><option value="Chip Repair">Chip Repair</option></select>
-         <div style="margin-top:10px;"><label><input type="checkbox" name="opt_rain"> Rain Sensor</label><label><input type="checkbox" name="opt_lane"> Lane Camera</label></div>
+         <label>Service Type</label>
+         <div class="radio-group">
+            <label class="radio-label" onclick="selectRadio(this)"><input type="radio" name="ws_service" value="Replacement"> Replacement</label>
+            <label class="radio-label" onclick="selectRadio(this)"><input type="radio" name="ws_service" value="Chip Repair"> Chip Repair</label>
+         </div>
+         <div style="margin-top:10px; display:flex; gap:10px; flex-wrap:wrap;">
+            <label style="font-size:0.8rem; display:flex; align-items:center;"><input type="checkbox" name="opt_rain" style="width:auto; margin-right:5px;"> Rain Sensor</label>
+            <label style="font-size:0.8rem; display:flex; align-items:center;"><input type="checkbox" name="opt_lane" style="width:auto; margin-right:5px;"> Lane Camera</label>
+         </div>
+      </div>
+
+      <div id="backGlassOptions" class="hidden options-box">
+        <label>Glass Style</label>
+        <select id="bg_style"><option value="Stationary">Stationary (Solid)</option><option value="Slider Manual">Slider (Manual)</option><option value="Slider Power">Slider (Power)</option></select>
+        <div class="row">
+          <div class="col"><label>Heated?</label><select id="bg_heated"><option value="Non-Heated">No</option><option value="Heated">Yes</option></select></div>
+          <div class="col"><label>Tint?</label><select id="bg_tint"><option value="Factory Tinted">Factory Tinted</option><option value="Clear">Clear</option></select></div>
+        </div>
+      </div>
+
+      <div id="doorGlassOptions" class="hidden options-box">
+        <div class="row">
+          <div class="col"><label>Row</label><select id="door_row" onchange="checkDoorTint()"><option value="Front">Front</option><option value="Back">Back</option></select></div>
+          <div class="col"><label>Side</label><select id="door_side"><option value="Driver">Driver (Left)</option><option value="Passenger">Passenger (Right)</option></select></div>
+        </div>
+        <div id="doorTintBox" class="hidden" style="margin-top:10px;">
+          <label>Tint?</label><select id="door_tint"><option value="Factory Tinted">Factory Tinted</option><option value="Clear">Clear</option></select>
+        </div>
+      </div>
+      
+      <div id="ventGlassOptions" class="hidden options-box">
+        <label>Type</label><select id="vent_type"><option value="Vent">Front Vent</option><option value="Quarter">Rear Quarter</option></select>
+        <div class="row">
+            <div class="col"><label>Side</label><select id="vent_side"><option value="Driver">Driver (Left)</option><option value="Passenger">Passenger (Right)</option></select></div>
+        </div>
+      </div>
+
+      <div id="sunroofOptions" class="hidden options-box">
+        <label>Issue</label>
+        <select id="sr_service">
+            <option value="Replacement">Glass Replacement</option>
+            <option value="Leaking">Leaking / Water Entry</option>
+            <option value="Motor/Regulator">Motor or Regulator</option>
+        </select>
+        <label style="margin-top:5px;">Type</label>
+        <select id="sr_type"><option value="Standard">Standard Sunroof</option><option value="Panoramic">Panoramic Roof</option></select>
+      </div>
+
+      <div class="options-box">
+        <div class="section-title">ADAS & VIN Verification</div>
+        <label>Does your vehicle have ADAS Sensors?</label>
+        <p style="font-size:0.8rem; color:#666; margin-bottom:10px; margin-top:-5px; line-height:1.4;">(e.g., Lane Departure Warning, Collision Alert, Cameras in windshield)</p>
+        <select name="adas_status" id="adasSelect" style="margin-bottom:5px;">
+          <option value="No">No / I don't think so</option>
+          <option value="Yes">Yes</option>
+          <option value="Not Sure">I'm Not Sure</option>
+        </select>
+
+        <div id="vinContainer" class="hidden" style="margin-top:10px;">
+          <label>Please Enter 17-Digit VIN</label>
+          <input type="text" name="vin" id="vinInput" placeholder="1HG..." maxlength="17" style="text-transform:uppercase; letter-spacing: 1px; font-family:monospace;">
+          <div id="vinCount" style="text-align:right; font-size:0.75rem; color:#888;">0 / 17</div>
+        </div>
       </div>
 
       <div class="cf-turnstile" data-sitekey="0x4AAAAAACKSYELy5eRYB9gy" data-theme="light" style="margin-top:15px; margin-bottom: 10px;"></div>
@@ -97,7 +174,7 @@
       <p style="text-align:center; font-size:0.75rem; color:#888; margin-top:10px;">Secure SSL Submission</p>
     </form>
   </div>
-  
+
   <div class="info-box">
     <h3>Local & Trusted</h3>
     <p>#1 on Google for Auto Glass in Lufkin.</p>
@@ -107,64 +184,175 @@
 </div>
 
 <script>
-  // CONFIG
+  // --- CONFIGURATION ---
   const scriptURL = 'https://script.google.com/macros/s/AKfycbzy3anFgwk-7c1UFr9J0Qb8D4h5awGmVlsLjW_uAs0qRfusgJQSqsQllQk0FZtTTR0l/exec';
 
-  // 1. GET IP (Required for Backend VPN Check)
-  fetch('https://api.ipify.org?format=json').then(r=>r.json()).then(d=>document.getElementById('user_ip').value=d.ip);
+  // 1. POPULATE YEARS IMMEDIATELY
+  const ySel = document.getElementById('year');
+  ySel.innerHTML = '<option value="">Year</option>';
+  for(let i=2026; i>=1990; i--) { 
+      let o=document.createElement('option'); o.value=i; o.text=i; ySel.add(o); 
+  }
 
-  // 2. LOGIC
-  function getParam(n){var r=new RegExp("[\\?&]"+n+"=([^&#]*)").exec(location.search);return r===null?"":decodeURIComponent(r[1].replace(/\+/g," "));}
+  // 2. HELPER: Get URL Parameters
+  function getParam(name) {
+    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)");
+    var results = regex.exec(location.search);
+    return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+  }
   document.getElementById('gclid').value = getParam('gclid');
 
-  const ySel=document.getElementById('year'), mInput=document.getElementById('make'), modSel=document.getElementById('model');
-  for(let i=2026;i>=1990;i--){let o=document.createElement('option');o.value=i;o.text=i;ySel.add(o);}
-
-  function fetchModels(){
-    const y=ySel.value, m=mInput.value;
-    modSel.innerHTML='<option>-- Select Year & Make --</option>'; modSel.disabled=true;
-    if(y && m && m!=='Other'){
-       modSel.innerHTML='<option>Loading...</option>'; modSel.classList.remove('hidden'); document.getElementById('model-manual').classList.add('hidden');
-       fetch(`https://vpic.nhtsa.dot.gov/api/vehicles/getmodelsformakeyear/make/${m}/modelyear/${y}?format=json`)
-       .then(r=>r.json()).then(d=>{
-         if(d.Count===0) throw new Error();
-         modSel.innerHTML='<option value="">Select Model</option>'; modSel.disabled=false;
-         d.Results.forEach(x=>{let o=document.createElement('option');o.text=x.Model_Name;modSel.add(o);});
-       }).catch(()=>{ modSel.classList.add('hidden'); document.getElementById('model-manual').classList.remove('hidden'); });
-    } else if(m==='Other'){ modSel.classList.add('hidden'); document.getElementById('model-manual').classList.remove('hidden'); }
+  // 3. UI HELPERS (Radio Buttons)
+  function selectRadio(label) {
+    document.querySelectorAll('.radio-label').forEach(l => l.classList.remove('selected'));
+    label.classList.add('selected');
+    label.querySelector('input').checked = true;
   }
-  ySel.addEventListener('change', fetchModels); mInput.addEventListener('change', fetchModels);
 
-  // OPTIONS TOGGLE
+  // 4. VEHICLE LOGIC (NHTSA API)
+  const mInput = document.getElementById('make');
+  const modSel = document.getElementById('model');
+
+  function fetchModels() {
+    const year = ySel.value;
+    const make = mInput.value; 
+
+    modSel.innerHTML = '<option>-- Select Year & Make --</option>';
+    modSel.disabled = true;
+
+    if (year && make && make !== 'Other') {
+      modSel.innerHTML = '<option>Loading...</option>';
+      modSel.classList.remove('hidden'); 
+      document.getElementById('model-manual').classList.add('hidden');
+
+      fetch(`https://vpic.nhtsa.dot.gov/api/vehicles/getmodelsformakeyear/make/${encodeURIComponent(make)}/modelyear/${year}?format=json`)
+      .then(r=>r.json())
+      .then(d => {
+        if (d.Count === 0) throw new Error("No models found");
+        modSel.innerHTML = '<option value="">Select Model</option>';
+        modSel.disabled = false;
+        d.Results.forEach(x => { 
+            let o=document.createElement('option'); o.text=x.Model_Name; modSel.add(o); 
+        });
+      })
+      .catch(() => {
+        modSel.classList.add('hidden'); 
+        document.getElementById('model-manual').classList.remove('hidden');
+      });
+    } else if (make === 'Other') {
+        modSel.classList.add('hidden'); 
+        document.getElementById('model-manual').classList.remove('hidden');
+    }
+  }
+  ySel.addEventListener('change', fetchModels);
+  mInput.addEventListener('change', fetchModels);
+
+  // 5. SHOW/HIDE OPTIONS
   document.getElementById('glassPart').addEventListener('change', function() {
-    if(this.value === 'Windshield') document.getElementById('windshieldOptions').classList.remove('hidden');
-    else document.getElementById('windshieldOptions').classList.add('hidden');
+    document.querySelectorAll('.options-box').forEach(b => {
+      // Don't hide the VIN box if it was open
+      if(b.id !== 'vinContainer' && b.parentElement.className !== 'options-box') b.classList.add('hidden');
+    });
+    
+    // Toggle Specific Divs
+    const val = this.value;
+    if(val === 'Windshield') document.getElementById('windshieldOptions').classList.remove('hidden');
+    else if(val === 'Back Glass') document.getElementById('backGlassOptions').classList.remove('hidden');
+    else if(val === 'Door Glass') { document.getElementById('doorGlassOptions').classList.remove('hidden'); checkDoorTint(); }
+    else if(val === 'Vent/Quarter') document.getElementById('ventGlassOptions').classList.remove('hidden');
+    else if(val === 'Sunroof') document.getElementById('sunroofOptions').classList.remove('hidden');
   });
 
-  // 3. SECURE SUBMIT
+  function checkDoorTint() {
+    const row = document.getElementById('door_row').value;
+    document.getElementById('doorTintBox').classList.toggle('hidden', row !== 'Back');
+  }
+
+  // 6. ADAS & VIN
+  document.getElementById('adasSelect').addEventListener('change', function() {
+    const vinCont = document.getElementById('vinContainer');
+    this.value === 'Yes' || this.value === 'Not Sure' ? vinCont.classList.remove('hidden') : vinCont.classList.add('hidden');
+  });
+
+  document.getElementById('vinInput').addEventListener('input', function() {
+    this.value = this.value.toUpperCase().replace(/[^A-Z0-9]/g, ''); 
+    document.getElementById('vinCount').innerText = this.value.length + " / 17";
+  });
+
+  // 7. SUBMIT LOGIC (Security + Data)
   document.getElementById('zionForm').onsubmit = (e) => {
     e.preventDefault();
-    if(document.getElementById('honey_trap').value !== "") return; // Bot Trap
-    
     const btn = document.getElementById('submitBtn');
-    btn.innerText = "Securing..."; btn.disabled = true;
     
+    // HONEYTRAP
+    if(document.getElementById('honey_trap').value !== "") return;
+
+    btn.innerText = "Verifying Security..."; btn.disabled = true;
+
+    // Handle Model Value
     let finalModel = modSel.value;
     if(!document.getElementById('model-manual').classList.contains('hidden')) finalModel = document.getElementById('model-manual').value;
+    
+    // Combine Sub-Options into "glassPart"
+    let part = document.getElementById('glassPart').value;
+    let details = "";
+    if (part === 'Back Glass') {
+      details = document.getElementById('bg_style').value + " | " + document.getElementById('bg_heated').value + " | " + document.getElementById('bg_tint').value;
+      part = "Back Glass (" + details + ")";
+    } else if (part === 'Door Glass') {
+      details = document.getElementById('door_row').value + " " + document.getElementById('door_side').value;
+      if(document.getElementById('door_row').value === 'Back') details += " (" + document.getElementById('door_tint').value + ")";
+      part = "Door Glass (" + details + ")";
+    } else if (part === 'Vent/Quarter') {
+      details = document.getElementById('vent_type').value + " (" + document.getElementById('vent_side').value + ")";
+      part = details;
+    } else if (part === 'Sunroof') {
+      details = document.getElementById('sr_type').value + " | Issue: " + document.getElementById('sr_service').value;
+      part = "Sunroof (" + details + ")";
+    } else if (part === 'Windshield') {
+        const type = document.querySelector('input[name="ws_service"]:checked')?.value || "Replacement";
+        let opts = [];
+        if(document.querySelector('input[name="opt_rain"]').checked) opts.push("Rain Sensor");
+        if(document.querySelector('input[name="opt_lane"]').checked) opts.push("Lane Camera");
+        part = "Windshield (" + type + ") " + opts.join(", ");
+    }
+
     const fd = new FormData(e.target);
     fd.append('final_model', finalModel);
+    fd.set('glassPart', part);
 
-    // Send to Google Script (Which handles the VPN Check now)
-    fetch(scriptURL, { method: 'POST', body: fd, mode: 'no-cors' })
+    // VPN CHECK (Client Side)
+    fetch('https://vpnapi.io/api/?key=ad27e9e886c443d39ea71cd9aed6ea20')
+    .then(r => r.json())
+    .then(d => {
+      if (d.security.vpn || d.security.proxy || d.security.tor || d.security.relay) {
+        alert("Security Alert: VPN Detected. Please disable to submit.");
+        btn.innerText = "Retry (No VPN)";
+        btn.disabled = false;
+        return; 
+      }
+      fd.set('user_ip', d.ip); 
+      submitData(fd);
+    })
+    .catch(() => {
+      // If API fails, submit anyway and let backend check
+      submitData(fd);
+    });
+  };
+
+  function submitData(formData) {
+    const btn = document.getElementById('submitBtn');
+    fetch(scriptURL, { method: 'POST', body: formData, mode: 'no-cors' })
     .then(() => { 
         sessionStorage.setItem('zion_submission_valid', 'true');
         window.location.href = 'thankyou.html'; 
     })
     .catch(err => { 
-        alert("Connection Error. Please call 1-936-707-7105"); 
+        alert("Connection Error. Please call 936-707-7105"); 
         btn.innerText="Try Again"; btn.disabled=false; 
     });
-  };
+  }
 </script>
 </body>
 </html>
