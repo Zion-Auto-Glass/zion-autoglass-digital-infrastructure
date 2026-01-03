@@ -3,71 +3,155 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Zion Classics | Restoration</title>
+<title>Classic Restoration Glass | Zion Auto Glass</title>
+
 <script async src="https://www.googletagmanager.com/gtag/js?id=AW-870403519"></script>
-<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','AW-870403519');</script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'AW-870403519');
+</script>
 <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+
 <style>
-  :root { --primary: #8B0000; }
-  body { font-family: "Georgia", serif; background-image: url('https://m.zionautoglass.com/MainPageClassicChevyTruck.jpg'); background-size: cover; min-height: 100vh; padding: 20px; }
-  .container { max-width: 500px; margin: 0 auto; background: rgba(255,255,255,0.96); padding: 30px; border-radius: 4px; box-shadow: 0 10px 40px rgba(0,0,0,0.8); border-top: 5px solid var(--primary); }
-  h1 { text-align: center; color: #1a1a1a; margin-top: 0; }
-  input, select, textarea { width: 100%; padding: 12px; margin-bottom: 12px; border: 1px solid #ccc; box-sizing: border-box; }
-  button { width: 100%; background: var(--primary); color: white; padding: 16px; border: none; font-weight: bold; cursor: pointer; text-transform: uppercase; }
-  .website-field { position: absolute; left: -9999px; }
+  /* --- BASE THEME (Chevy Truck) --- */
+  :root { 
+    --primary: #004aad; 
+    --classic-gold: #c5a059; /* THE CLASSIC ACCENT */
+    --classic-dark: #8a6d3b;
+    --red: #e60000; 
+    --glass-bg: rgba(255, 255, 255, 0.96); 
+    --shadow: 0 20px 60px rgba(0,0,0,0.6);
+  }
+  
+  body { 
+    font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; 
+    margin: 0; padding: 0; color: #333;
+    background-image: url('https://m.zionautoglass.com/MainPageClassicChevyTruck.jpg'); 
+    background-size: cover; background-position: center; background-attachment: fixed;
+    min-height: 100vh;
+  }
+
+  .main-wrapper { display: flex; flex-direction: column; align-items: center; padding: 20px; padding-top: 40px; }
+  
+  /* CONTAINER: Wider for Classics, Gold Border */
+  .container { 
+    width: 100%; max-width: 600px; /* WIDER than standard */
+    background: var(--glass-bg); 
+    backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+    padding: 35px; border-radius: 12px; 
+    box-shadow: var(--shadow); 
+    border-top: 5px solid var(--classic-gold); /* DISTINCT TOP BORDER */
+    margin-bottom: 40px; position: relative;
+  }
+
+  .logo-img { max-width: 260px; width: 100%; display: block; margin: 0 auto 10px; }
+  
+  /* HEADER: Vintage Style */
+  h2.form-header { 
+    text-align: center; color: var(--classic-dark); 
+    margin-top: 5px; margin-bottom: 30px; 
+    font-family: "Georgia", serif; /* SERIF FONT FOR CLASSICS */
+    font-size: 1.8rem; text-transform: uppercase; letter-spacing: 2px;
+    border-bottom: 1px solid var(--classic-gold); padding-bottom: 15px;
+  }
+
+  /* INPUTS: Gold/Chrome Focus */
+  input, select, textarea { 
+    width: 100%; padding: 16px; margin-bottom: 18px; 
+    border: 2px solid #ccc; border-radius: 4px; /* Squarer corners for retro feel */
+    font-size: 16px; font-weight: 600; background: #fffcf5; /* Slight cream tint */
+    transition: all 0.3s;
+  }
+  input:focus, select:focus, textarea:focus { 
+    border-color: var(--classic-gold); 
+    outline: none; background: #fff;
+    box-shadow: 0 0 0 4px rgba(197, 160, 89, 0.2); 
+  }
+  
+  label { font-weight: 700; font-size: 0.8rem; text-transform: uppercase; display: block; margin-bottom: 8px; color: var(--classic-dark); letter-spacing: 1px; }
+  .row { display: flex; gap: 15px; } .col { flex: 1; } .hidden { display: none; }
+  
+  /* NOTES AREA */
+  textarea { resize: vertical; min-height: 120px; font-family: inherit; }
+
+  /* BUTTON: Keeps the Action Red */
+  button[type="submit"] { 
+    width: 100%; background: var(--red); color: white; padding: 20px; border: none; 
+    font-size: 1.3rem; font-weight: 900; border-radius: 4px; cursor: pointer; margin-top: 10px; 
+    text-transform: uppercase; letter-spacing: 1px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+  }
+  button:hover { background: #b30000; transform: translateY(-2px); }
+
+  /* PAYMENT SELECTOR (Classy Style) */
+  .pay-box { display: flex; gap: 10px; margin-top: 10px; }
+  .pay-opt { 
+    flex: 1; text-align: center; border: 2px solid #ccc; padding: 15px; 
+    cursor: pointer; font-weight: bold; color: #666; transition: 0.2s;
+  }
+  .pay-opt:hover { border-color: var(--classic-gold); color: var(--classic-dark); }
+  .pay-opt.selected { background: var(--classic-gold); color: white; border-color: var(--classic-gold); }
+  .pay-opt input { display: none; }
+
+  /* INFO BADGE */
+  .info-box { 
+    width: 100%; max-width: 400px; background: rgba(0, 0, 0, 0.9); color: #c5a059; 
+    padding: 30px; border: 2px solid var(--classic-gold); 
+    text-align: center; margin-top: 20px; 
+  }
+
+  @media (min-width: 900px) { .main-wrapper { flex-direction: row; justify-content: center; align-items: flex-start; gap: 50px; } }
 </style>
 </head>
 <body>
 
-<div class="container">
-  <img src="https://m.zionautoglass.com/zionlogo.jpg" alt="Zion Auto Glass" style="display:block; margin:0 auto 10px; max-width:200px;">
-  <h1>Classic Restoration</h1>
-  <form id="zionForm">
-    <input type="hidden" name="funnel_source" value="Classic Car">
-    <input type="hidden" name="user_ip" id="user_ip">
-    <div class="website-field"><input type="text" id="honey_trap" name="website_url"></div>
-
-    <input type="text" name="firstName" placeholder="First Name" required>
-    <input type="text" name="lastName" placeholder="Last Name" required>
-    <input type="tel" name="phone" placeholder="Phone" required>
-    <input type="email" name="email" placeholder="Email" required>
+<div class="main-wrapper">
+  <div class="container">
+    <img src="https://m.zionautoglass.com/zionlogo.jpg" alt="Zion Auto Glass" class="logo-img">
+    <h2 class="form-header">Restoration Quote</h2>
     
-    <div style="display:flex; gap:10px;">
-      <input type="text" name="year" placeholder="Year (e.g. 1967)" required>
-      <input type="text" name="make" placeholder="Make (e.g. Chevy)" required>
-    </div>
-    <input type="text" name="final_model" placeholder="Model (e.g. Camaro SS)" required>
-    
-    <select name="glassPart" required>
-      <option value="">-- Service Needed --</option>
-      <option value="Windshield Restoration">Windshield Replacement / Seal</option>
-      <option value="Back Glass">Rear Window</option>
-      <option value="Full Restoration">Full Glass Restoration</option>
-      <option value="Custom Flat">Custom Flat Glass</option>
-    </select>
-    <textarea name="ws_service" placeholder="Project Notes (Rubber gaskets? Chrome trim?)" required></textarea>
+    <form id="zionForm">
+      <input type="hidden" name="glassPart" value="Classic Car">
+      <input type="hidden" name="gclid" id="gclid">
+      <input type="hidden" name="user_ip" id="user_ip">
+      <div style="position:absolute; left:-9999px;"><input type="text" id="honey_trap" name="website_url" tabindex="-1"></div>
+      
+      <div class="row">
+        <div class="col"><label>First Name</label><input type="text" name="firstName" required></div>
+        <div class="col"><label>Last Name</label><input type="text" name="lastName" required></div>
+      </div>
+      <div class="row">
+        <div class="col"><label>Phone</label><input type="tel" name="phone" required></div>
+        <div class="col"><label>Zip</label><input type="tel" name="zip" required></div>
+      </div>
+      <label>Email Address</label><input type="email" name="email" id="emailInput" onchange="validateEmail()" required>
+      <div id="emailError" class="hidden" style="color:var(--red); font-size:0.8rem; margin-top:-15px; margin-bottom:10px;">Invalid Email</div>
 
-    <div class="cf-turnstile" data-sitekey="0x4AAAAAACKSYELy5eRYB9gy" data-theme="light" style="margin-bottom: 15px;"></div>
+      <hr style="border:0; border-top:1px solid #ddd; margin: 30px 0;">
 
-    <button type="submit" id="submitBtn">Request Quote</button>
-  </form>
-</div>
+      <div class="row">
+        <div class="col" style="flex:0 0 30%;">
+            <label>Year</label>
+            <select id="year" name="year" required><option value="">---</option></select>
+        </div>
+        <div class="col">
+            <label>Make & Model</label>
+            <input type="text" name="make_model" placeholder="e.g. 1965 Ford Mustang" required>
+        </div>
+      </div>
+      
+      <label>Body Style / Trim</label>
+      <input type="text" name="bodyStyle" placeholder="e.g. Fastback, Convertible, 2-Door Post" required>
 
-<script>
-  const scriptURL = 'https://script.google.com/macros/s/AKfycbzy3anFgwk-7c1UFr9J0Qb8D4h5awGmVlsLjW_uAs0qRfusgJQSqsQllQk0FZtTTR0l/exec';
-  // Capture IP for Backend Security
-  fetch('https://api.ipify.org?format=json').then(r=>r.json()).then(d=>document.getElementById('user_ip').value=d.ip);
+      <label>Project Notes & Condition</label>
+      <textarea name="notes" placeholder="Tell us about the car. Is it original? Custom chop? Is the glass flat or curved? Do you need new rubber seals?"></textarea>
 
-  document.getElementById('zionForm').onsubmit = (e) => {
-    e.preventDefault();
-    if(document.getElementById('honey_trap').value !== "") return;
-    
-    document.getElementById('submitBtn').innerText = "Processing..."; document.getElementById('submitBtn').disabled = true;
-    const fd = new FormData(e.target);
-    fetch(scriptURL, { method: 'POST', body: fd, mode: 'no-cors' })
-    .then(() => { sessionStorage.setItem('zion_submission_valid', 'true'); window.location.href = 'thankyou.html'; })
-    .catch(() => alert("Error. Call 936-707-7105"));
-  };
-</script>
-</body>
-</html>
+      <label style="margin-top:15px;">Payment Preference</label>
+      <div class="pay-box">
+        <label class="pay-opt selected" onclick="togglePay(this)"><input type="radio" name="pay_type" value="Self Pay" checked> Self Pay</label>
+        <label class="pay-opt" onclick="togglePay(this)"><input type="radio" name="pay_type" value="Insurance"> Insurance</label>
+      </div>
+
+      <div class="cf-turnstile
