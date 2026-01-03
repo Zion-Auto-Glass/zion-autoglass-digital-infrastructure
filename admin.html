@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zion Command Center</title>
+<style>
+  body { font-family: sans-serif; background: #f4f4f9; padding: 20px; max-width: 600px; margin: 0 auto; }
+  .card { background: white; padding: 20px; margin-bottom: 15px; border-radius: 12px; border-left: 6px solid #ccc; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+  .card.status-New { border-left-color: #e60000; }
+  .card.status-Working { border-left-color: #ffcc00; }
+  .card.status-Booked { border-left-color: #28a745; opacity: 0.6; }
+  
+  /* BADGE FOR SECURITY RISK */
+  .badge-risk { background: #d9534f; color: white; padding: 4px 8px; border-radius: 4px; font-weight: bold; font-size: 0.8em; margin-left: 5px; }
+  
+  .actions { margin-top: 15px; display: flex; gap: 10px; }
+  button { flex: 1; padding: 10px; cursor: pointer; border-radius: 6px; border: 1px solid #ddd; }
+  .btn-call { background: #28a745; color: white; border: none; font-weight: bold; }
+  #loginOverlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #004aad; z-index: 999; display: flex; flex-direction: column; justify-content: center; align-items: center; color: white; }
+  #passInput { padding: 15px; font-size: 18px; border-radius: 8px; border: none; margin-bottom: 10px; text-align: center; }
+</style>
+</head>
+<body>
+
+<div id="loginOverlay">
+  <img src="https://m.zionautoglass.com/zionlogo.jpg" style="width:200px; margin-bottom:20px; border-radius:10px;">
+  <input type="password" id="passInput" placeholder="Password">
+  <button onclick="checkPass()" style="background:#e60000; color:white; font-weight:bold;">Unlock</button>
+</div>
+
+<div id="dashboard" style="display:none;">
+  <h1 style="text-align:center; color:#004aad;">Zion Live Feed</h1>
+  <div id="feed">Loading leads...</div>
+</div>
+
+<script>
+  const scriptURL = 'https://script.google.com/macros/s/AKfycbzy3anFgwk-7c1UFr9J0Qb8D4h5awGmVlsLjW_uAs0qRfusgJQSqsQllQk0FZtTTR0l/exec';
+
+  function checkPass() {
+    if(document.getElementById('passInput').value.toLowerCase() === 'zion') {
+      document.getElementById('loginOverlay').style.display = 'none';
+      document.getElementById('dashboard').style.display = 'block';
+      loadFeed();
+    } else { alert("Incorrect"); }
+  }
+
+  function loadFeed() {
+    fetch(scriptURL).then(r=>r.json()).then(data => {
+      document.getElementById('feed').innerHTML = '';
+      data.forEach(lead => {
+        // Check for VPN/Proxy Risk in data
+        let riskBadge = '';
+        if(lead.securityRisk && (lead.securityRisk.includes('VPN') || lead.securityRisk.includes('Proxy'))) {
+            riskBadge = '<span class="badge-risk">⚠️ RISK</span>';
+        }
+
+        let html = `
+          <div class="card status-${lead.status}">
+            <div style="font-weight:bold; font-size:1.2rem;">${lead.name} ${riskBadge}</div>
+            <div style="color:#004aad; font-weight:600;">${lead.vehicle}</div>
+            <div>${lead.glass}</div>
+            <div style="color:#888; font-size:0.8rem; margin-top:5px;">${lead.timestamp} | ${lead.source}</div>
+            <div class="actions">
+              <a href="tel:${lead.phone}" style="flex:1;"><button class="btn-call">📞 Call</button></a>
+              <button onclick="setStatus(${lead.row}, 'Working')">Working</button>
+              <button onclick="setStatus(${lead.row}, 'Booked')">Booked</button>
+            </div>
+          </div>`;
+        document.getElementById('feed').innerHTML += html;
+      });
+    });
+  }
+  
+  function setStatus(row, status) {
+    const fd = new FormData(); fd.append('action','update_status'); fd.append('row', row); fd.append('status', status);
+    fetch(scriptURL, {method:'POST', body:fd, mode:'no-cors'}).then(() => loadFeed());
+  }
+
+  setInterval(loadFeed, 30000); 
+</script>
+</body>
+</html>
