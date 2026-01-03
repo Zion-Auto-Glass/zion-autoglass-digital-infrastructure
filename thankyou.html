@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Request Received</title>
+<script>
+  if (!sessionStorage.getItem('zion_submission_valid')) { window.location.replace('index.html'); } 
+  else { sessionStorage.removeItem('zion_submission_valid'); }
+</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-870403519"></script>
+<script>
+  window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date()); gtag('config', 'AW-870403519');
+</script>
+<style>
+  body { font-family: sans-serif; background: #111; color: #fff; display: flex; justify-content: center; align-items: center; min-height: 100vh; text-align: center; margin: 0; }
+  .container { background: #fff; color: #333; padding: 40px; border-radius: 16px; width: 90%; max-width: 500px; }
+  h1 { color: #333; }
+  a { color: #004aad; }
+</style>
+</head>
+<body>
+  <div class="container">
+    <img src="zionlogo.jpg" style="max-width:200px; margin-bottom:20px;">
+    <h1>Thank you!</h1>
+    <p>We have received your request.</p>
+    <p>For immediate assistance call <strong>1-936-707-7105</strong>.</p>
+    <a href="index.html">Return to Home</a>
+  </div>
+</body>
+</html>
