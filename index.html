@@ -22,6 +22,7 @@
     --primary-dark: #003380;
     --red: #e60000; 
     --red-hover: #cc0000;
+    /* The "Glass" Variables */
     --glass-bg: rgba(255, 255, 255, 0.95); 
     --glass-border: 1px solid rgba(255, 255, 255, 0.6);
     --shadow: 0 15px 35px rgba(0,0,0,0.4);
@@ -30,6 +31,7 @@
   body { 
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; 
     margin: 0; padding: 0; color: #1a1a1a;
+    /* RESTORED BACKGROUND IMAGE */
     background-image: url('https://m.zionautoglass.com/MainPageClassicChevyTruck.jpg'); 
     background-size: cover; background-position: center; background-attachment: fixed;
     min-height: 100vh;
@@ -42,11 +44,11 @@
     padding-top: 40px; 
   }
   
-  /* MAIN CARD */
+  /* MAIN CARD (The Glass Effect) */
   .container { 
     width: 100%; max-width: 500px; 
     background: var(--glass-bg); 
-    backdrop-filter: blur(10px); 
+    backdrop-filter: blur(10px); /* This creates the premium blur effect */
     -webkit-backdrop-filter: blur(10px);
     padding: 30px 25px; 
     border-radius: 16px; 
@@ -66,16 +68,17 @@
     border-bottom: 3px solid #e0e0e0; padding-bottom: 15px;
   }
 
-  /* INPUT FIELDS */
+  /* INPUT FIELDS (Restored Bold Blue Borders) */
   input, select, textarea { 
     width: 100%; padding: 14px; margin-bottom: 15px; 
-    border: 2px solid #b8c6db; 
+    border: 2px solid #b8c6db; /* Slightly lighter blue-grey initially */
     border-radius: 8px; box-sizing: border-box; 
     font-size: 16px; font-weight: 700; color: #333; 
     background: #fff;
     transition: all 0.2s ease;
   }
   
+  /* Focus State - The "Pop" */
   input:focus, select:focus { 
     border-color: var(--primary); 
     outline: none; 
@@ -94,9 +97,9 @@
   .col { flex: 1; } 
   .hidden { display: none; }
   
-  /* DYNAMIC SECTIONS */
+  /* DYNAMIC SECTIONS (Styled) */
   .options-box { 
-    background: #f0f7ff; 
+    background: #f0f7ff; /* Very light blue tint */
     padding: 20px; 
     border-radius: 12px; 
     border: 2px solid #dcebfc; 
@@ -114,7 +117,7 @@
     box-shadow: 0 2px 5px rgba(0,0,0,0.05);
   }
   
-  /* BUTTONS */
+  /* BUTTONS (Action Red) */
   button[type="submit"], .action-btn { 
     width: 100%; background: var(--red); color: white; 
     padding: 18px; border: none; 
@@ -127,7 +130,7 @@
   button:hover { transform: translateY(-3px); background: var(--red-hover); box-shadow: 0 8px 25px rgba(230, 0, 0, 0.5); }
   button:disabled { background: #999; transform: none; box-shadow: none; cursor: not-allowed; }
 
-  /* RADIO GROUP */
+  /* RADIO GROUP TILES */
   .radio-group { display: flex; gap: 10px; margin-bottom: 12px; }
   .radio-label { 
     flex: 1; text-align: center; background: white; 
@@ -143,7 +146,7 @@
   }
   .radio-label input { display: none; }
 
-  /* PRICE DISPLAY */
+  /* PRICE DISPLAY WIDGET */
   .price-display {
       background: white; border: 3px solid var(--primary); 
       border-radius: 12px; padding: 20px; text-align: center; margin-top: 15px;
@@ -152,16 +155,16 @@
   .price-amount { font-size: 2.2rem; font-weight: 900; color: var(--primary); display: block; line-height: 1; margin-bottom: 5px; }
   .price-note { font-size: 0.85rem; color: #666; font-weight: 600; text-transform: uppercase; }
 
-  /* MODAL */
+  /* MODAL (Distance Warning) - Styled to Match */
   .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 1000; justify-content: center; align-items: center; padding: 20px; backdrop-filter: blur(5px); }
   .modal-content { background: white; padding: 30px; border-radius: 16px; max-width: 400px; text-align: center; position: relative; box-shadow: 0 20px 60px rgba(0,0,0,0.5); border: 2px solid var(--primary); }
   .modal-img { width: 100%; border-radius: 8px; margin-bottom: 20px; border: 2px solid #eee; max-height: 200px; object-fit: cover; }
   .close-modal { position: absolute; top: 10px; right: 15px; font-size: 32px; cursor: pointer; color: #888; font-weight: bold; line-height: 1; }
 
-  /* INFO FOOTER */
+  /* INFO FOOTER (Dark Glass) */
   .info-box { 
     width: 100%; max-width: 450px; 
-    background: rgba(0, 0, 0, 0.85); 
+    background: rgba(0, 0, 0, 0.85); /* Darker for contrast */
     color: white; 
     padding: 30px; border-radius: 16px; 
     text-align: center; 
@@ -171,6 +174,7 @@
     box-shadow: 0 10px 30px rgba(0,0,0,0.5);
   }
 
+  /* Desktop Adjustments */
   @media (min-width: 900px) { 
     .main-wrapper { 
       flex-direction: row; justify-content: center; 
@@ -344,7 +348,7 @@
 
       <hr style="border:0; border-top:1px solid #ddd; margin: 25px 0;">
 
-      <div id="paymentOptionsBox" class="options-box" style="border: 2px solid var(--primary); background:#fff;">
+      <div class="options-box" style="border: 2px solid var(--primary); background:#fff;">
           <div style="text-align:center; color:var(--primary); font-weight:800; margin-bottom:15px; text-transform:uppercase; font-size:1.1rem;">Select Payment Method</div>
           <div class="radio-group">
             <label class="radio-label selected" onclick="togglePay('self', this)"><input type="radio" name="pay_type" value="Self Pay" checked> Self Pay</label>
@@ -378,7 +382,10 @@
       <div class="cf-turnstile" data-sitekey="0x4AAAAAACKSYELy5eRYB9gy" data-theme="light"></div>
 
       <button type="submit" id="submitBtn">SUBMIT REQUEST</button>
-      <p style="text-align:center; font-size:0.75rem; color:#888; margin-top:15px;">Secure 256-bit SSL Encrypted Submission</p>
+      <p style="text-align:center; font-size:0.75rem; color:#888; margin-top:15px;">
+    Secure 256-bit SSL Encrypted Submission <br>
+    <a href="privacy.html" target="_blank" style="color:#888; text-decoration:underline;">Privacy Policy</a>
+</p>
     </form>
   </div>
 
@@ -392,7 +399,7 @@
 </div>
 
 <script>
-  // --- BRAINS ---
+  // --- BRAINS (Logic from Indextwo) ---
   const scriptURL = 'https://script.google.com/macros/s/AKfycbzy3anFgwk-7c1UFr9J0Qb8D4h5awGmVlsLjW_uAs0qRfusgJQSqsQllQk0FZtTTR0l/exec';
   const SHOP_LAT = 31.3386; // Lufkin Coordinates
   const SHOP_LON = -94.7291; 
@@ -492,11 +499,7 @@
   // 5. SERVICE OPTIONS & PRICING
   document.getElementById('glassPart').addEventListener('change', function() {
     document.querySelectorAll('.options-box').forEach(b => {
-       // FIX: Do NOT hide the Payment Box (id="paymentOptionsBox")
-       // Also keep insurance items visible if we are inside that logic
-       if(b.id !== 'paymentOptionsBox' && !b.id.includes('insurance') && b.parentElement.className !== 'options-box') {
-          b.classList.add('hidden');
-       }
+       if(!b.id.includes('insurance') && b.parentElement.className !== 'options-box') b.classList.add('hidden');
     });
 
     const val = this.value;
@@ -510,6 +513,7 @@
   // VIN LOGIC (Strict)
   const vinInput = document.getElementById('vinInput');
   vinInput.addEventListener('input', function() {
+    // Force Upper, Remove I, O, Q (illegal in VINs)
     this.value = this.value.toUpperCase().replace(/[IOQ]/g, '').replace(/[^A-Z0-9]/g, '');
     document.getElementById('vinFeedback').innerText = this.value.length + " / 17";
     
@@ -523,7 +527,7 @@
       else vinSec.classList.add('hidden');
   });
 
-  // CHIP PRICE CALCULATOR
+  // CHIP PRICE CALCULATOR (With Zones)
   let chipBase = 60; 
   let chipAdd = 10;
   
@@ -536,11 +540,13 @@
       let note = "Tax Included";
 
       if (isMobile) {
+          // Check if Free Zone
           if(FREE_ZIPS.includes(zip)) {
               note = "Mobile Fee Waived (Local Area)";
           } else {
+              // Calculate Mileage Fee
               let miles = Math.ceil(currentDistance);
-              if(miles < 1) miles = 0; 
+              if(miles < 1) miles = 0; // fallback if zip not entered
               total += miles;
               note = `Includes $${miles} Mobile Fee (${miles} miles)`;
           }
@@ -561,8 +567,9 @@
 
   // 6. INSURANCE LOGIC
   function togglePay(type, lbl) {
-      // Logic for the Payment Radio Buttons
-      document.querySelectorAll('#paymentOptionsBox .radio-label').forEach(l => l.classList.remove('selected'));
+      document.querySelectorAll('.radio-group .radio-label').forEach(l => {
+          if(l.textContent.includes('Self') || l.textContent.includes('Insurance')) l.classList.remove('selected');
+      });
       lbl.classList.add('selected');
       lbl.querySelector('input').checked = true;
       
