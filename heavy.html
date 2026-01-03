@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Zion Heavy Glass | Equipment</title>
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-870403519"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','AW-870403519');</script>
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+<style>
+  :root { --urgent: #ff9900; --dark: #111; --primary: #004aad; }
+  body { font-family: "Roboto", sans-serif; background-color: #222; color: #fff; padding: 20px; text-align: center; }
+  .container { max-width: 500px; margin: 0 auto; background: #fff; color: #333; padding: 25px; border-radius: 8px; border-top: 6px solid var(--urgent); }
+  input, select, textarea { width: 100%; padding: 12px; margin-bottom: 10px; border: 2px solid #ddd; box-sizing: border-box; }
+  button { width: 100%; background: var(--urgent); padding: 15px; font-weight: 900; border: none; cursor: pointer; text-transform: uppercase; font-size: 1.1rem; }
+  .website-field { position: absolute; left: -9999px; }
+  .address-text { color: #555; font-size: 0.9rem; margin-top:10px; }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <img src="https://m.zionautoglass.com/zionlogo.jpg" alt="Zion Auto Glass" style="max-width:200px;">
+  <h1>Heavy Equipment Glass</h1>
+  
+  <form id="zionForm">
+    <input type="hidden" name="funnel_source" value="Heavy Equipment">
+    <input type="hidden" name="user_ip" id="user_ip">
+    <div class="website-field"><input type="text" id="honey_trap" name="website_url"></div>
+
+    <input type="text" name="firstName" placeholder="First Name" required>
+    <input type="text" name="lastName" placeholder="Last Name" required>
+    <input type="tel" name="phone" placeholder="Phone" required>
+    <input type="email" name="email" placeholder="Email" required>
+    
+    <label style="display:block;text-align:left;font-weight:bold;margin-top:10px;">Machine Details</label>
+    <select name="make" required>
+      <option value="">Type (e.g. Excavator)</option>
+      <option value="Tractor">Tractor</option><option value="Excavator">Excavator</option><option value="Skid Steer">Skid Steer</option><option value="Backhoe">Backhoe</option><option value="Semi Truck">Semi Truck</option>
+    </select>
+    <input type="text" name="final_model" placeholder="Brand (e.g. CAT / John Deere)" required>
+    <input type="text" name="year" placeholder="Model Number (e.g. 320G)" required>
+    <input type="text" name="glassPart" placeholder="Glass Needed (e.g. Door, Windshield)" required>
+    <textarea name="ws_service" placeholder="Job Site Location / Notes" required></textarea>
+
+    <div class="cf-turnstile" data-sitekey="0x4AAAAAACKSYELy5eRYB9gy" data-theme="light" style="margin-bottom: 10px;"></div>
+
+    <button type="submit" id="submitBtn">Request Quote</button>
+    
+    <div class="address-text">
+        <strong>1500 Atkinson Drive, Lufkin, TX 75901</strong><br>
+        <span style="color:var(--primary); font-weight:bold;">1-936-707-7105</span>
+    </div>
+  </form>
+</div>
+
+<script>
+  const scriptURL = 'https://script.google.com/macros/s/AKfycbzy3anFgwk-7c1UFr9J0Qb8D4h5awGmVlsLjW_uAs0qRfusgJQSqsQllQk0FZtTTR0l/exec';
+  // Capture IP for Backend Security
+  fetch('https://api.ipify.org?format=json').then(r=>r.json()).then(d=>document.getElementById('user_ip').value=d.ip);
+
+  document.getElementById('zionForm').onsubmit = (e) => {
+    e.preventDefault();
+    if(document.getElementById('honey_trap').value !== "") return;
+    
+    document.getElementById('submitBtn').innerText = "Sending..."; document.getElementById('submitBtn').disabled = true;
+    const fd = new FormData(e.target);
+    
+    // Post to Google Script (It handles the VPN Check)
+    fetch(scriptURL, { method: 'POST', body: fd, mode: 'no-cors' })
+    .then(() => { sessionStorage.setItem('zion_submission_valid', 'true'); window.location.href = 'thankyou.html'; })
+    .catch(() => alert("Error. Call 936-707-7105"));
+  };
+</script>
+</body>
+</html>
