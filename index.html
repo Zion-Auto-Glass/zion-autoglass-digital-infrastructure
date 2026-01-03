@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Zion Auto Glass | Verified Quote</title>
+<title>Zion Auto Glass | Verified Quote & Booking</title>
 
 <script async src="https://www.googletagmanager.com/gtag/js?id=AW-870403519"></script>
 <script>
@@ -16,62 +16,218 @@
 <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 
 <style>
-  :root { --primary: #004aad; --red: #e60000; --glass: rgba(255, 255, 255, 0.95); }
+  /* --- DESIGN SYSTEM (Restored Beauty) --- */
+  :root { 
+    --primary: #004aad; 
+    --primary-dark: #003380;
+    --red: #e60000; 
+    --red-hover: #cc0000;
+    --glass-bg: rgba(255, 255, 255, 0.95); 
+    --glass-border: 1px solid rgba(255, 255, 255, 0.6);
+    --shadow: 0 15px 35px rgba(0,0,0,0.4);
+  }
+  
   body { 
-    font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; 
-    margin: 0; padding: 0; color: #333;
-    background-image: url('https://m.zionautoglass.com/MainPageClassicChevyTruck.jpg');
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; 
+    margin: 0; padding: 0; color: #1a1a1a;
+    background-image: url('https://m.zionautoglass.com/MainPageClassicChevyTruck.jpg'); 
     background-size: cover; background-position: center; background-attachment: fixed;
     min-height: 100vh;
   }
-  .main-wrapper { display: flex; flex-direction: column; align-items: center; padding: 20px; width: 100%; box-sizing: border-box; }
-  .container { width: 100%; max-width: 480px; background: var(--glass); padding: 20px; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); margin-bottom: 40px; z-index: 2; position: relative; }
-  .info-box { width: 100%; max-width: 480px; background: rgba(0, 0, 0, 0.85); color: white; padding: 25px; border-radius: 12px; text-align: center; border: 1px solid rgba(255,255,255,0.2); z-index: 1; }
-  .logo-img { max-width: 260px; width: 100%; display: block; margin: 0 auto 15px; }
+
+  /* LAYOUT WRAPPER */
+  .main-wrapper { 
+    display: flex; flex-direction: column; align-items: center; 
+    padding: 20px; width: 100%; box-sizing: border-box; 
+    padding-top: 40px; 
+  }
   
-  /* INPUTS */
-  input, select { width: 100%; padding: 14px; margin-bottom: 12px; border: 2px solid var(--primary); border-radius: 8px; box-sizing: border-box; font-size: 16px; font-weight: 700; color: #000; }
-  label { font-weight: 700; font-size: 0.8rem; text-transform: uppercase; display: block; margin-bottom: 5px; color: var(--primary); }
-  .row { display: flex; gap: 10px; } .col { flex: 1; } .hidden { display: none; }
-  .options-box { background: #f0f7ff; padding: 15px; border-radius: 8px; border: 1px solid #cce4ff; margin-bottom: 15px; }
+  /* MAIN CARD */
+  .container { 
+    width: 100%; max-width: 500px; 
+    background: var(--glass-bg); 
+    backdrop-filter: blur(10px); 
+    -webkit-backdrop-filter: blur(10px);
+    padding: 30px 25px; 
+    border-radius: 16px; 
+    box-shadow: var(--shadow); 
+    margin-bottom: 40px; 
+    z-index: 2; position: relative; 
+    border: var(--glass-border);
+  }
+
+  .logo-img { max-width: 280px; width: 100%; display: block; margin: 0 auto 20px; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1)); }
   
-  /* RADIO BUTTONS */
-  .radio-group { display: flex; gap: 10px; margin-bottom: 10px; }
-  .radio-label { flex: 1; text-align: center; background: white; border: 2px solid #ddd; padding: 10px; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 0.9rem; }
+  /* HEADERS */
+  h2.form-header { 
+    text-align: center; color: var(--primary); 
+    margin-top: 0; margin-bottom: 25px; 
+    font-size: 1.6rem; text-transform: uppercase; letter-spacing: 1.5px; font-weight: 900;
+    border-bottom: 3px solid #e0e0e0; padding-bottom: 15px;
+  }
+
+  /* INPUT FIELDS */
+  input, select, textarea { 
+    width: 100%; padding: 14px; margin-bottom: 15px; 
+    border: 2px solid #b8c6db; 
+    border-radius: 8px; box-sizing: border-box; 
+    font-size: 16px; font-weight: 700; color: #333; 
+    background: #fff;
+    transition: all 0.2s ease;
+  }
+  
+  input:focus, select:focus { 
+    border-color: var(--primary); 
+    outline: none; 
+    box-shadow: 0 0 0 4px rgba(0, 74, 173, 0.15); 
+    transform: translateY(-1px);
+  }
+  
+  label { 
+    font-weight: 800; font-size: 0.85rem; 
+    text-transform: uppercase; display: block; 
+    margin-bottom: 6px; color: var(--primary); 
+    letter-spacing: 0.5px; 
+  }
+  
+  .row { display: flex; gap: 12px; } 
+  .col { flex: 1; } 
+  .hidden { display: none; }
+  
+  /* DYNAMIC SECTIONS */
+  .options-box { 
+    background: #f0f7ff; 
+    padding: 20px; 
+    border-radius: 12px; 
+    border: 2px solid #dcebfc; 
+    margin-bottom: 20px; 
+    animation: fadeIn 0.3s ease-in-out;
+  }
+  
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(-5px); } to { opacity: 1; transform: translateY(0); } }
+
+  .alert-box { 
+    background: #fff4f4; color: #d32f2f; 
+    padding: 15px; border-left: 5px solid var(--red); 
+    border-radius: 6px; margin-bottom: 15px; 
+    font-size: 0.9rem; line-height: 1.5; 
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+  }
+  
+  /* BUTTONS */
+  button[type="submit"], .action-btn { 
+    width: 100%; background: var(--red); color: white; 
+    padding: 18px; border: none; 
+    font-size: 1.3rem; font-weight: 900; 
+    border-radius: 50px; cursor: pointer; margin-top: 15px; 
+    text-transform: uppercase; letter-spacing: 1px;
+    box-shadow: 0 5px 20px rgba(230, 0, 0, 0.4); 
+    transition: transform 0.2s, background 0.2s, box-shadow 0.2s;
+  }
+  button:hover { transform: translateY(-3px); background: var(--red-hover); box-shadow: 0 8px 25px rgba(230, 0, 0, 0.5); }
+  button:disabled { background: #999; transform: none; box-shadow: none; cursor: not-allowed; }
+
+  /* RADIO GROUP */
+  .radio-group { display: flex; gap: 10px; margin-bottom: 12px; }
+  .radio-label { 
+    flex: 1; text-align: center; background: white; 
+    border: 2px solid #e0e0e0; padding: 12px; 
+    border-radius: 8px; cursor: pointer; 
+    font-weight: 700; font-size: 0.95rem; color: #555;
+    transition: all 0.2s; 
+  }
+  .radio-label:hover { border-color: var(--primary); color: var(--primary); }
+  .radio-label.selected { 
+    border-color: var(--primary); background: var(--primary); color: white; 
+    box-shadow: 0 4px 10px rgba(0,74,173,0.3);
+  }
   .radio-label input { display: none; }
-  .radio-label.selected { border-color: var(--primary); background: #e6f0ff; color: var(--primary); }
 
-  /* SUBMIT BUTTON */
-  button[type="submit"] { width: 100%; background: var(--red); color: white; padding: 18px; border: none; font-size: 1.2rem; font-weight: bold; border-radius: 8px; cursor: pointer; margin-top: 10px; }
-  button:disabled { background: #ccc; cursor: not-allowed; }
-  
-  .website-field { position: absolute; left: -9999px; }
+  /* PRICE DISPLAY */
+  .price-display {
+      background: white; border: 3px solid var(--primary); 
+      border-radius: 12px; padding: 20px; text-align: center; margin-top: 15px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+  }
+  .price-amount { font-size: 2.2rem; font-weight: 900; color: var(--primary); display: block; line-height: 1; margin-bottom: 5px; }
+  .price-note { font-size: 0.85rem; color: #666; font-weight: 600; text-transform: uppercase; }
 
-  @media (min-width: 900px) { .main-wrapper { flex-direction: row; justify-content: center; align-items: flex-start; gap: 40px; padding-top: 50px; } }
+  /* MODAL */
+  .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 1000; justify-content: center; align-items: center; padding: 20px; backdrop-filter: blur(5px); }
+  .modal-content { background: white; padding: 30px; border-radius: 16px; max-width: 400px; text-align: center; position: relative; box-shadow: 0 20px 60px rgba(0,0,0,0.5); border: 2px solid var(--primary); }
+  .modal-img { width: 100%; border-radius: 8px; margin-bottom: 20px; border: 2px solid #eee; max-height: 200px; object-fit: cover; }
+  .close-modal { position: absolute; top: 10px; right: 15px; font-size: 32px; cursor: pointer; color: #888; font-weight: bold; line-height: 1; }
+
+  /* INFO FOOTER */
+  .info-box { 
+    width: 100%; max-width: 450px; 
+    background: rgba(0, 0, 0, 0.85); 
+    color: white; 
+    padding: 30px; border-radius: 16px; 
+    text-align: center; 
+    border: 1px solid rgba(255,255,255,0.2); 
+    margin-top: 20px; 
+    backdrop-filter: blur(10px);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+  }
+
+  @media (min-width: 900px) { 
+    .main-wrapper { 
+      flex-direction: row; justify-content: center; 
+      align-items: flex-start; gap: 60px; padding-top: 80px; 
+    } 
+    .info-box { margin-top: 0; position: sticky; top: 80px; }
+  }
 </style>
 </head>
 <body>
 
+<div id="distanceModal" class="modal-overlay">
+  <div class="modal-content">
+    <span class="close-modal" onclick="closeModal()">×</span>
+    <h3 style="color:var(--red); margin-top:0; font-size:1.6rem; text-transform:uppercase; letter-spacing:1px;">⚠️ Distance Alert</h3>
+    <img src="shopshineyrain.jpg" alt="Zion Auto Glass Shop" class="modal-img">
+    <p style="font-size:1.1rem; line-height:1.5; font-weight:600;">You are outside our standard mobile area.</p>
+    <p style="color:#666;">Please contact us to arrange special mobile service or visit our shop in Lufkin.</p>
+    
+    <div style="background:#f5f5f5; padding:15px; border-radius:8px; margin:20px 0; border-left: 5px solid var(--primary); text-align: left;">
+      <strong>ZION AUTO GLASS</strong><br>
+      1500 Atkinson Drive<br>
+      Lufkin, Texas 75901
+    </div>
+    
+    <a href="tel:936-707-7105" class="action-btn" style="display:block; text-decoration:none; background:var(--primary); box-shadow:none;">Call 936-707-7105</a>
+    <button onclick="closeModal()" style="background:none; border:none; color:#777; font-size:0.9rem; margin-top:15px; text-decoration:underline; font-weight:normal; box-shadow:none;">I will come to the shop</button>
+  </div>
+</div>
+
 <div class="main-wrapper">
+  
   <div class="container">
     <img src="https://m.zionautoglass.com/zionlogo.jpg" alt="Zion Auto Glass" class="logo-img">
+    <h2 class="form-header">Get A Verified Quote</h2>
     
     <form id="zionForm">
       <input type="hidden" name="gclid" id="gclid">
       <input type="hidden" name="user_ip" id="user_ip">
-      <input type="hidden" name="funnel_source" value="Main Website">
-      
-      <div class="website-field"><label>Website</label><input type="text" id="honey_trap" name="website_url" tabindex="-1" autocomplete="off"></div>
+      <div style="position:absolute; left:-9999px;"><input type="text" id="honey_trap" name="website_url" tabindex="-1"></div>
       
       <div class="row">
         <div class="col"><label>First Name</label><input type="text" name="firstName" placeholder="Jane" required></div>
         <div class="col"><label>Last Name</label><input type="text" name="lastName" placeholder="Doe" required></div>
       </div>
-      <label>Mobile Phone</label><input type="tel" name="phone" placeholder="(936) 555-0199" required>
-      <label>Email Address</label><input type="email" name="email" placeholder="jane@example.com" required>
-      <label>Zip Code</label><input type="tel" name="zip" placeholder="75901" maxlength="5" required>
+      
+      <label>Mobile Phone</label>
+      <input type="tel" name="phone" placeholder="(936) 555-0199" required>
+      
+      <label>Email Address</label>
+      <input type="email" name="email" id="emailInput" placeholder="jane@example.com" onchange="validateEmail()" required>
+      <div id="emailError" class="hidden" style="color:var(--red); font-size:0.8rem; margin-top:-10px; margin-bottom:10px; font-weight:bold;">⚠️ Please enter a valid email address.</div>
+      
+      <label>Zip Code</label>
+      <input type="tel" name="zip" id="zipInput" placeholder="75901" maxlength="5" onchange="handleZip()" required>
 
-      <hr style="border:0; border-top:1px solid #eee; margin: 15px 0;">
+      <hr style="border:0; border-top:2px solid #eee; margin: 25px 0;">
 
       <div class="row">
         <div class="col"><label>Year</label><select id="year" name="year" required><option value="">Loading...</option></select></div>
@@ -88,136 +244,225 @@
       <label>Body Style</label>
       <select name="bodyStyle" required>
         <option value="">-- Select Body Style --</option>
-        <option value="Sedan">Sedan (4 Door)</option><option value="Coupe">Coupe (2 Door)</option><option value="SUV">SUV</option><option value="Truck Crew">Truck Crew Cab</option><option value="Truck Ext">Truck Ext Cab</option><option value="Truck Reg">Truck Reg Cab</option>
+        <option value="Sedan">Sedan (4 Doors)</option>
+        <option value="Coupe">Coupe (2 Doors)</option>
+        <option value="SUV">SUV (4 Doors)</option>
+        <option value="Truck Crew">Truck Crew Cab (4 Doors)</option>
+        <option value="Truck Ext">Truck Ext Cab (3 Doors)</option>
+        <option value="Truck Std">Truck Standard Cab (2 Doors)</option>
       </select>
 
       <label style="margin-top:10px;">Service Required</label>
-      <select id="glassPart" name="glassPart" required>
+      <select id="glassPart" name="glassPart" required style="border-color:var(--primary); border-width:3px;">
         <option value="">-- Select Service --</option>
         <option value="Windshield">Windshield</option>
-        <option value="Back Glass">Back Glass</option>
+        <option value="Chip Repair">Rock Chip Repair</option>
+        <option value="Back Glass">Back Glass / Liftgate</option>
         <option value="Door Glass">Door Glass</option>
-        <option value="Vent/Quarter">Vent/Quarter</option>
-        <option value="Sunroof">Sunroof</option>
-        <option value="Other">Other</option>
+        <option value="Vent/Quarter">Vent / Quarter Glass</option>
+        <option value="Sunroof">Sunroof / Panoramic</option>
+        <option value="Classic Car">Classic Car Glass</option>
+        <option value="Heavy Equipment">Heavy Equipment</option>
+        <option value="RV Glass">RV Glass Service</option>
+        <option value="Leak Diag">Leak Diagnostic & Repair</option>
+        <option value="Regulator">Window Regulator & Motor</option>
+        <option value="ADAS Repair">ADAS Sensor Repair</option>
       </select>
       
       <div id="windshieldOptions" class="hidden options-box">
-         <label>Service Type</label>
-         <div class="radio-group">
-            <label class="radio-label" onclick="selectRadio(this)"><input type="radio" name="ws_service" value="Replacement"> Replacement</label>
-            <label class="radio-label" onclick="selectRadio(this)"><input type="radio" name="ws_service" value="Chip Repair"> Chip Repair</label>
-         </div>
-         <div style="margin-top:10px; display:flex; gap:10px; flex-wrap:wrap;">
-            <label style="font-size:0.8rem; display:flex; align-items:center;"><input type="checkbox" name="opt_rain" style="width:auto; margin-right:5px;"> Rain Sensor</label>
-            <label style="font-size:0.8rem; display:flex; align-items:center;"><input type="checkbox" name="opt_lane" style="width:auto; margin-right:5px;"> Lane Camera</label>
+         <label>ADAS Sensor Status</label>
+         <select id="adasSelect" name="adas_status">
+            <option value="No">No Sensors / Basic Model</option>
+            <option value="Yes">List ADAS Sensors</option>
+            <option value="Unsure">I am Unsure</option>
+         </select>
+         
+         <div id="vinSection" class="hidden" style="margin-top:15px; border-top:1px solid #dbeaff; padding-top:15px;">
+            <label style="color:var(--red);">⚠️ VIN Verification Required</label>
+            <p style="font-size:0.85rem; color:#555; margin:0 0 10px 0;">We need the VIN to guarantee the right glass.</p>
+            
+            <input type="text" name="vin" id="vinInput" placeholder="Type 17-Digit VIN" maxlength="17" 
+                   style="text-transform:uppercase; letter-spacing:2px; font-family:monospace; font-size:1.1rem; border: 2px dashed var(--primary);">
+            <div id="vinFeedback" style="text-align:right; font-size:0.75rem; color:#888; margin-top:-10px;">0 / 17</div>
+
+            <p style="text-align:center; font-size:0.8rem; font-weight:bold; margin:15px 0; color:#aaa;">- OR -</p>
+            
+            <label>Upload VIN Photo / Scan</label>
+            <input type="file" name="vin_photo" accept="image/*" capture="environment" style="border:1px dashed var(--primary); padding:10px; background:white; width:100%;">
          </div>
       </div>
 
+      <div id="chipOptions" class="hidden options-box">
+         <label>How many chips?</label>
+         <select id="chip_count" onchange="calcChipPrice()">
+             <option value="1">1 Chip</option><option value="2">2 Chips</option><option value="3">3 Chips</option>
+         </select>
+         
+         <label style="margin-top:10px;">Service Location</label>
+         <div class="radio-group">
+            <label class="radio-label selected" onclick="toggleChipLoc('shop', this)"><input type="radio" name="chip_loc" value="Shop" checked> In-Shop</label>
+            <label class="radio-label" onclick="toggleChipLoc('mobile', this)"><input type="radio" name="chip_loc" value="Mobile"> Mobile</label>
+         </div>
+
+         <div id="chipMobileAddr" class="hidden">
+             <label>Service Address</label>
+             <input type="text" name="service_address" placeholder="123 Main St, Lufkin TX">
+         </div>
+
+         <div class="price-display">
+             <span class="price-amount" id="chipTotal">$60.00</span>
+             <span class="price-note" id="chipNote">Tax Included</span>
+         </div>
+
+         <label style="margin-top:20px;">Requested Date</label>
+         <div class="row">
+            <div class="col"><input type="date" name="book_date" id="bookDate"></div>
+            <div class="col">
+                <select name="book_time">
+                    <option value="Morning">Morning (8a-11a)</option>
+                    <option value="Afternoon">Afternoon (1p-4p)</option>
+                </select>
+            </div>
+         </div>
+         <p style="font-size:0.75rem; text-align:center; color:#666;">You will receive a Square invoice to confirm this booking.</p>
+      </div>
+
       <div id="backGlassOptions" class="hidden options-box">
-        <label>Glass Style</label>
-        <select id="bg_style"><option value="Stationary">Stationary (Solid)</option><option value="Slider Manual">Slider (Manual)</option><option value="Slider Power">Slider (Power)</option></select>
-        <div class="row">
-          <div class="col"><label>Heated?</label><select id="bg_heated"><option value="Non-Heated">No</option><option value="Heated">Yes</option></select></div>
-          <div class="col"><label>Tint?</label><select id="bg_tint"><option value="Factory Tinted">Factory Tinted</option><option value="Clear">Clear</option></select></div>
-        </div>
+        <label>Type</label>
+        <select name="bg_type"><option value="Back Glass">Standard Back Glass</option><option value="Liftgate">Liftgate (Hatchback/SUV)</option></select>
+        <label>Features</label>
+        <select name="bg_heated"><option value="Heated">Heated (Defrost)</option><option value="Non-Heated">Non-Heated</option></select>
+        <select name="bg_slider"><option value="Solid">Solid</option><option value="Slider Power">Power Slider</option><option value="Slider Manual">Manual Slider</option></select>
       </div>
 
       <div id="doorGlassOptions" class="hidden options-box">
         <div class="row">
-          <div class="col"><label>Row</label><select id="door_row" onchange="checkDoorTint()"><option value="Front">Front</option><option value="Back">Back</option></select></div>
-          <div class="col"><label>Side</label><select id="door_side"><option value="Driver">Driver (Left)</option><option value="Passenger">Passenger (Right)</option></select></div>
-        </div>
-        <div id="doorTintBox" class="hidden" style="margin-top:10px;">
-          <label>Tint?</label><select id="door_tint"><option value="Factory Tinted">Factory Tinted</option><option value="Clear">Clear</option></select>
-        </div>
-      </div>
-      
-      <div id="ventGlassOptions" class="hidden options-box">
-        <label>Type</label><select id="vent_type"><option value="Vent">Front Vent</option><option value="Quarter">Rear Quarter</option></select>
-        <div class="row">
-            <div class="col"><label>Side</label><select id="vent_side"><option value="Driver">Driver (Left)</option><option value="Passenger">Passenger (Right)</option></select></div>
+          <div class="col"><label>Row</label><select name="door_row"><option value="Front">Front</option><option value="Back">Back</option></select></div>
+          <div class="col"><label>Side</label><select name="door_side"><option value="Driver">Driver (Left)</option><option value="Passenger">Passenger (Right)</option></select></div>
         </div>
       </div>
 
-      <div id="sunroofOptions" class="hidden options-box">
-        <label>Issue</label>
-        <select id="sr_service">
-            <option value="Replacement">Glass Replacement</option>
-            <option value="Leaking">Leaking / Water Entry</option>
-            <option value="Motor/Regulator">Motor or Regulator</option>
-        </select>
-        <label style="margin-top:5px;">Type</label>
-        <select id="sr_type"><option value="Standard">Standard Sunroof</option><option value="Panoramic">Panoramic Roof</option></select>
+      <hr style="border:0; border-top:1px solid #ddd; margin: 25px 0;">
+
+      <div id="paymentOptionsBox" class="options-box" style="border: 2px solid var(--primary); background:#fff;">
+          <div style="text-align:center; color:var(--primary); font-weight:800; margin-bottom:15px; text-transform:uppercase; font-size:1.1rem;">Select Payment Method</div>
+          <div class="radio-group">
+            <label class="radio-label selected" onclick="togglePay('self', this)"><input type="radio" name="pay_type" value="Self Pay" checked> Self Pay</label>
+            <label class="radio-label" onclick="togglePay('insurance', this)"><input type="radio" name="pay_type" value="Insurance"> Insurance</label>
+          </div>
+
+          <div id="insuranceSection" class="hidden">
+              <div class="alert-box">
+                  <strong>⚠️ IMPORTANT RIGHTS NOTICE:</strong><br>
+                  You have the legal right to choose Zion Auto Glass. Do not let your insurance company pressure you into using another shop.
+              </div>
+              <label>Select Your Provider</label>
+              <select id="ins_provider" name="insurance_provider" onchange="redirectIns()">
+                  <option value="">-- Choose Provider --</option>
+                  <option value="State Farm">State Farm</option>
+                  <option value="Geico">Geico</option>
+                  <option value="Progressive">Progressive</option>
+                  <option value="Allstate">Allstate</option>
+                  <option value="USAA">USAA</option>
+                  <option value="Farmers">Farmers</option>
+                  <option value="Other">Other</option>
+              </select>
+              
+              <div id="dispatchSection" class="hidden" style="margin-top:15px;">
+                  <label>Claim / Dispatch Number</label>
+                  <input type="text" name="dispatch_num" placeholder="Enter Reference #">
+              </div>
+          </div>
       </div>
 
-      <div class="options-box">
-        <div class="section-title">ADAS & VIN Verification</div>
-        <label>Does your vehicle have ADAS Sensors?</label>
-        <p style="font-size:0.8rem; color:#666; margin-bottom:10px; margin-top:-5px; line-height:1.4;">(e.g., Lane Departure Warning, Collision Alert, Cameras in windshield)</p>
-        <select name="adas_status" id="adasSelect" style="margin-bottom:5px;">
-          <option value="No">No / I don't think so</option>
-          <option value="Yes">Yes</option>
-          <option value="Not Sure">I'm Not Sure</option>
-        </select>
+      <div class="cf-turnstile" data-sitekey="0x4AAAAAACKSYELy5eRYB9gy" data-theme="light"></div>
 
-        <div id="vinContainer" class="hidden" style="margin-top:10px;">
-          <label>Please Enter 17-Digit VIN</label>
-          <input type="text" name="vin" id="vinInput" placeholder="1HG..." maxlength="17" style="text-transform:uppercase; letter-spacing: 1px; font-family:monospace;">
-          <div id="vinCount" style="text-align:right; font-size:0.75rem; color:#888;">0 / 17</div>
-        </div>
-      </div>
-
-      <div class="cf-turnstile" data-sitekey="0x4AAAAAACKSYELy5eRYB9gy" data-theme="light" style="margin-top:15px; margin-bottom: 10px;"></div>
-
-      <button type="submit" id="submitBtn">GET MY QUOTE</button>
-      <p style="text-align:center; font-size:0.75rem; color:#888; margin-top:10px;">Secure SSL Submission</p>
+      <button type="submit" id="submitBtn">SUBMIT REQUEST</button>
+      <p style="text-align:center; font-size:0.75rem; color:#888; margin-top:15px;">Secure 256-bit SSL Encrypted Submission</p>
     </form>
   </div>
 
   <div class="info-box">
-    <h3>Local & Trusted</h3>
-    <p>#1 on Google for Auto Glass in Lufkin.</p>
-    <p style="font-size:1.2rem; font-weight:bold; color:#4da6ff;">1-936-707-7105</p>
-    <p>1500 Atkinson Drive, Lufkin, TX 75901</p>
+    <h3 style="margin-top:0; font-size:1.8rem; color:#4da6ff; text-transform:uppercase; letter-spacing:1px; font-weight:900;">ZION AUTO GLASS</h3>
+    <p style="font-size:1.1rem;">#1 Rated in East Texas</p>
+    <div style="font-size:1.6rem; font-weight:bold; margin:20px 0; color:#fff; border:2px solid #fff; padding:10px; border-radius:50px;">936-707-7105</div>
+    <p style="font-weight:bold;">1500 Atkinson Drive<br>Lufkin, TX 75901</p>
+    <p style="font-size:0.9rem; margin-top:15px; opacity:0.8;">Serving Lufkin, Hudson, Huntington & Beyond</p>
   </div>
 </div>
 
 <script>
-  // --- CONFIGURATION ---
+  // --- BRAINS ---
   const scriptURL = 'https://script.google.com/macros/s/AKfycbzy3anFgwk-7c1UFr9J0Qb8D4h5awGmVlsLjW_uAs0qRfusgJQSqsQllQk0FZtTTR0l/exec';
+  const SHOP_LAT = 31.3386; // Lufkin Coordinates
+  const SHOP_LON = -94.7291; 
+  
+  // FREE MOBILE ZIPS (Lufkin, Hudson, Huntington)
+  const FREE_ZIPS = ['75901', '75902', '75903', '75904', '75915', '75949'];
 
-  // 1. POPULATE YEARS IMMEDIATELY
+  // 1. POPULATE YEARS
   const ySel = document.getElementById('year');
   ySel.innerHTML = '<option value="">Year</option>';
-  for(let i=2026; i>=1990; i--) { 
-      let o=document.createElement('option'); o.value=i; o.text=i; ySel.add(o); 
+  for(let i=2026; i>=1990; i--) { let o=document.createElement('option'); o.value=i; o.text=i; ySel.add(o); }
+  
+  const today = new Date().toISOString().split('T')[0];
+  if(document.getElementById('bookDate')) document.getElementById('bookDate').min = today;
+
+  // 2. EMAIL CHECK
+  function validateEmail() {
+      const email = document.getElementById('emailInput').value;
+      const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      const err = document.getElementById('emailError');
+      if(!re.test(email) && email.length > 0) {
+          err.classList.remove('hidden'); return false;
+      } else {
+          err.classList.add('hidden'); return true;
+      }
   }
 
-  // 2. HELPER: Get URL Parameters
-  function getParam(name) {
-    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
-    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)");
-    var results = regex.exec(location.search);
-    return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
-  }
-  document.getElementById('gclid').value = getParam('gclid');
+  // 3. ZIP CODE LOGIC (Distance + Free Zones)
+  let currentDistance = 0;
+  function handleZip() {
+      const zip = document.getElementById('zipInput').value;
+      if(zip.length !== 5) return;
 
-  // 3. UI HELPERS (Radio Buttons)
-  function selectRadio(label) {
-    document.querySelectorAll('.radio-label').forEach(l => l.classList.remove('selected'));
-    label.classList.add('selected');
-    label.querySelector('input').checked = true;
+      fetch(`https://api.zippopotam.us/us/${zip}`)
+      .then(r => { if(!r.ok) throw new Error("Invalid Zip"); return r.json(); })
+      .then(data => {
+          const lat = parseFloat(data.places[0].latitude);
+          const lon = parseFloat(data.places[0].longitude);
+          currentDistance = getDistanceFromLatLonInMiles(SHOP_LAT, SHOP_LON, lat, lon);
+          
+          if(currentDistance > 60) {
+              document.getElementById('distanceModal').style.display = 'flex';
+          }
+          // Recalculate chip price if zip changes
+          if(document.getElementById('chipOptions').classList.contains('hidden') === false) {
+              calcChipPrice();
+          }
+      })
+      .catch(e => console.log("Zip check failed"));
   }
 
-  // 4. VEHICLE LOGIC (NHTSA API)
+  function getDistanceFromLatLonInMiles(lat1,lon1,lat2,lon2) {
+    var R = 3958.8; 
+    var dLat = deg2rad(lat2-lat1); 
+    var dLon = deg2rad(lon2-lon1); 
+    var a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+            Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * Math.sin(dLon/2) * Math.sin(dLon/2); 
+    var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
+    return R * c;
+  }
+  function deg2rad(deg) { return deg * (Math.PI/180); }
+  function closeModal() { document.getElementById('distanceModal').style.display = 'none'; }
+
+  // 4. VEHICLE MODEL
   const mInput = document.getElementById('make');
   const modSel = document.getElementById('model');
 
   function fetchModels() {
     const year = ySel.value;
     const make = mInput.value; 
-
     modSel.innerHTML = '<option>-- Select Year & Make --</option>';
     modSel.disabled = true;
 
@@ -229,130 +474,147 @@
       fetch(`https://vpic.nhtsa.dot.gov/api/vehicles/getmodelsformakeyear/make/${encodeURIComponent(make)}/modelyear/${year}?format=json`)
       .then(r=>r.json())
       .then(d => {
-        if (d.Count === 0) throw new Error("No models found");
+        if (d.Count === 0) throw new Error("No models");
         modSel.innerHTML = '<option value="">Select Model</option>';
         modSel.disabled = false;
-        d.Results.forEach(x => { 
-            let o=document.createElement('option'); o.text=x.Model_Name; modSel.add(o); 
-        });
+        d.Results.forEach(x => { let o=document.createElement('option'); o.text=x.Model_Name; modSel.add(o); });
       })
       .catch(() => {
-        modSel.classList.add('hidden'); 
-        document.getElementById('model-manual').classList.remove('hidden');
+        modSel.classList.add('hidden'); document.getElementById('model-manual').classList.remove('hidden');
       });
     } else if (make === 'Other') {
-        modSel.classList.add('hidden'); 
-        document.getElementById('model-manual').classList.remove('hidden');
+        modSel.classList.add('hidden'); document.getElementById('model-manual').classList.remove('hidden');
     }
   }
   ySel.addEventListener('change', fetchModels);
   mInput.addEventListener('change', fetchModels);
 
-  // 5. SHOW/HIDE OPTIONS
+  // 5. SERVICE OPTIONS & PRICING
   document.getElementById('glassPart').addEventListener('change', function() {
     document.querySelectorAll('.options-box').forEach(b => {
-      // Don't hide the VIN box if it was open
-      if(b.id !== 'vinContainer' && b.parentElement.className !== 'options-box') b.classList.add('hidden');
+       // FIX: Do NOT hide the Payment Box (id="paymentOptionsBox")
+       // Also keep insurance items visible if we are inside that logic
+       if(b.id !== 'paymentOptionsBox' && !b.id.includes('insurance') && b.parentElement.className !== 'options-box') {
+          b.classList.add('hidden');
+       }
     });
-    
-    // Toggle Specific Divs
+
     const val = this.value;
     if(val === 'Windshield') document.getElementById('windshieldOptions').classList.remove('hidden');
+    else if(val === 'Chip Repair') document.getElementById('chipOptions').classList.remove('hidden');
     else if(val === 'Back Glass') document.getElementById('backGlassOptions').classList.remove('hidden');
-    else if(val === 'Door Glass') { document.getElementById('doorGlassOptions').classList.remove('hidden'); checkDoorTint(); }
-    else if(val === 'Vent/Quarter') document.getElementById('ventGlassOptions').classList.remove('hidden');
-    else if(val === 'Sunroof') document.getElementById('sunroofOptions').classList.remove('hidden');
+    else if(val === 'Door Glass') document.getElementById('doorGlassOptions').classList.remove('hidden');
+    else if(val === 'Vent/Quarter') document.getElementById('doorGlassOptions').classList.remove('hidden');
   });
 
-  function checkDoorTint() {
-    const row = document.getElementById('door_row').value;
-    document.getElementById('doorTintBox').classList.toggle('hidden', row !== 'Back');
+  // VIN LOGIC (Strict)
+  const vinInput = document.getElementById('vinInput');
+  vinInput.addEventListener('input', function() {
+    this.value = this.value.toUpperCase().replace(/[IOQ]/g, '').replace(/[^A-Z0-9]/g, '');
+    document.getElementById('vinFeedback').innerText = this.value.length + " / 17";
+    
+    if(this.value.length === 17) document.getElementById('vinFeedback').style.color = "green";
+    else document.getElementById('vinFeedback').style.color = "#888";
+  });
+
+  document.getElementById('adasSelect').addEventListener('change', function() {
+      const vinSec = document.getElementById('vinSection');
+      if(this.value === 'Yes' || this.value === 'Unsure') vinSec.classList.remove('hidden');
+      else vinSec.classList.add('hidden');
+  });
+
+  // CHIP PRICE CALCULATOR
+  let chipBase = 60; 
+  let chipAdd = 10;
+  
+  function calcChipPrice() {
+      const count = parseInt(document.getElementById('chip_count').value);
+      const isMobile = document.querySelector('input[name="chip_loc"]:checked').value === 'Mobile';
+      const zip = document.getElementById('zipInput').value;
+      
+      let total = chipBase + ((count - 1) * chipAdd);
+      let note = "Tax Included";
+
+      if (isMobile) {
+          if(FREE_ZIPS.includes(zip)) {
+              note = "Mobile Fee Waived (Local Area)";
+          } else {
+              let miles = Math.ceil(currentDistance);
+              if(miles < 1) miles = 0; 
+              total += miles;
+              note = `Includes $${miles} Mobile Fee (${miles} miles)`;
+          }
+      }
+
+      document.getElementById('chipTotal').innerText = "$" + total + ".00";
+      document.getElementById('chipNote').innerText = note;
+  }
+  
+  function toggleChipLoc(type, lbl) {
+      document.querySelectorAll('#chipOptions .radio-label').forEach(l => l.classList.remove('selected'));
+      lbl.classList.add('selected');
+      lbl.querySelector('input').checked = true;
+      if(type === 'mobile') document.getElementById('chipMobileAddr').classList.remove('hidden');
+      else document.getElementById('chipMobileAddr').classList.add('hidden');
+      calcChipPrice();
   }
 
-  // 6. ADAS & VIN
-  document.getElementById('adasSelect').addEventListener('change', function() {
-    const vinCont = document.getElementById('vinContainer');
-    this.value === 'Yes' || this.value === 'Not Sure' ? vinCont.classList.remove('hidden') : vinCont.classList.add('hidden');
-  });
+  // 6. INSURANCE LOGIC
+  function togglePay(type, lbl) {
+      // Logic for the Payment Radio Buttons
+      document.querySelectorAll('#paymentOptionsBox .radio-label').forEach(l => l.classList.remove('selected'));
+      lbl.classList.add('selected');
+      lbl.querySelector('input').checked = true;
+      
+      if(type === 'insurance') document.getElementById('insuranceSection').classList.remove('hidden');
+      else document.getElementById('insuranceSection').classList.add('hidden');
+  }
 
-  document.getElementById('vinInput').addEventListener('input', function() {
-    this.value = this.value.toUpperCase().replace(/[^A-Z0-9]/g, ''); 
-    document.getElementById('vinCount').innerText = this.value.length + " / 17";
-  });
+  function redirectIns() {
+      const prov = document.getElementById('ins_provider').value;
+      if(prov) {
+          document.getElementById('dispatchSection').classList.remove('hidden');
+          let url = "";
+          if(prov === 'State Farm') url = "https://www.statefarm.com/claims/file-a-claim";
+          else if(prov === 'Geico') url = "https://www.geico.com/claims/";
+          else if(prov === 'Progressive') url = "https://www.progressive.com/claims/";
+          else if(prov === 'Allstate') url = "https://www.allstate.com/claims/file-claim";
+          else if(prov === 'USAA') url = "https://www.usaa.com/inet/wc/insurance-file-claims-auto";
+          else if(prov === 'Farmers') url = "https://www.farmers.com/claims/";
+          
+          if(url) window.open(url, '_blank');
+      }
+  }
 
-  // 7. SUBMIT LOGIC (Security + Data)
+  // 7. SUBMIT
   document.getElementById('zionForm').onsubmit = (e) => {
     e.preventDefault();
-    const btn = document.getElementById('submitBtn');
-    
-    // HONEYTRAP
     if(document.getElementById('honey_trap').value !== "") return;
+    if(!validateEmail()) { alert("Please fix email address."); return; }
 
-    btn.innerText = "Verifying Security..."; btn.disabled = true;
-
-    // Handle Model Value
-    let finalModel = modSel.value;
-    if(!document.getElementById('model-manual').classList.contains('hidden')) finalModel = document.getElementById('model-manual').value;
-    
-    // Combine Sub-Options into "glassPart"
-    let part = document.getElementById('glassPart').value;
-    let details = "";
-    if (part === 'Back Glass') {
-      details = document.getElementById('bg_style').value + " | " + document.getElementById('bg_heated').value + " | " + document.getElementById('bg_tint').value;
-      part = "Back Glass (" + details + ")";
-    } else if (part === 'Door Glass') {
-      details = document.getElementById('door_row').value + " " + document.getElementById('door_side').value;
-      if(document.getElementById('door_row').value === 'Back') details += " (" + document.getElementById('door_tint').value + ")";
-      part = "Door Glass (" + details + ")";
-    } else if (part === 'Vent/Quarter') {
-      details = document.getElementById('vent_type').value + " (" + document.getElementById('vent_side').value + ")";
-      part = details;
-    } else if (part === 'Sunroof') {
-      details = document.getElementById('sr_type').value + " | Issue: " + document.getElementById('sr_service').value;
-      part = "Sunroof (" + details + ")";
-    } else if (part === 'Windshield') {
-        const type = document.querySelector('input[name="ws_service"]:checked')?.value || "Replacement";
-        let opts = [];
-        if(document.querySelector('input[name="opt_rain"]').checked) opts.push("Rain Sensor");
-        if(document.querySelector('input[name="opt_lane"]').checked) opts.push("Lane Camera");
-        part = "Windshield (" + type + ") " + opts.join(", ");
-    }
+    const btn = document.getElementById('submitBtn');
+    btn.innerText = "Processing..."; btn.disabled = true;
 
     const fd = new FormData(e.target);
-    fd.append('final_model', finalModel);
-    fd.set('glassPart', part);
-
-    // VPN CHECK (Client Side)
+    
+    // VPN Check
     fetch('https://vpnapi.io/api/?key=ad27e9e886c443d39ea71cd9aed6ea20')
     .then(r => r.json())
     .then(d => {
-      if (d.security.vpn || d.security.proxy || d.security.tor || d.security.relay) {
-        alert("Security Alert: VPN Detected. Please disable to submit.");
-        btn.innerText = "Retry (No VPN)";
-        btn.disabled = false;
-        return; 
+      if (d.security.vpn || d.security.proxy) {
+        alert("Security Alert: VPN Detected.");
+        btn.innerText = "Retry"; btn.disabled = false; return; 
       }
       fd.set('user_ip', d.ip); 
-      submitData(fd);
-    })
-    .catch(() => {
-      // If API fails, submit anyway and let backend check
-      submitData(fd);
+      
+      fetch(scriptURL, { method: 'POST', body: fd, mode: 'no-cors' })
+      .then(() => { 
+          sessionStorage.setItem('zion_submission_valid', 'true');
+          window.location.href = 'thankyou.html'; 
+      })
+      .catch(err => { alert("Error connecting. Call 936-707-7105"); btn.disabled=false; });
     });
   };
-
-  function submitData(formData) {
-    const btn = document.getElementById('submitBtn');
-    fetch(scriptURL, { method: 'POST', body: formData, mode: 'no-cors' })
-    .then(() => { 
-        sessionStorage.setItem('zion_submission_valid', 'true');
-        window.location.href = 'thankyou.html'; 
-    })
-    .catch(err => { 
-        alert("Connection Error. Please call 936-707-7105"); 
-        btn.innerText="Try Again"; btn.disabled=false; 
-    });
-  }
 </script>
 </body>
 </html>
