@@ -1,0 +1,149 @@
+// --- ZION AUTO GLASS: BACKEND BRAIN (v6.0 - Black Widow Edition) ---
+// Features: US Geo-Lock, Bot Shield, Pricing Engine, Escalating Rate Limiting.
+
+const CORS_HEADERS = {
+  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Methods": "POST, GET, OPTIONS",
+  "Access-Control-Allow-Headers": "Content-Type",
+};
+
+// CONFIG
+const VPN_KEY = "ad27e9e886c443d39ea71cd9aed6ea20"; 
+const SHOP_LAT = 31.3386; 
+const SHOP_LON = -94.7291;
+const FREE_ZIPS = ['75901', '75902', '75903', '75904', '75915', '75949'];
+const LUXURY_MAKES = ['Mercedes', 'BMW', 'Lexus', 'Audi', 'Infiniti', 'Land Rover', 'Porsche', 'Tesla', 'Cadillac', 'Lincoln', 'Jaguar', 'Rivian', 'Lucid'];
+
+// THE BANISHMENT URL (Iggy Azalea - Black Widow)
+const BLACK_WIDOW_URL = "https://www.youtube.com/watch?v=u3u22OYqFGo";
+
+export default {
+  async fetch(request, env, ctx) {
+    const url = new URL(request.url);
+
+    // 1. Handle Preflight
+    if (request.method === "OPTIONS") return new Response(null, { headers: CORS_HEADERS });
+
+    // 2. GEO-SHIELD (US ONLY)
+    const country = request.cf ? request.cf.country : "XX"; // XX allows local dev
+    if (country !== "US" && country !== "XX") {
+      return new Response(JSON.stringify({ error: "Access Denied: Region Blocked" }), { status: 403, headers: CORS_HEADERS });
+    }
+
+    // 3. RATE LIMITING ENGINE (The Cookie Counter)
+    // Frontend calls this on load to check if it should freeze or banish.
+    if (request.method === "GET" && url.pathname === "/init") {
+      const cookieHeader = request.headers.get("Cookie") || "";
+      let visits = 0;
+      
+      // Parse "zion_visits" Cookie
+      if (cookieHeader.includes("zion_visits=")) {
+        const match = cookieHeader.match(/zion_visits=(\d+)/);
+        if (match) visits = parseInt(match[1]);
+      }
+      
+      // Increment Visit
+      visits++;
+
+      // Determine Fate
+      let status = "normal";
+      let redirect = null;
+
+      if (visits === 3) {
+        status = "frozen"; // Can scroll, cannot click
+      } else if (visits >= 4) {
+        status = "banish"; // Iggy time
+        redirect = BLACK_WIDOW_URL;
+      }
+
+      // Return Status + Set New Cookie
+      const response = new Response(JSON.stringify({ status: status, redirect: redirect, visits: visits }), {
+        headers: CORS_HEADERS
+      });
+      
+      // Cookie lasts 24 hours | Secure | HttpOnly
+      response.headers.append("Set-Cookie", `zion_visits=${visits}; Path=/; Max-Age=86400; SameSite=None; Secure`);
+      return response;
+    }
+
+    // 4. PRICING ENGINE (POST Requests)
+    if (request.method === "POST") {
+      try {
+        const data = await request.json();
+        const userIp = request.headers.get("CF-Connecting-IP") || "1.1.1.1";
+
+        // Security Check (VPN/Bot)
+        const securityCheck = await fetch(`https://vpnapi.io/api/${userIp}?key=${VPN_KEY}`);
+        const secData = await securityCheck.json();
+        if (secData.security.vpn || secData.security.proxy || secData.security.tor) {
+          return new Response(JSON.stringify({ error: "Security Alert: Connection Blocked" }), { status: 403, headers: CORS_HEADERS });
+        }
+
+        // Pricing Logic
+        let price = 0;
+        let note = "";
+        let isEstimate = false;
+
+        // Chip Repair
+        if (data.service === 'Chip Repair') {
+          const count = parseInt(data.chip_count) || 1;
+          price = 60 + ((count - 1) * 10);
+          if (data.service_loc === 'Mobile') {
+            if (FREE_ZIPS.includes(data.zip)) note = "Mobile Fee Waived (Local)";
+            else {
+              const dist = await getDistance(data.zip);
+              const miles = Math.ceil(dist);
+              price += miles; 
+              note = `Includes $${miles} Mobile Fee`;
+            }
+          }
+        } 
+        // Regulator
+        else if (data.service === 'Regulator') {
+          let base = 135; 
+          if (LUXURY_MAKES.includes(data.make)) base += 50; 
+          if (parseInt(data.year) > 2018) base += 20; 
+          price = base; 
+          note = `Estimated Range: $${base} - $${base + 70}`; 
+          isEstimate = true;
+        }
+        // Leak Diag
+        else if (data.service === 'Leak Diag') {
+          if (parseInt(data.year) > 2023 || LUXURY_MAKES.includes(data.make)) { price = 350; note = "Advanced/Luxury Leak Diagnostic"; } 
+          else { price = 150; note = "Standard Leak Diagnostic"; }
+        }
+        // Windshield
+        else if (data.service === 'Windshield') {
+          if (LUXURY_MAKES.includes(data.make)) { price = 650; isEstimate = true; }
+          else if (parseInt(data.year) > 2021) price = 450;
+          else price = 325;
+          note = isEstimate ? "Starting Estimate (VIN Verification Required)" : "Standard Replacement Estimate";
+        }
+
+        // Afterpay
+        const afterpayTotal = price + 50;
+        const afterpayMonthly = (afterpayTotal / 4).toFixed(2);
+
+        return new Response(JSON.stringify({
+          success: true, price: price, note: note, isEstimate: isEstimate,
+          afterpay: { monthly: afterpayMonthly, total_with_fee: afterpayTotal }
+        }), { headers: CORS_HEADERS });
+
+      } catch (err) { return new Response(JSON.stringify({ error: err.message }), { status: 500, headers: CORS_HEADERS }); }
+    }
+
+    return new Response("Zion Brain Active", { status: 200 });
+  }
+};
+
+async function getDistance(zip) {
+  try {
+    const r = await fetch(`https://api.zippopotam.us/us/${zip}`);
+    if (!r.ok) return 0;
+    const d = await r.json();
+    const lat = parseFloat(d.places[0].latitude); const lon = parseFloat(d.places[0].longitude);
+    const R = 3958.8; const dLat = (lat - SHOP_LAT) * (Math.PI/180); const dLon = (lon - SHOP_LON) * (Math.PI/180);
+    const a = Math.sin(dLat/2) * Math.sin(dLat/2) + Math.cos(SHOP_LAT * (Math.PI/180)) * Math.cos(lat * (Math.PI/180)) * Math.sin(dLon/2) * Math.sin(dLon/2);
+    return R * (2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)));
+  } catch (e) { return 0; }
+}
