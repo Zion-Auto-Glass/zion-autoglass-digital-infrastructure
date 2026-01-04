@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<meta name="description" content="Zion Auto Glass: #1 Rated Auto Glass Repair & Replacement in Lufkin, TX. We serve Deep East Texas with windshields, heavy equipment glass, and classic car restoration.">
+<meta name="description" content="Zion Auto Glass: #1 Rated Auto Glass Repair & Replacement in Lufkin, TX. We serve Deep East Texas with windshields, heavy equipment glass, and classic car restoration. Open Mon-Fri 8-5, Sat-Sun 9-6.">
 <title>Zion Auto Glass | Verified Quote & Booking</title>
 
 <script async src="https://www.googletagmanager.com/gtag/js?id=AW-870403519"></script>
@@ -35,152 +35,83 @@
     "longitude": -94.7291
   },
   "priceRange": "$$",
-  "openingHoursSpecification": {
-    "@type": "OpeningHoursSpecification",
-    "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-    "opens": "08:00",
-    "closes": "17:00"
-  }
+  "openingHoursSpecification": [
+    { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"], "opens": "08:00", "closes": "17:00" },
+    { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Saturday", "Sunday"], "opens": "09:00", "closes": "18:00" }
+  ]
 }
 </script>
 
 <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 
 <style>
-  /* --- ZION THEME (Optimized & Secure) --- */
+  /* --- ZION THEME --- */
   :root { 
-    --primary: #004aad; 
-    --primary-dark: #003380;
-    --red: #e60000; 
-    --red-hover: #cc0000;
-    --glass-bg: rgba(255, 255, 255, 0.96); 
-    --glass-border: 1px solid rgba(255, 255, 255, 0.8);
+    --primary: #004aad; --primary-dark: #003380; --red: #e60000; --red-hover: #cc0000;
+    --glass-bg: rgba(255, 255, 255, 0.96); --glass-border: 1px solid rgba(255, 255, 255, 0.8);
     --shadow: 0 15px 40px rgba(0,0,0,0.5);
   }
-  
-  body { 
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; 
-    margin: 0; padding: 0; color: #1a1a1a;
-    background-image: url('Background.jpg'); 
-    background-size: cover; background-position: center; background-attachment: fixed;
-    transition: background-image 0.5s ease-in-out;
-    min-height: 100vh;
-  }
-
-  /* LAYOUT */
-  .main-wrapper { 
-    display: flex; flex-direction: column; align-items: center; 
-    padding: 20px; width: 100%; box-sizing: border-box; 
-    padding-top: 40px; 
-  }
-  
-  .container { 
-    width: 100%; max-width: 550px; 
-    background: var(--glass-bg); 
-    backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
-    padding: 30px 25px; 
-    border-radius: 16px; 
-    box-shadow: var(--shadow); 
-    margin-bottom: 40px; 
-    z-index: 2; position: relative; 
-    border: var(--glass-border);
-    min-height: 400px; 
-  }
-
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; margin: 0; padding: 0; color: #1a1a1a; background-image: url('Background.jpg'); background-size: cover; background-position: center; background-attachment: fixed; transition: background-image 0.5s ease-in-out; min-height: 100vh; }
+  .main-wrapper { display: flex; flex-direction: column; align-items: center; padding: 20px; width: 100%; box-sizing: border-box; padding-top: 40px; }
+  .container { width: 100%; max-width: 550px; background: var(--glass-bg); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); padding: 30px 25px; border-radius: 16px; box-shadow: var(--shadow); margin-bottom: 40px; z-index: 2; position: relative; border: var(--glass-border); min-height: 400px; }
   .logo-img { max-width: 260px; width: 100%; display: block; margin: 0 auto 15px; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1)); }
-
-  /* PROGRESS BAR */
   .progress-container { width: 100%; background: #e0e0e0; height: 6px; border-radius: 3px; margin-bottom: 25px; overflow: hidden; }
   .progress-bar { height: 100%; background: var(--primary); width: 25%; transition: width 0.4s ease; }
-
-  /* ACCOLADES */
   .accolades { text-align: center; margin-bottom: 25px; font-size: 0.75rem; color: #555; display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; }
   .badge { background: #fff; padding: 4px 10px; border-radius: 15px; border: 1px solid #ccc; font-weight: bold; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
   .badge span { color: #f4c430; margin-right: 4px; }
-
-  /* STEPS */
-  .step { display: none; animation: slideIn 0.4s ease; }
-  .step.active { display: block; }
+  .step { display: none; animation: slideIn 0.4s ease; } .step.active { display: block; }
   @keyframes slideIn { from { opacity: 0; transform: translateX(20px); } to { opacity: 1; transform: translateX(0); } }
-
-  h2.step-header { 
-    text-align: center; color: var(--primary); margin: 0 0 20px 0;
-    font-size: 1.4rem; text-transform: uppercase; font-weight: 900; letter-spacing: 1px;
-  }
-
-  /* INPUTS */
-  input, select, textarea { 
-    width: 100%; padding: 14px; margin-bottom: 15px; 
-    border: 2px solid #b8c6db; border-radius: 8px; box-sizing: border-box; 
-    font-size: 16px; font-weight: 700; color: #333; background: #fff;
-    transition: all 0.2s ease;
-  }
-  input:focus, select:focus { 
-    border-color: var(--primary); outline: none; 
-    box-shadow: 0 0 0 4px rgba(0, 74, 173, 0.15); transform: translateY(-1px);
-  }
-  
+  h2.step-header { text-align: center; color: var(--primary); margin: 0 0 20px 0; font-size: 1.4rem; text-transform: uppercase; font-weight: 900; letter-spacing: 1px; }
+  input, select, textarea { width: 100%; padding: 14px; margin-bottom: 15px; border: 2px solid #b8c6db; border-radius: 8px; box-sizing: border-box; font-size: 16px; font-weight: 700; color: #333; background: #fff; transition: all 0.2s ease; }
+  input:focus, select:focus { border-color: var(--primary); outline: none; box-shadow: 0 0 0 4px rgba(0, 74, 173, 0.15); transform: translateY(-1px); }
   label { font-weight: 800; font-size: 0.8rem; text-transform: uppercase; display: block; margin-bottom: 6px; color: var(--primary); letter-spacing: 0.5px; }
   .row { display: flex; gap: 12px; } .col { flex: 1; } .hidden { display: none; }
   
-  /* CLASS SELECTOR TILES */
   .class-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; }
-  .class-tile { 
-      background: #fff; border: 2px solid #e0e0e0; border-radius: 10px; padding: 15px 5px; 
-      text-align: center; cursor: pointer; transition: all 0.2s;
-  }
+  .class-tile { background: #fff; border: 2px solid #e0e0e0; border-radius: 10px; padding: 15px 5px; text-align: center; cursor: pointer; transition: all 0.2s; }
   .class-tile:hover { border-color: var(--primary); transform: translateY(-2px); }
   .class-tile.selected { background: var(--primary); border-color: var(--primary); color: white; box-shadow: 0 5px 15px rgba(0,74,173,0.3); }
   .class-tile div { font-size: 0.8rem; font-weight: 800; text-transform: uppercase; margin-top: 5px; }
   .class-icon { font-size: 1.8rem; display: block; margin-bottom: 5px; }
-
-  /* OPTIONS & BRANCHES */
+  
   .options-box { background: #f0f7ff; padding: 20px; border-radius: 12px; border: 2px solid #dcebfc; margin-bottom: 20px; }
   .alert-box { background: #fff4f4; color: #d32f2f; padding: 15px; border-left: 5px solid var(--red); border-radius: 6px; margin-bottom: 15px; font-size: 0.9rem; line-height: 1.4; }
-
-  /* BUTTONS */
+  
   .nav-btns { display: flex; gap: 10px; margin-top: 20px; }
-  button { 
-    width: 100%; padding: 16px; border: none; font-size: 1.2rem; font-weight: 900; 
-    border-radius: 50px; cursor: pointer; text-transform: uppercase; letter-spacing: 1px; 
-    transition: transform 0.2s; box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-  }
+  button { width: 100%; padding: 16px; border: none; font-size: 1.2rem; font-weight: 900; border-radius: 50px; cursor: pointer; text-transform: uppercase; letter-spacing: 1px; transition: transform 0.2s; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
   .btn-next { background: var(--red); color: white; box-shadow: 0 5px 20px rgba(230, 0, 0, 0.3); }
   .btn-next:hover { background: var(--red-hover); transform: translateY(-2px); }
   .btn-back { background: #e0e0e0; color: #555; width: 40%; }
   .btn-back:hover { background: #d0d0d0; }
-
-  /* RADIO GROUP */
+  
   .radio-group { display: flex; gap: 10px; margin-bottom: 15px; }
-  .radio-label { 
-    flex: 1; text-align: center; background: white; border: 2px solid #e0e0e0; padding: 12px; 
-    border-radius: 8px; cursor: pointer; font-weight: 700; font-size: 0.95rem; color: #555;
-  }
+  .radio-label { flex: 1; text-align: center; background: white; border: 2px solid #e0e0e0; padding: 12px; border-radius: 8px; cursor: pointer; font-weight: 700; font-size: 0.95rem; color: #555; }
   .radio-label.selected { border-color: var(--primary); background: var(--primary); color: white; box-shadow: 0 4px 10px rgba(0,74,173,0.3); }
   .radio-label input { display: none; }
-
-  /* PRICE WIDGET */
+  
   .price-display { background: white; border: 3px solid var(--primary); border-radius: 12px; padding: 20px; text-align: center; margin-top: 15px; }
   .price-amount { font-size: 2.2rem; font-weight: 900; color: var(--primary); display: block; line-height: 1; margin-bottom: 5px; }
   .price-note { font-size: 0.85rem; color: #666; font-weight: 600; text-transform: uppercase; }
   .afterpay-box { color: #00c853; font-weight: 900; font-size: 1.2rem; margin-top: 10px; text-transform: uppercase; letter-spacing: 0.5px; }
-
-  /* MODAL */
+  
   .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 1000; justify-content: center; align-items: center; padding: 20px; }
   .modal-content { background: white; padding: 30px; border-radius: 16px; max-width: 500px; width: 100%; max-height: 80vh; overflow-y: auto; text-align: left; border: 4px solid var(--red); }
   .terms-list li { margin-bottom: 10px; font-size: 0.9rem; line-height: 1.4; color: #444; }
   .terms-heading { color: var(--red); font-weight: 900; text-transform: uppercase; margin-top: 20px; border-bottom: 2px solid #eee; padding-bottom: 5px; }
-
-  /* FOOTER & LOADER */
+  
   .info-box { width: 100%; max-width: 500px; background: rgba(0, 0, 0, 0.85); color: white; padding: 30px; border-radius: 16px; text-align: center; border: 1px solid rgba(255,255,255,0.2); margin-top: 20px; backdrop-filter: blur(10px); }
   .footer-img { width: 100%; border-radius: 8px; margin-top: 20px; border: 2px solid #555; }
   .loader { border: 3px solid #f3f3f3; border-top: 3px solid var(--primary); border-radius: 50%; width: 20px; height: 20px; animation: spin 1s linear infinite; display:none; float:right; }
   @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+  
+  /* THE FREEZE STYLE */
+  .frozen { pointer-events: none; opacity: 0.6; filter: grayscale(100%); }
 
   @media (min-width: 900px) { .main-wrapper { flex-direction: row; justify-content: center; align-items: flex-start; gap: 60px; padding-top: 80px; } .info-box { margin-top: 0; position: sticky; top: 80px; } }
 </style>
 </head>
-<body>
+<body onload="checkStatus()">
 
 <div id="termsModal" class="modal-overlay">
   <div class="modal-content">
@@ -210,20 +141,19 @@
 </div>
 
 <div class="main-wrapper">
-  <div class="container">
+  <div class="container" id="mainContainer">
     <img src="zionlogo.jpg" alt="Zion Auto Glass" class="logo-img">
-    
     <div class="accolades">
         <div class="badge"><span>★</span> Voted Best of Lufkin 2025</div>
         <div class="badge"><span>★</span> #1 on Bankrate</div>
         <div class="badge"><span>★</span> #1 on Google</div>
     </div>
-
     <div class="progress-container"><div class="progress-bar" id="progressBar"></div></div>
     
     <form id="zionForm">
       <input type="hidden" name="gclid" id="gclid">
       <input type="hidden" name="user_ip" id="user_ip">
+      <input type="hidden" name="user_agent" id="user_agent">
       <input type="hidden" name="vehicle_class" id="vehicleClass" value="Personal">
       <div style="position:absolute; left:-9999px;"><input type="text" id="honey_trap" name="website_url" tabindex="-1"></div>
 
@@ -236,51 +166,33 @@
         <label>Mobile Phone</label><input type="tel" name="phone" id="phone" placeholder="(936) 555-0199">
         <label>Email Address</label><input type="email" name="email" id="email" placeholder="jane@example.com">
         <label>Zip Code</label><input type="tel" name="zip" id="zipInput" placeholder="75901" maxlength="5">
-        
-        <div class="nav-btns">
-            <button type="button" class="btn-next" onclick="nextStep(1)">Next Step &rarr;</button>
-        </div>
+        <div class="nav-btns"><button type="button" class="btn-next" onclick="nextStep(1)">Next Step &rarr;</button></div>
       </div>
 
       <div id="step2" class="step">
         <h2 class="step-header">Your Vehicle</h2>
-        
         <label style="margin-bottom:10px;">Select Vehicle Type</label>
         <div class="class-grid">
-            <div class="class-tile selected" onclick="selectClass('Personal', this)">
-                <span class="class-icon">🚗</span><div>Personal</div>
-            </div>
-            <div class="class-tile" onclick="selectClass('Semi', this)">
-                <span class="class-icon">🚛</span><div>Semi / Big Rig</div>
-            </div>
-            <div class="class-tile" onclick="selectClass('Heavy', this)">
-                <span class="class-icon">🚜</span><div>Heavy Equip</div>
-            </div>
-            <div class="class-tile" onclick="selectClass('RV', this)">
-                <span class="class-icon">🚌</span><div>RV / Bus</div>
-            </div>
+            <div class="class-tile selected" onclick="selectClass('Personal', this)"><span class="class-icon">🚗</span><div>Personal</div></div>
+            <div class="class-tile" onclick="selectClass('Semi', this)"><span class="class-icon">🚛</span><div>Semi / Big Rig</div></div>
+            <div class="class-tile" onclick="selectClass('Heavy', this)"><span class="class-icon">🚜</span><div>Heavy Equip</div></div>
+            <div class="class-tile" onclick="selectClass('RV', this)"><span class="class-icon">🚌</span><div>RV / Bus</div></div>
         </div>
 
         <div id="apiInputs">
             <label>Year <div class="loader" id="yearLoad"></div></label>
-            <select id="yearSelect" name="year" onchange="loadMakes()"><option value="">Select Year</option></select>
-            
+            <select id="yearSelect" name="year" onchange="enableMake()"><option value="">Select Year</option></select>
             <label>Make <div class="loader" id="makeLoad"></div></label>
             <select id="makeSelect" name="make" onchange="loadModels()" disabled><option value="">Select Year First</option></select>
-            
             <label>Model <div class="loader" id="modelLoad"></div></label>
             <select id="modelSelect" name="model" disabled><option value="">Select Make First</option></select>
         </div>
 
         <div id="manualInputs" class="hidden">
-            <label>Vehicle Year</label>
-            <input type="number" name="manual_year" id="manualYear" placeholder="e.g. 2018">
-            <label>Make / Manufacturer</label>
-            <input type="text" name="manual_make" id="manualMake" placeholder="e.g. Peterbilt, Caterpillar, Fleetwood">
-            <label>Model Number</label>
-            <input type="text" name="manual_model" id="manualModel" placeholder="e.g. 389, 259D, Bounder">
+            <label>Vehicle Year</label><input type="number" name="manual_year" id="manualYear" placeholder="e.g. 2018">
+            <label>Make / Manufacturer</label><input type="text" name="manual_make" id="manualMake" placeholder="e.g. Peterbilt, Caterpillar, Fleetwood">
+            <label>Model Number</label><input type="text" name="manual_model" id="manualModel" placeholder="e.g. 389, 259D, Bounder">
         </div>
-        
         <div class="nav-btns">
             <button type="button" class="btn-back" onclick="prevStep(2)">&larr; Back</button>
             <button type="button" class="btn-next" onclick="nextStep(2)">Next Step &rarr;</button>
@@ -302,7 +214,6 @@
             <option value="Classic Car">Classic Car Restoration</option>
             <option value="Heavy Equipment">Heavy Equipment</option>
         </select>
-
         <div id="windshieldBranch" class="hidden options-box">
              <label>Repair or Replace?</label>
              <div class="radio-group">
@@ -314,11 +225,9 @@
                  <label style="margin-top:10px;">Under 6 Inches?</label><select id="sizeCheck" onchange="checkSize()"><option value="Yes">Yes</option><option value="No">No</option></select>
              </div>
              <div id="replaceDetails" class="hidden">
-                 <label>VIN (Required for Sensor Check)</label>
-                 <input type="text" name="vin" id="vinInput" maxlength="17" placeholder="VIN NUMBER" style="text-transform:uppercase;">
+                 <label>VIN (Required for Sensor Check)</label><input type="text" name="vin" id="vinInput" maxlength="17" placeholder="VIN NUMBER" style="text-transform:uppercase;">
              </div>
         </div>
-
         <div id="doorGlassOptions" class="hidden options-box">
             <div class="row">
              <div class="col"><label>Row</label><select name="door_row"><option>Front</option><option>Back</option></select></div>
@@ -326,11 +235,9 @@
             </div>
             <label>Tinted?</label><select name="is_tinted"><option>Factory Tint</option><option>Clear</option><option>Aftermarket</option></select>
         </div>
-
         <div id="backGlassOptions" class="hidden options-box">
             <label>Type</label><select name="bg_type"><option value="Standard">Standard</option><option value="Slider Power">Power Slider</option><option value="Slider Manual">Manual Slider</option></select>
         </div>
-
         <div class="nav-btns">
             <button type="button" class="btn-back" onclick="prevStep(3)">&larr; Back</button>
             <button type="button" class="btn-next" onclick="nextStep(3)">Get Pricing &rarr;</button>
@@ -344,25 +251,16 @@
             <label class="radio-label selected" onclick="togglePay('Self Pay', this)"><input type="radio" name="pay_type" value="Self Pay" checked> Self Pay</label>
             <label class="radio-label" onclick="togglePay('Insurance', this)"><input type="radio" name="pay_type" value="Insurance"> Insurance</label>
         </div>
-
         <div id="insuranceSection" class="hidden">
-            <div class="alert-box">
-                <strong>⚠️ YOUR LEGAL RIGHTS:</strong><br>It is unlawful for an insurance company to pressure you to use a specific shop. You have the right to choose Zion Auto Glass.
-            </div>
-            <div class="alert-box" style="background:#e8f4fd; border-left-color:var(--primary); color:#333;">
-                1. File Claim with Provider.<br>2. Get Dispatch Number.<br>3. Enter below.
-            </div>
+            <div class="alert-box"><strong>⚠️ YOUR LEGAL RIGHTS:</strong><br>It is unlawful for an insurance company to pressure you to use a specific shop. You have the right to choose Zion Auto Glass.</div>
             <label>Select Provider</label>
             <select name="insurance_provider">
                 <option value="">-- Choose Provider --</option>
-                <option value="Texas Farm Bureau">Texas Farm Bureau</option><option value="Germania">Germania</option>
-                <option value="State Farm">State Farm</option><option value="Geico">Geico</option><option value="Progressive">Progressive</option>
-                <option value="Allstate">Allstate</option><option value="USAA">USAA</option><option value="Farmers">Farmers</option><option value="Other">Other</option>
+                <option value="State Farm">State Farm</option><option value="Geico">Geico</option><option value="Progressive">Progressive</option><option value="Texas Farm Bureau">Texas Farm Bureau</option><option value="Germania">Germania</option><option value="Other">Other</option>
             </select>
             <label>Dispatch / Reference #</label><input type="text" name="dispatch_num" placeholder="REQUIRED">
             <label style="font-weight:normal; font-size:0.8rem;"><input type="checkbox" name="aob_signed" value="Yes" checked> I authorize Zion Auto Glass to handle this claim (AOB).</label>
         </div>
-
         <div id="selfPaySection">
             <label>Location</label>
             <div class="radio-group">
@@ -370,29 +268,24 @@
                 <label class="radio-label" onclick="toggleLoc('Mobile', this)"><input type="radio" name="service_loc" value="Mobile"> Mobile</label>
             </div>
             <div id="mobileAddr" class="hidden"><input type="text" name="service_address" placeholder="123 Main St"></div>
-            
             <div id="brainPriceBox" class="hidden price-display">
                 <span class="price-amount" id="brainTotal">Calculating...</span>
                 <span class="price-note" id="brainNote"></span>
                 <div class="afterpay-box" id="afterpayText"></div>
             </div>
         </div>
-
         <label style="margin-top:15px;">Requested Date</label>
         <div class="row">
             <div class="col"><input type="date" name="req_date" id="reqDate"></div>
             <div class="col"><select name="req_time"><option>Morning</option><option>Afternoon</option></select></div>
         </div>
-
         <div class="nav-btns">
             <button type="button" class="btn-back" onclick="prevStep(4)">&larr; Back</button>
             <button type="button" class="btn-next" onclick="openTerms()">Review & Book</button>
         </div>
       </div>
-
     </form>
   </div>
-
   <div class="info-box">
     <h3 style="margin:0; font-size:1.5rem; color:#4da6ff;">ZION AUTO GLASS</h3>
     <div style="font-size:1.4rem; font-weight:bold; margin:15px 0; color:#fff; border:2px solid #fff; padding:8px; border-radius:50px;">936-707-7105</div>
@@ -402,14 +295,31 @@
 </div>
 
 <script>
-  // CONFIG
+  // CONFIG - HARDWIRED
   const brainURL = 'https://zion-brain.zion-auto-glass.workers.dev/'; 
   const scriptURL = 'https://script.google.com/macros/s/AKfycbxQZ_uiE9wdMnraVVr6GLxUojOwEb1jvwZs8LJY5rTT1XtksQBnK2tx5Hfgpna4e3NE5Q/exec';
   const SHOP_LAT = 31.3386; const SHOP_LON = -94.7291; 
+  
+  const POPULAR_MAKES = [
+    "Acura", "Audi", "BMW", "Buick", "Cadillac", "Chevrolet", "Chrysler", "Dodge", "Fiat", "Ford", "GMC", "Genesis", "Honda", "Hyundai", "Infiniti", "Jaguar", "Jeep", "Kia", "Land Rover", "Lexus", "Lincoln", "Mazda", "Mercedes-Benz", "Mini", "Mitsubishi", "Nissan", "Porsche", "Ram", "Rivian", "Subaru", "Tesla", "Toyota", "Volkswagen", "Volvo"
+  ];
 
-  // --- FUNNEL NAVIGATION ---
-  let currentStep = 1;
-  const totalSteps = 4;
+  // --- RATE LIMIT CHECK (Black Widow Logic) ---
+  function checkStatus() {
+      fetch(brainURL + '/init')
+      .then(r => r.json())
+      .then(d => {
+          if (d.status === "banish" && d.redirect) {
+              window.location.href = d.redirect;
+          } else if (d.status === "frozen") {
+              document.getElementById('mainContainer').classList.add('frozen');
+              alert("Visit Limit Reached: Browse only mode active. Call 936-707-7105 for help.");
+          }
+      })
+      .catch(e => console.log("Brain init failed"));
+  }
+
+  let currentStep = 1; const totalSteps = 4;
 
   function nextStep(step) {
       if(!validateStep(step)) return;
@@ -432,13 +342,10 @@
       document.getElementById('progressBar').style.width = pct + '%';
   }
 
-  // --- VALIDATION & CLASS LOGIC ---
   function selectClass(type, el) {
       document.querySelectorAll('.class-tile').forEach(t => t.classList.remove('selected'));
       el.classList.add('selected');
-      
       document.getElementById('vehicleClass').value = type;
-      
       if(type === 'Personal') {
           document.getElementById('apiInputs').classList.remove('hidden');
           document.getElementById('manualInputs').classList.add('hidden');
@@ -446,7 +353,6 @@
           document.getElementById('apiInputs').classList.add('hidden');
           document.getElementById('manualInputs').classList.remove('hidden');
       }
-      
       if(type === 'Heavy' || type === 'Semi') updateBackground('Heavy Equipment');
       else if(type === 'RV') updateBackground('Classic Car'); 
       else updateBackground('Default');
@@ -463,7 +369,7 @@
           if(vClass === 'Personal') {
               if(!document.getElementById('modelSelect').value) { alert("Please select vehicle."); return false; }
           } else {
-              if(!document.getElementById('manualMake').value) { alert("Please enter Make/Manufacturer."); return false; }
+              if(!document.getElementById('manualMake').value) { alert("Please enter Make."); return false; }
               if(!document.getElementById('manualYear').value) { alert("Please enter Year."); return false; }
           }
           return true;
@@ -475,14 +381,12 @@
       return true;
   }
 
-  // --- DYNAMIC BACKGROUNDS ---
   function updateBackground(type) {
       if(type === 'Classic Car') document.body.style.backgroundImage = "url('MainPageClassicChevyTruck.jpg')";
       else if(type === 'Heavy Equipment') document.body.style.backgroundImage = "url('Background.jpg')"; 
       else document.body.style.backgroundImage = "url('Background.jpg')";
   }
 
-  // --- API LOGIC (Personal Only) ---
   const ySel = document.getElementById('yearSelect');
   const mSel = document.getElementById('makeSelect');
   const modSel = document.getElementById('modelSelect');
@@ -492,16 +396,10 @@
     for (let y = cy; y >= 1990; y--) { let o=document.createElement('option'); o.value=y; o.text=y; ySel.add(o); }
   })();
 
-  function loadMakes() {
-    const year = ySel.value;
-    mSel.innerHTML = '<option>Loading...</option>'; mSel.disabled=true;
-    document.getElementById('makeLoad').style.display='block';
-    fetch(`https://vpic.nhtsa.dot.gov/api/vehicles/GetMakesForManufacturerAndYear/mer?year=${year}&format=json`)
-    .then(r=>r.json()).then(d=>{
-      mSel.innerHTML='<option value="">Select Make</option>';
-      [...new Set(d.Results.map(i=>i.MakeName))].sort().forEach(m=>{ let o=document.createElement('option'); o.value=m; o.text=m; mSel.add(o); });
-      mSel.disabled=false; document.getElementById('makeLoad').style.display='none';
-    });
+  function enableMake() {
+      mSel.innerHTML = '<option value="">Select Make</option>';
+      POPULAR_MAKES.forEach(m => { let o=document.createElement('option'); o.value=m; o.text=m; mSel.add(o); });
+      mSel.disabled = false;
   }
 
   function loadModels() {
@@ -516,15 +414,12 @@
     });
   }
 
-  // --- GLASS LOGIC ---
   function handleGlassChange() {
     const val = document.getElementById('glassPart').value;
     updateBackground(val); 
-
     document.getElementById('windshieldBranch').classList.add('hidden');
     document.getElementById('doorGlassOptions').classList.add('hidden');
     document.getElementById('backGlassOptions').classList.add('hidden');
-
     if(val === 'Windshield') { document.getElementById('windshieldBranch').classList.remove('hidden'); }
     else if(val === 'Chip Repair') { 
         document.getElementById('windshieldBranch').classList.remove('hidden'); 
@@ -544,22 +439,18 @@
       if(document.getElementById('sizeCheck').value === 'No') { alert("Over 6 inches needs replacement."); document.querySelectorAll('input[name="ws_service"]')[1].click(); }
   }
 
-  // --- BRAIN CONNECTION ---
   function getBrainQuote() {
       const service = document.getElementById('glassPart').value;
       if(!service) return;
-      
       let actualService = service;
       if(service === 'Windshield') {
           const ws = document.querySelector('input[name="ws_service"]:checked');
           if(ws && ws.value === 'Repair') actualService = 'Chip Repair';
       }
-
       const zip = document.getElementById('zipInput').value;
       const count = document.getElementById('chip_count').value;
       const loc = document.querySelector('input[name="service_loc"]:checked') ? document.querySelector('input[name="service_loc"]:checked').value : 'Shop';
-
-      // DETERMINE VEHICLE DATA
+      
       const vClass = document.getElementById('vehicleClass').value;
       let year, make;
       if(vClass === 'Personal') {
@@ -589,7 +480,6 @@
       });
   }
 
-  // --- PAY UI ---
   function togglePay(type, lbl) {
       document.querySelectorAll('.options-box .radio-label').forEach(l=>{ if(l.textContent.includes('Self')||l.textContent.includes('Insurance')) l.classList.remove('selected'); });
       lbl.classList.add('selected'); lbl.querySelector('input').checked=true;
@@ -603,7 +493,6 @@
       getBrainQuote();
   }
 
-  // --- FINAL SUBMIT (SECURED) ---
   function openTerms() { document.getElementById('termsModal').style.display='flex'; }
   document.getElementById('agreeCheck').addEventListener('change', function() { document.getElementById('confirmBtn').disabled=!this.checked; });
 
@@ -619,8 +508,8 @@
       }
       
       fd.append('quoted_price', document.getElementById('brainTotal').innerText);
+      fd.set('user_agent', navigator.userAgent);
 
-      // SECURITY UPDATE: Removed Frontend VPN Check. Cloudflare Worker now handles security.
       fetch(scriptURL, { method:'POST', body:fd, mode:'no-cors' })
       .then(()=>{ sessionStorage.setItem('zion_valid', 'true'); window.location.href='thankyou.html'; })
       .catch(()=>{ alert("Error"); btn.disabled=false; });
