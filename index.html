@@ -507,6 +507,7 @@
   function openTerms() { document.getElementById('termsModal').style.display='flex'; }
   document.getElementById('agreeCheck').addEventListener('change', function() { document.getElementById('confirmBtn').disabled=!this.checked; });
 
+  // REPLACED FUNCTION FOR GOOGLE ADS ENHANCED CONVERSIONS
   function finalSubmit() {
       const btn = document.getElementById('confirmBtn'); btn.innerText = "PROCESSING..."; btn.disabled=true;
       const fd = new FormData(document.getElementById('zionForm'));
@@ -521,8 +522,15 @@
       fd.append('quoted_price', document.getElementById('brainTotal').innerText);
       fd.set('user_agent', navigator.userAgent);
 
+      // Save Data for Enhanced Conversions + Google Sheet
       fetch(scriptURL, { method:'POST', body:fd, mode:'no-cors' })
-      .then(()=>{ sessionStorage.setItem('zion_valid', 'true'); window.location.href='thankyou.html'; })
+      .then(()=>{ 
+          sessionStorage.setItem('zion_valid', 'true');
+          // Capture for Google Ads
+          sessionStorage.setItem('zion_email', document.getElementById('email').value);
+          sessionStorage.setItem('zion_phone', document.getElementById('phone').value);
+          window.location.href='thankyou.html'; 
+      })
       .catch(()=>{ alert("Error"); btn.disabled=false; });
   }
 
