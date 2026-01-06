@@ -5,26 +5,51 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Request Received | Zion Auto Glass</title>
 
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-870403519"></script>
 <script>
-  if (!sessionStorage.getItem('zion_submission_valid')) { 
-      // If no key, kick them out immediately
-      window.location.replace('index.html'); 
-  } else { 
-      // KEY REMOVAL: Prevents Refreshing/Double-Counting Pixels
-      sessionStorage.removeItem('zion_submission_valid'); 
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  // RETRIEVE USER DATA (Saved from the previous page)
+  const userEmail = sessionStorage.getItem('zion_email');
+  const userPhone = sessionStorage.getItem('zion_phone');
+
+  // CONFIGURE TAG WITH ENHANCED DATA
+  // This matches the ad click to this specific person using the data we saved
+  gtag('config', 'AW-870403519', {
+    'allow_enhanced_conversions': true,
+    'user_data': {
+      'email': userEmail,
+      'phone_number': userPhone
+    }
+  });
+</script>
+
+<script>
+  // SECURITY: Only run if they actually came from the form (prevents fake stats on refresh)
+  if (sessionStorage.getItem('zion_valid') === 'true') {
+      
+      // FIRE THE SIGNAL TO GOOGLE ADS
+      gtag('event', 'conversion', {
+          'send_to': 'AW-870403519/gXEmCNu4_d0bEL-bhZ8D'  /* <--- PASTE LABEL HERE */
+      });
+
+      // CLEANUP: Wipe the data so it doesn't count twice if they refresh
+      setTimeout(() => {
+        sessionStorage.removeItem('zion_valid');
+        sessionStorage.removeItem('zion_email');
+        sessionStorage.removeItem('zion_phone');
+      }, 500); // Small delay to ensure the tag fires first
+
+  } else {
+      // If they didn't fill out the form, kick them back to start
+      window.location.replace('index.html');
   }
 </script>
 
-<script async src="https://www.googletagmanager.com/gtag/js?id=AW-870403519"></script>
-<script>
-  window.dataLayer = window.dataLayer || []; 
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date()); 
-  gtag('config', 'AW-870403519');
-</script>
-
 <style>
-  /* --- SHARED DESIGN SYSTEM --- */
+  /* --- SHARED DESIGN SYSTEM (Your Original Style) --- */
   :root { 
     --primary: #004aad; 
     --glass-bg: rgba(255, 255, 255, 0.95); 
