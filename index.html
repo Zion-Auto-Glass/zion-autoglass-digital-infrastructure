@@ -2,134 +2,542 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Request Received | Zion Auto Glass</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="description" content="Zion Auto Glass: #1 Rated Auto Glass Repair & Replacement in Lufkin, TX. We serve Deep East Texas with windshields, heavy equipment glass, and classic car restoration. Open Mon-Fri 8-5, Sat-Sun 9-6.">
+<title>Zion Auto Glass | Verified Quote & Booking</title>
 
 <script async src="https://www.googletagmanager.com/gtag/js?id=AW-870403519"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
-
-  // RETRIEVE USER DATA (Saved from the previous page)
-  const userEmail = sessionStorage.getItem('zion_email');
-  const userPhone = sessionStorage.getItem('zion_phone');
-
-  // CONFIGURE TAG WITH ENHANCED DATA
-  // This matches the ad click to this specific person using the data we saved
-  gtag('config', 'AW-870403519', {
-    'allow_enhanced_conversions': true,
-    'user_data': {
-      'email': userEmail,
-      'phone_number': userPhone
-    }
-  });
+  gtag('config', 'AW-870403519');
 </script>
 
-<script>
-  // SECURITY: Only run if they actually came from the form (prevents fake stats on refresh)
-  if (sessionStorage.getItem('zion_valid') === 'true') {
-      
-      // FIRE THE SIGNAL TO GOOGLE ADS
-      gtag('event', 'conversion', {
-          'send_to': 'AW-870403519/gXEmCNu4_d0bEL-bhZ8D'  /* <--- PASTE LABEL HERE */
-      });
-
-      // CLEANUP: Wipe the data so it doesn't count twice if they refresh
-      setTimeout(() => {
-        sessionStorage.removeItem('zion_valid');
-        sessionStorage.removeItem('zion_email');
-        sessionStorage.removeItem('zion_phone');
-      }, 500); // Small delay to ensure the tag fires first
-
-  } else {
-      // If they didn't fill out the form, kick them back to start
-      window.location.replace('index.html');
-  }
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "AutoGlassShop",
+  "name": "Zion Auto Glass",
+  "image": "https://m.zionautoglass.com/zionlogo.jpg",
+  "telephone": "936-255-2215",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "1500 Atkinson Drive",
+    "addressLocality": "Lufkin",
+    "addressRegion": "TX",
+    "postalCode": "75901",
+    "addressCountry": "US"
+  },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": 31.3386,
+    "longitude": -94.7291
+  },
+  "priceRange": "$$",
+  "openingHoursSpecification": [
+    { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"], "opens": "08:00", "closes": "17:00" },
+    { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Saturday", "Sunday"], "opens": "09:00", "closes": "18:00" }
+  ]
+}
 </script>
+
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 
 <style>
-  /* --- SHARED DESIGN SYSTEM (Your Original Style) --- */
+  /* --- ZION THEME --- */
   :root { 
-    --primary: #004aad; 
-    --glass-bg: rgba(255, 255, 255, 0.95); 
-    --glass-border: 1px solid rgba(255, 255, 255, 0.6);
-    --shadow: 0 20px 50px rgba(0,0,0,0.5);
+    --primary: #004aad; --primary-dark: #003380; --red: #e60000; --red-hover: #cc0000;
+    --glass-bg: rgba(255, 255, 255, 0.96); --glass-border: 1px solid rgba(255, 255, 255, 0.8);
+    --shadow: 0 15px 40px rgba(0,0,0,0.5);
   }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; margin: 0; padding: 0; color: #1a1a1a; background-image: url('Background.jpg'); background-size: cover; background-position: center; background-attachment: fixed; transition: background-image 0.5s ease-in-out; min-height: 100vh; }
+  .main-wrapper { display: flex; flex-direction: column; align-items: center; padding: 20px; width: 100%; box-sizing: border-box; padding-top: 40px; }
+  .container { width: 100%; max-width: 550px; background: var(--glass-bg); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); padding: 30px 25px; border-radius: 16px; box-shadow: var(--shadow); margin-bottom: 40px; z-index: 2; position: relative; border: var(--glass-border); min-height: 400px; }
+  .logo-img { max-width: 260px; width: 100%; display: block; margin: 0 auto 15px; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1)); }
+  .progress-container { width: 100%; background: #e0e0e0; height: 6px; border-radius: 3px; margin-bottom: 25px; overflow: hidden; }
+  .progress-bar { height: 100%; background: var(--primary); width: 25%; transition: width 0.4s ease; }
+  .accolades { text-align: center; margin-bottom: 25px; font-size: 0.75rem; color: #555; display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; }
+  .badge { background: #fff; padding: 4px 10px; border-radius: 15px; border: 1px solid #ccc; font-weight: bold; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+  .badge span { color: #f4c430; margin-right: 4px; }
+  .step { display: none; animation: slideIn 0.4s ease; } .step.active { display: block; }
+  @keyframes slideIn { from { opacity: 0; transform: translateX(20px); } to { opacity: 1; transform: translateX(0); } }
+  h2.step-header { text-align: center; color: var(--primary); margin: 0 0 20px 0; font-size: 1.4rem; text-transform: uppercase; font-weight: 900; letter-spacing: 1px; }
+  input, select, textarea { width: 100%; padding: 14px; margin-bottom: 15px; border: 2px solid #b8c6db; border-radius: 8px; box-sizing: border-box; font-size: 16px; font-weight: 700; color: #333; background: #fff; transition: all 0.2s ease; }
+  input:focus, select:focus { border-color: var(--primary); outline: none; box-shadow: 0 0 0 4px rgba(0, 74, 173, 0.15); transform: translateY(-1px); }
+  label { font-weight: 800; font-size: 0.8rem; text-transform: uppercase; display: block; margin-bottom: 6px; color: var(--primary); letter-spacing: 0.5px; }
+  .row { display: flex; gap: 12px; } .col { flex: 1; } .hidden { display: none; }
   
-  body { 
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; 
-    margin: 0; padding: 0; color: #333;
-    /* The Classic Chevy Background */
-    background-image: url('https://m.zionautoglass.com/MainPageClassicChevyTruck.jpg'); 
-    background-size: cover; background-position: center; background-attachment: fixed;
-    min-height: 100vh;
-    display: flex; justify-content: center; align-items: center;
-  }
-
-  /* GLASS CONTAINER */
-  .container { 
-    width: 90%; max-width: 480px; 
-    background: var(--glass-bg); 
-    backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
-    padding: 40px 30px; 
-    border-radius: 16px; 
-    box-shadow: var(--shadow); 
-    text-align: center;
-    border: var(--glass-border);
-    animation: popUp 0.4s ease-out;
-  }
-
-  @keyframes popUp { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
-
-  .logo-img { max-width: 220px; width: 100%; margin-bottom: 20px; }
-
-  h1 { 
-    color: var(--primary); margin: 10px 0; 
-    text-transform: uppercase; letter-spacing: 1px; font-weight: 900; 
-  }
+  .class-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; }
+  .class-tile { background: #fff; border: 2px solid #e0e0e0; border-radius: 10px; padding: 15px 5px; text-align: center; cursor: pointer; transition: all 0.2s; }
+  .class-tile:hover { border-color: var(--primary); transform: translateY(-2px); }
+  .class-tile.selected { background: var(--primary); border-color: var(--primary); color: white; box-shadow: 0 5px 15px rgba(0,74,173,0.3); }
+  .class-tile div { font-size: 0.8rem; font-weight: 800; text-transform: uppercase; margin-top: 5px; }
+  .class-icon { font-size: 1.8rem; display: block; margin-bottom: 5px; }
   
-  p { font-size: 1.1rem; line-height: 1.5; color: #555; margin-bottom: 25px; }
-
-  /* SUCCESS ICON */
-  .checkmark {
-    width: 80px; height: 80px; border-radius: 50%;
-    background: #4CAF50; color: white;
-    font-size: 50px; line-height: 80px;
-    margin: 0 auto 20px;
-    box-shadow: 0 5px 15px rgba(76, 175, 80, 0.4);
-  }
-
-  /* BUTTONS */
-  .btn {
-    display: inline-block; width: 100%; box-sizing: border-box;
-    padding: 15px; border-radius: 50px; text-decoration: none;
-    font-weight: bold; font-size: 1.1rem; margin-top: 10px;
-    transition: transform 0.2s;
-  }
-  .btn-primary { background: var(--primary); color: white; box-shadow: 0 4px 15px rgba(0, 74, 173, 0.3); }
-  .btn-secondary { background: white; color: #666; border: 2px solid #ddd; margin-top: 15px; }
+  .options-box { background: #f0f7ff; padding: 20px; border-radius: 12px; border: 2px solid #dcebfc; margin-bottom: 20px; }
+  .alert-box { background: #fff4f4; color: #d32f2f; padding: 15px; border-left: 5px solid var(--red); border-radius: 6px; margin-bottom: 15px; font-size: 0.9rem; line-height: 1.4; }
   
-  .btn:hover { transform: translateY(-2px); }
+  .nav-btns { display: flex; gap: 10px; margin-top: 20px; }
+  button { width: 100%; padding: 16px; border: none; font-size: 1.2rem; font-weight: 900; border-radius: 50px; cursor: pointer; text-transform: uppercase; letter-spacing: 1px; transition: transform 0.2s; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+  .btn-next { background: var(--red); color: white; box-shadow: 0 5px 20px rgba(230, 0, 0, 0.3); }
+  .btn-next:hover { background: var(--red-hover); transform: translateY(-2px); }
+  .btn-back { background: #e0e0e0; color: #555; width: 40%; }
+  .btn-back:hover { background: #d0d0d0; }
+  
+  .radio-group { display: flex; gap: 10px; margin-bottom: 15px; }
+  .radio-label { flex: 1; text-align: center; background: white; border: 2px solid #e0e0e0; padding: 12px; border-radius: 8px; cursor: pointer; font-weight: 700; font-size: 0.95rem; color: #555; }
+  .radio-label.selected { border-color: var(--primary); background: var(--primary); color: white; box-shadow: 0 4px 10px rgba(0,74,173,0.3); }
+  .radio-label input { display: none; }
+  
+  .price-display { background: white; border: 3px solid var(--primary); border-radius: 12px; padding: 20px; text-align: center; margin-top: 15px; }
+  .price-amount { font-size: 2.2rem; font-weight: 900; color: var(--primary); display: block; line-height: 1; margin-bottom: 5px; }
+  .price-note { font-size: 0.85rem; color: #666; font-weight: 600; text-transform: uppercase; }
+  .afterpay-box { color: #00c853; font-weight: 900; font-size: 1.2rem; margin-top: 10px; text-transform: uppercase; letter-spacing: 0.5px; }
+  
+  .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 1000; justify-content: center; align-items: center; padding: 20px; }
+  .modal-content { background: white; padding: 30px; border-radius: 16px; max-width: 500px; width: 100%; max-height: 80vh; overflow-y: auto; text-align: left; border: 4px solid var(--red); }
+  .terms-list li { margin-bottom: 10px; font-size: 0.9rem; line-height: 1.4; color: #444; }
+  .terms-heading { color: var(--red); font-weight: 900; text-transform: uppercase; margin-top: 20px; border-bottom: 2px solid #eee; padding-bottom: 5px; }
+  
+  .info-box { width: 100%; max-width: 500px; background: rgba(0, 0, 0, 0.85); color: white; padding: 30px; border-radius: 16px; text-align: center; border: 1px solid rgba(255,255,255,0.2); margin-top: 20px; backdrop-filter: blur(10px); }
+  .footer-img { width: 100%; border-radius: 8px; margin-top: 20px; border: 2px solid #555; }
+  .loader { border: 3px solid #f3f3f3; border-top: 3px solid var(--primary); border-radius: 50%; width: 20px; height: 20px; animation: spin 1s linear infinite; display:none; float:right; }
+  @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+  
+  /* THE FREEZE STYLE */
+  .frozen { pointer-events: none; opacity: 0.6; filter: grayscale(100%); }
+
+  @media (min-width: 900px) { .main-wrapper { flex-direction: row; justify-content: center; align-items: flex-start; gap: 60px; padding-top: 80px; } .info-box { margin-top: 0; position: sticky; top: 80px; } }
 </style>
 </head>
-<body>
+<body onload="checkStatus()">
 
-  <div class="container">
-    <div class="checkmark">✓</div>
+<div id="termsModal" class="modal-overlay">
+  <div class="modal-content">
+    <h2 style="color:var(--primary); margin-top:0; text-align:center;">SERVICE AGREEMENT</h2>
+    <div class="terms-heading">🛑 ABSOLUTELY NOTS</div>
+    <ul class="terms-list">
+      <li><strong>NO HIGH PRESSURE WASHERS</strong> for 7 Days after replacement. This will void your warranty and cause leaks.</li>
+      <li><strong>DO NOT</strong> slam doors with windows rolled up for 48 hours. Cabin pressure can pop the fresh seal.</li>
+      <li><strong>Back Glass:</strong> DO NOT drive with windows down for 48 hours.</li>
+    </ul>
+    <div class="terms-heading">⚠️ ROCK CHIP REPAIRS</div>
+    <ul class="terms-list">
+      <li><strong>Money Back Guarantee:</strong> If the chip spreads, we credit your payment toward a new windshield.</li>
+      <li><strong>Disclaimer:</strong> The goal is structural integrity. The chip may not disappear completely.</li>
+      <li><strong>Care:</strong> Do not wash for 48 hours. Park in sun to cure.</li>
+    </ul>
+    <div class="terms-heading">ℹ️ BOOKING POLICY</div>
+    <ul class="terms-list">
+      <li>All appointments are requests until confirmed by the owner.</li>
+      <li>We are a dedicated "Mom & Pop" shop striving for perfection. Please help us by following these care instructions.</li>
+    </ul>
     
-    <img src="https://m.zionautoglass.com/zionlogo.jpg" alt="Zion Auto Glass" class="logo-img">
-    
-    <h1>Request Received!</h1>
-    <p>Thank you for choosing Zion Auto Glass.<br>We are reviewing your details and will be in touch shortly.</p>
-    
-    <div style="background:#f0f7ff; padding:15px; border-radius:10px; border:1px solid #cce0ff; margin-bottom:20px;">
-        <p style="margin:0; font-size:0.9rem; color:#004aad;">Need immediate help?</p>
-        <a href="tel:936-255-2215" style="display:block; font-size:1.6rem; font-weight:bold; color:#004aad; text-decoration:none; margin-top:5px;">936-255-2215</a>
+    <div class="terms-heading">📱 SMS / TEXT CONSENT</div>
+    <div style="font-size: 0.85rem; color: #444; line-height: 1.5; margin-bottom: 10px; background: #f0f7ff; padding: 10px; border-radius: 6px;">
+        <strong>I would like to receive updates by text.</strong><br>
+        We'll be sending you booking reminders and updates from Zion Auto Glass.
+        <br><br>
+        Message and data rates may apply. Message frequency varies. At any time you can text <strong>HELP</strong> for help or <strong>STOP</strong> to opt out.
+        <br><br>
+        View our compliant <a href="https://www.quo.com/policies/OR2PpiDiUy" target="_blank" style="color: var(--primary); text-decoration: underline;">Privacy Policy</a>.
     </div>
 
-    <a href="index.html" class="btn btn-secondary">Return to Home Page</a>
+    <div style="background:#f9f9f9; padding:15px; border-radius:8px; text-align:center; margin-top:20px;">
+      <label><input type="checkbox" id="agreeCheck"> I AGREE TO TERMS & SMS POLICY</label>
+      <button onclick="finalSubmit()" id="confirmBtn" class="action-btn" disabled style="margin-top:10px; font-size:1rem; padding:12px;">ACCEPT & SUBMIT</button>
+    </div>
   </div>
+</div>
 
+<div class="main-wrapper">
+  <div class="container" id="mainContainer">
+    <img src="zionlogo.jpg" alt="Zion Auto Glass" class="logo-img">
+    <div class="accolades">
+        <div class="badge"><span>★</span> Voted Best of Lufkin 2025</div>
+        <div class="badge"><span>★</span> #1 on Bankrate</div>
+        <div class="badge"><span>★</span> #1 on Google</div>
+    </div>
+    <div class="progress-container"><div class="progress-bar" id="progressBar"></div></div>
+    
+    <form id="zionForm">
+      <input type="hidden" name="gclid" id="gclid">
+      <input type="hidden" name="user_ip" id="user_ip">
+      <input type="hidden" name="user_agent" id="user_agent">
+      <input type="hidden" name="vehicle_class" id="vehicleClass" value="Personal">
+      <div style="position:absolute; left:-9999px;"><input type="text" id="honey_trap" name="website_url" tabindex="-1"></div>
+
+      <div id="step1" class="step active">
+        <h2 class="step-header">Let's Get Started</h2>
+        <div class="row">
+          <div class="col"><label>First Name</label><input type="text" name="firstName" id="fName" placeholder="Jane"></div>
+          <div class="col"><label>Last Name</label><input type="text" name="lastName" id="lName" placeholder="Doe"></div>
+        </div>
+        <label>Mobile Phone</label><input type="tel" name="phone" id="phone" placeholder="(936) 555-0199">
+        <label>Email Address</label><input type="email" name="email" id="email" placeholder="jane@example.com">
+        <label>Zip Code</label><input type="tel" name="zip" id="zipInput" placeholder="75901" maxlength="5">
+        <div class="nav-btns"><button type="button" class="btn-next" onclick="nextStep(1)">Next Step &rarr;</button></div>
+      </div>
+
+      <div id="step2" class="step">
+        <h2 class="step-header">Your Vehicle</h2>
+        <label style="margin-bottom:10px;">Select Vehicle Type</label>
+        <div class="class-grid">
+            <div class="class-tile selected" onclick="selectClass('Personal', this)"><span class="class-icon">🚗</span><div>Personal</div></div>
+            <div class="class-tile" onclick="selectClass('Semi', this)"><span class="class-icon">🚛</span><div>Semi / Big Rig</div></div>
+            <div class="class-tile" onclick="selectClass('Heavy', this)"><span class="class-icon">🚜</span><div>Heavy Equip</div></div>
+            <div class="class-tile" onclick="selectClass('RV', this)"><span class="class-icon">🚌</span><div>RV / Bus</div></div>
+        </div>
+
+        <div id="apiInputs">
+            <label>Year <div class="loader" id="yearLoad"></div></label>
+            <select id="yearSelect" name="year" onchange="enableMake()"><option value="">Select Year</option></select>
+            <label>Make <div class="loader" id="makeLoad"></div></label>
+            <select id="makeSelect" name="make" onchange="loadModels()" disabled><option value="">Select Year First</option></select>
+            <label>Model <div class="loader" id="modelLoad"></div></label>
+            <select id="modelSelect" name="model" disabled><option value="">Select Make First</option></select>
+        </div>
+
+        <div id="manualInputs" class="hidden">
+            <label>Vehicle Year</label><input type="number" name="manual_year" id="manualYear" placeholder="e.g. 2018">
+            <label>Make / Manufacturer</label><input type="text" name="manual_make" id="manualMake" placeholder="e.g. Peterbilt, Caterpillar, Fleetwood">
+            <label>Model Number</label><input type="text" name="manual_model" id="manualModel" placeholder="e.g. 389, 259D, Bounder">
+        </div>
+        <div class="nav-btns">
+            <button type="button" class="btn-back" onclick="prevStep(2)">&larr; Back</button>
+            <button type="button" class="btn-next" onclick="nextStep(2)">Next Step &rarr;</button>
+        </div>
+      </div>
+
+      <div id="step3" class="step">
+        <h2 class="step-header">What's Broken?</h2>
+        <select id="glassPart" name="glassPart" onchange="handleGlassChange()" style="border-color:var(--primary); border-width:3px;">
+            <option value="">-- Select Part --</option>
+            <option value="Windshield">Windshield</option>
+            <option value="Chip Repair">Rock Chip Repair</option>
+            <option value="Door Glass">Door Glass</option>
+            <option value="Back Glass">Back Glass</option>
+            <option value="Sunroof">Sunroof</option>
+            <option value="Mirror">Side Mirror</option>
+            <option value="Regulator">Window Motor / Regulator</option>
+            <option value="Leak Diag">Leak Diagnostic</option>
+            <option value="Classic Car">Classic Car Restoration</option>
+            <option value="Heavy Equipment">Heavy Equipment</option>
+        </select>
+        <div id="windshieldBranch" class="hidden options-box">
+             <label>Repair or Replace?</label>
+             <div class="radio-group">
+                <label class="radio-label" onclick="toggleWS('Repair', this)"><input type="radio" name="ws_service" value="Repair"> Repair</label>
+                <label class="radio-label" onclick="toggleWS('Replace', this)"><input type="radio" name="ws_service" value="Replace"> Replace</label>
+             </div>
+             <div id="chipDetails" class="hidden">
+                 <label>How Many Chips?</label><select id="chip_count" name="chip_count"><option value="1">1</option><option value="2">2</option><option value="3">3</option></select>
+                 <label style="margin-top:10px;">Under 6 Inches?</label><select id="sizeCheck" onchange="checkSize()"><option value="Yes">Yes</option><option value="No">No</option></select>
+             </div>
+             <div id="replaceDetails" class="hidden">
+                 <label>VIN (Required for Sensor Check)</label><input type="text" name="vin" id="vinInput" maxlength="17" placeholder="VIN NUMBER" style="text-transform:uppercase;">
+             </div>
+        </div>
+        <div id="doorGlassOptions" class="hidden options-box">
+            <div class="row">
+             <div class="col"><label>Row</label><select name="door_row"><option>Front</option><option>Back</option></select></div>
+             <div class="col"><label>Side</label><select name="door_side"><option>Driver</option><option>Passenger</option></select></div>
+            </div>
+            <label>Tinted?</label><select name="is_tinted"><option>Factory Tint</option><option>Clear</option><option>Aftermarket</option></select>
+        </div>
+        <div id="backGlassOptions" class="hidden options-box">
+            <label>Type</label><select name="bg_type"><option value="Standard">Standard</option><option value="Slider Power">Power Slider</option><option value="Slider Manual">Manual Slider</option></select>
+        </div>
+        <div class="nav-btns">
+            <button type="button" class="btn-back" onclick="prevStep(3)">&larr; Back</button>
+            <button type="button" class="btn-next" onclick="nextStep(3)">Get Pricing &rarr;</button>
+        </div>
+      </div>
+
+      <div id="step4" class="step">
+        <h2 class="step-header">Pricing & Booking</h2>
+        <label>Payment Method</label>
+        <div class="radio-group">
+            <label class="radio-label selected" onclick="togglePay('Self Pay', this)"><input type="radio" name="pay_type" value="Self Pay" checked> Self Pay</label>
+            <label class="radio-label" onclick="togglePay('Insurance', this)"><input type="radio" name="pay_type" value="Insurance"> Insurance</label>
+        </div>
+        <div id="insuranceSection" class="hidden">
+            <div class="alert-box"><strong>⚠️ YOUR LEGAL RIGHTS:</strong><br>It is unlawful for an insurance company to pressure you to use a specific shop. You have the right to choose Zion Auto Glass.</div>
+            <label>Select Provider</label>
+            <select name="insurance_provider">
+                <option value="">-- Choose Provider --</option>
+                <option value="State Farm">State Farm</option><option value="Geico">Geico</option><option value="Progressive">Progressive</option><option value="Texas Farm Bureau">Texas Farm Bureau</option><option value="Germania">Germania</option><option value="Other">Other</option>
+            </select>
+            <label>Dispatch / Reference #</label><input type="text" name="dispatch_num" placeholder="REQUIRED">
+            <label style="font-weight:normal; font-size:0.8rem;"><input type="checkbox" name="aob_signed" value="Yes" checked> I authorize Zion Auto Glass to handle this claim (AOB).</label>
+        </div>
+        <div id="selfPaySection">
+            <label>Location</label>
+            <div class="radio-group">
+                <label class="radio-label selected" onclick="toggleLoc('Shop', this)"><input type="radio" name="service_loc" value="Shop" checked> In-Shop</label>
+                <label class="radio-label" onclick="toggleLoc('Mobile', this)"><input type="radio" name="service_loc" value="Mobile"> Mobile</label>
+            </div>
+            <div id="mobileAddr" class="hidden"><input type="text" name="service_address" placeholder="123 Main St"></div>
+            <div id="brainPriceBox" class="hidden price-display">
+                <span class="price-amount" id="brainTotal">Calculating...</span>
+                <span class="price-note" id="brainNote"></span>
+                <div class="afterpay-box" id="afterpayText"></div>
+            </div>
+        </div>
+        <label style="margin-top:15px;">Requested Date</label>
+        <div class="row">
+            <div class="col"><input type="date" name="req_date" id="reqDate"></div>
+            <div class="col"><select name="req_time"><option>Morning</option><option>Afternoon</option></select></div>
+        </div>
+        <div class="nav-btns">
+            <button type="button" class="btn-back" onclick="prevStep(4)">&larr; Back</button>
+            <button type="button" class="btn-next" onclick="openTerms()">Review & Book</button>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="info-box">
+    <h3 style="margin:0; font-size:1.5rem; color:#4da6ff;">ZION AUTO GLASS</h3>
+    <div style="font-size:1.4rem; font-weight:bold; margin:15px 0; color:#fff; border:2px solid #fff; padding:8px; border-radius:50px;">936-255-2215</div>
+    <p>1500 Atkinson Drive<br>Lufkin, TX 75901</p>
+    <img src="shopshineyrain.jpg" class="footer-img" alt="Shop Front">
+  </div>
+</div>
+
+<script>
+  // CONFIG - HARDWIRED
+  const brainURL = 'https://zion-brain.zion-auto-glass.workers.dev/'; 
+  const scriptURL = 'https://script.google.com/macros/s/AKfycbxQZ_uiE9wdMnraVVr6GLxUojOwEb1jvwZs8LJY5rTT1XtksQBnK2tx5Hfgpna4e3NE5Q/exec';
+  const SHOP_LAT = 31.3386; const SHOP_LON = -94.7291; 
+  
+  const POPULAR_MAKES = [
+    "Acura", "Audi", "BMW", "Buick", "Cadillac", "Chevrolet", "Chrysler", "Dodge", "Fiat", "Ford", "GMC", "Genesis", "Honda", "Hyundai", "Infiniti", "Jaguar", "Jeep", "Kia", "Land Rover", "Lexus", "Lincoln", "Mazda", "Mercedes-Benz", "Mini", "Mitsubishi", "Nissan", "Porsche", "Ram", "Rivian", "Subaru", "Tesla", "Toyota", "Volkswagen", "Volvo"
+  ];
+
+  // --- RATE LIMIT CHECK (Black Widow Logic) ---
+  function checkStatus() {
+      fetch(brainURL + '/init')
+      .then(r => r.json())
+      .then(d => {
+          if (d.status === "banish" && d.redirect) {
+              window.location.href = d.redirect;
+          } else if (d.status === "frozen") {
+              document.getElementById('mainContainer').classList.add('frozen');
+              alert("Visit Limit Reached: Browse only mode active. Call 936-255-2215 for help.");
+          }
+      })
+      .catch(e => console.log("Brain init failed"));
+  }
+
+  let currentStep = 1; const totalSteps = 4;
+
+  function nextStep(step) {
+      if(!validateStep(step)) return;
+      document.getElementById('step'+step).classList.remove('active');
+      currentStep++;
+      document.getElementById('step'+currentStep).classList.add('active');
+      updateProgress();
+      if(currentStep === 4) getBrainQuote();
+  }
+
+  function prevStep(step) {
+      document.getElementById('step'+step).classList.remove('active');
+      currentStep--;
+      document.getElementById('step'+currentStep).classList.add('active');
+      updateProgress();
+  }
+
+  function updateProgress() {
+      const pct = (currentStep / totalSteps) * 100;
+      document.getElementById('progressBar').style.width = pct + '%';
+  }
+
+  function selectClass(type, el) {
+      document.querySelectorAll('.class-tile').forEach(t => t.classList.remove('selected'));
+      el.classList.add('selected');
+      document.getElementById('vehicleClass').value = type;
+      if(type === 'Personal') {
+          document.getElementById('apiInputs').classList.remove('hidden');
+          document.getElementById('manualInputs').classList.add('hidden');
+      } else {
+          document.getElementById('apiInputs').classList.add('hidden');
+          document.getElementById('manualInputs').classList.remove('hidden');
+      }
+      if(type === 'Heavy' || type === 'Semi') updateBackground('Heavy Equipment');
+      else if(type === 'RV') updateBackground('Classic Car'); 
+      else updateBackground('Default');
+  }
+
+  function validateStep(step) {
+      if(step === 1) {
+          const req = ['fName','lName','phone','email','zipInput'];
+          for(let id of req) { if(!document.getElementById(id).value) { alert("Please complete all fields."); return false; }}
+          return true;
+      }
+      if(step === 2) {
+          const vClass = document.getElementById('vehicleClass').value;
+          if(vClass === 'Personal') {
+              if(!document.getElementById('modelSelect').value) { alert("Please select vehicle."); return false; }
+          } else {
+              if(!document.getElementById('manualMake').value) { alert("Please enter Make."); return false; }
+              if(!document.getElementById('manualYear').value) { alert("Please enter Year."); return false; }
+          }
+          return true;
+      }
+      if(step === 3) {
+          if(!document.getElementById('glassPart').value) { alert("Please select glass part."); return false; }
+          return true;
+      }
+      return true;
+  }
+
+  function updateBackground(type) {
+      if(type === 'Classic Car') document.body.style.backgroundImage = "url('MainPageClassicChevyTruck.jpg')";
+      else if(type === 'Heavy Equipment') document.body.style.backgroundImage = "url('Background.jpg')"; 
+      else document.body.style.backgroundImage = "url('Background.jpg')";
+  }
+
+  const ySel = document.getElementById('yearSelect');
+  const mSel = document.getElementById('makeSelect');
+  const modSel = document.getElementById('modelSelect');
+
+  (function initYears() {
+    const cy = new Date().getFullYear() + 1;
+    for (let y = cy; y >= 1990; y--) { let o=document.createElement('option'); o.value=y; o.text=y; ySel.add(o); }
+  })();
+
+  function enableMake() {
+      mSel.innerHTML = '<option value="">Select Make</option>';
+      POPULAR_MAKES.forEach(m => { let o=document.createElement('option'); o.value=m; o.text=m; mSel.add(o); });
+      mSel.disabled = false;
+  }
+
+  function loadModels() {
+    const year = ySel.value; const make = mSel.value;
+    modSel.innerHTML = '<option>Loading...</option>'; modSel.disabled=true;
+    document.getElementById('modelLoad').style.display='block';
+    fetch(`https://vpic.nhtsa.dot.gov/api/vehicles/GetModelsForMakeYear/make/${make}/modelyear/${year}?format=json`)
+    .then(r=>r.json()).then(d=>{
+      modSel.innerHTML='<option value="">Select Model</option>';
+      [...new Set(d.Results.map(i=>i.Model_Name))].sort().forEach(m=>{ let o=document.createElement('option'); o.value=m; o.text=m; modSel.add(o); });
+      modSel.disabled=false; document.getElementById('modelLoad').style.display='none';
+    });
+  }
+
+  function handleGlassChange() {
+    const val = document.getElementById('glassPart').value;
+    updateBackground(val); 
+    document.getElementById('windshieldBranch').classList.add('hidden');
+    document.getElementById('doorGlassOptions').classList.add('hidden');
+    document.getElementById('backGlassOptions').classList.add('hidden');
+    if(val === 'Windshield') { document.getElementById('windshieldBranch').classList.remove('hidden'); }
+    else if(val === 'Chip Repair') { 
+        document.getElementById('windshieldBranch').classList.remove('hidden'); 
+        document.querySelectorAll('input[name="ws_service"]')[0].click();
+    }
+    else if(val === 'Door Glass') { document.getElementById('doorGlassOptions').classList.remove('hidden'); }
+    else if(val === 'Back Glass') { document.getElementById('backGlassOptions').classList.remove('hidden'); }
+  }
+
+  function toggleWS(type, lbl) {
+      document.querySelectorAll('#windshieldBranch .radio-label').forEach(l=>l.classList.remove('selected'));
+      lbl.classList.add('selected'); lbl.querySelector('input').checked=true;
+      if(type==='Repair') { document.getElementById('chipDetails').classList.remove('hidden'); document.getElementById('replaceDetails').classList.add('hidden'); }
+      else { document.getElementById('chipDetails').classList.add('hidden'); document.getElementById('replaceDetails').classList.remove('hidden'); }
+  }
+  function checkSize() {
+      if(document.getElementById('sizeCheck').value === 'No') { alert("Over 6 inches needs replacement."); document.querySelectorAll('input[name="ws_service"]')[1].click(); }
+  }
+
+  function getBrainQuote() {
+      const service = document.getElementById('glassPart').value;
+      if(!service) return;
+      let actualService = service;
+      if(service === 'Windshield') {
+          const ws = document.querySelector('input[name="ws_service"]:checked');
+          if(ws && ws.value === 'Repair') actualService = 'Chip Repair';
+      }
+      const zip = document.getElementById('zipInput').value;
+      const count = document.getElementById('chip_count').value;
+      const loc = document.querySelector('input[name="service_loc"]:checked') ? document.querySelector('input[name="service_loc"]:checked').value : 'Shop';
+      
+      const vClass = document.getElementById('vehicleClass').value;
+      let year, make;
+      if(vClass === 'Personal') {
+          year = document.getElementById('yearSelect').value;
+          make = document.getElementById('makeSelect').value;
+      } else {
+          year = document.getElementById('manualYear').value || "2000";
+          make = document.getElementById('manualMake').value || "Heavy";
+      }
+
+      document.getElementById('brainPriceBox').classList.remove('hidden');
+      document.getElementById('brainTotal').innerText = "Calculating...";
+
+      fetch(brainURL, {
+          method: 'POST', headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({
+              service: actualService, zip: zip, chip_count: count, service_loc: loc,
+              make: make, year: year
+          })
+      })
+      .then(r=>r.json()).then(d=>{
+          if(d.error) { document.getElementById('brainTotal').innerText = "Blocked"; return; }
+          document.getElementById('brainTotal').innerText = "$" + d.price + (d.isEstimate?"+":".00");
+          document.getElementById('brainNote').innerText = d.note;
+          if(d.afterpay) document.getElementById('afterpayText').innerText = `Or 4 payments of $${d.afterpay.monthly} with Afterpay`;
+          else document.getElementById('afterpayText').innerText = "";
+      });
+  }
+
+  function togglePay(type, lbl) {
+      document.querySelectorAll('.options-box .radio-label').forEach(l=>{ if(l.textContent.includes('Self')||l.textContent.includes('Insurance')) l.classList.remove('selected'); });
+      lbl.classList.add('selected'); lbl.querySelector('input').checked=true;
+      if(type==='Insurance') { document.getElementById('insuranceSection').classList.remove('hidden'); document.getElementById('selfPaySection').classList.add('hidden'); }
+      else { document.getElementById('insuranceSection').classList.add('hidden'); document.getElementById('selfPaySection').classList.remove('hidden'); getBrainQuote(); }
+  }
+  function toggleLoc(type, lbl) {
+      document.querySelectorAll('#selfPaySection .radio-label').forEach(l=>{ if(l.textContent.includes('Shop')||l.textContent.includes('Mobile')) l.classList.remove('selected'); });
+      lbl.classList.add('selected'); lbl.querySelector('input').checked=true;
+      if(type==='Mobile') document.getElementById('mobileAddr').classList.remove('hidden'); else document.getElementById('mobileAddr').classList.add('hidden');
+      getBrainQuote();
+  }
+
+  function openTerms() { document.getElementById('termsModal').style.display='flex'; }
+  document.getElementById('agreeCheck').addEventListener('change', function() { document.getElementById('confirmBtn').disabled=!this.checked; });
+
+  // REPLACED FUNCTION FOR GOOGLE ADS ENHANCED CONVERSIONS
+  function finalSubmit() {
+      const btn = document.getElementById('confirmBtn'); btn.innerText = "PROCESSING..."; btn.disabled=true;
+      const fd = new FormData(document.getElementById('zionForm'));
+      
+      const vClass = document.getElementById('vehicleClass').value;
+      if(vClass !== 'Personal') {
+          fd.set('year', document.getElementById('manualYear').value);
+          fd.set('make', document.getElementById('manualMake').value);
+          fd.set('model', document.getElementById('manualModel').value);
+      }
+      
+      fd.append('quoted_price', document.getElementById('brainTotal').innerText);
+      fd.set('user_agent', navigator.userAgent);
+
+      // Save Data for Enhanced Conversions + Google Sheet
+      fetch(scriptURL, { method:'POST', body:fd, mode:'no-cors' })
+      .then(()=>{ 
+          sessionStorage.setItem('zion_valid', 'true');
+          // Capture for Google Ads
+          sessionStorage.setItem('zion_email', document.getElementById('email').value);
+          sessionStorage.setItem('zion_phone', document.getElementById('phone').value);
+          window.location.href='thankyou.html'; 
+      })
+      .catch(()=>{ alert("Error"); btn.disabled=false; });
+  }
+
+  const today = new Date().toISOString().split('T')[0];
+  if(document.getElementById('reqDate')) document.getElementById('reqDate').min = today;
+  document.getElementById('vinInput').addEventListener('input', function() { this.value = this.value.toUpperCase().replace(/[IOQ]/g, '').replace(/[^A-Z0-9]/g, ''); });
+  function validateEmail() { const email = document.getElementById('emailInput').value; const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; if(!re.test(email) && email.length > 0) { alert("Invalid Email"); return false; } return true; }
+</script>
 </body>
 </html>
