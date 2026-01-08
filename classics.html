@@ -3,155 +3,452 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Classic Restoration Glass | Zion Auto Glass</title>
+<title>Zion Auto Glass | Classic Car Restoration</title>
 
 <script async src="https://www.googletagmanager.com/gtag/js?id=AW-870403519"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
-  gtag('config', 'AW-870403519');
+  gtag('config', 'AW-870403519', {'send_page_view': true});
 </script>
-<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 
 <style>
-  /* --- BASE THEME (Chevy Truck) --- */
+  /* --- ZION THEME: Classic Edition --- */
   :root { 
-    --primary: #004aad; 
-    --classic-gold: #c5a059; /* THE CLASSIC ACCENT */
-    --classic-dark: #8a6d3b;
-    --red: #e60000; 
-    --glass-bg: rgba(255, 255, 255, 0.96); 
-    --shadow: 0 20px 60px rgba(0,0,0,0.6);
+    --primary: #004aad; /* Zion Blue */
+    --red: #e60000;     /* Zion Red */
+    --glass: rgba(255, 255, 255, 0.96); 
+    --overlay: rgba(0,0,0,0.6);
   }
   
   body { 
-    font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; 
+    font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; 
     margin: 0; padding: 0; color: #333;
-    background-image: url('https://m.zionautoglass.com/MainPageClassicChevyTruck.jpg'); 
+    /* DYNAMIC BACKGROUND - PRE-SET FOR CLASSIC */
+    background-image: url('MainPageClassicChevyTruck.jpg');
     background-size: cover; background-position: center; background-attachment: fixed;
     min-height: 100vh;
+    transition: background-image 0.5s ease-in-out;
   }
 
-  .main-wrapper { display: flex; flex-direction: column; align-items: center; padding: 20px; padding-top: 40px; }
-  
-  /* CONTAINER: Wider for Classics, Gold Border */
+  body::before { content:""; position:fixed; top:0; left:0; right:0; bottom:0; background: var(--overlay); z-index:-1; }
+
+  .main-wrapper {
+    display: flex; flex-direction: column; align-items: center;
+    padding: 20px; width: 100%; box-sizing: border-box;
+    padding-top: 40px;
+  }
+
+  /* MAIN CONTAINER */
   .container { 
-    width: 100%; max-width: 600px; /* WIDER than standard */
-    background: var(--glass-bg); 
-    backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
-    padding: 35px; border-radius: 12px; 
-    box-shadow: var(--shadow); 
-    border-top: 5px solid var(--classic-gold); /* DISTINCT TOP BORDER */
-    margin-bottom: 40px; position: relative;
+    width: 100%; max-width: 500px; 
+    background: var(--glass); 
+    padding: 25px; border-radius: 12px; 
+    box-shadow: 0 15px 40px rgba(0,0,0,0.6); 
+    margin-bottom: 40px;
+    position: relative;
+    border: 1px solid rgba(255,255,255,0.4);
   }
 
-  .logo-img { max-width: 260px; width: 100%; display: block; margin: 0 auto 10px; }
-  
-  /* HEADER: Vintage Style */
-  h2.form-header { 
-    text-align: center; color: var(--classic-dark); 
-    margin-top: 5px; margin-bottom: 30px; 
-    font-family: "Georgia", serif; /* SERIF FONT FOR CLASSICS */
-    font-size: 1.8rem; text-transform: uppercase; letter-spacing: 2px;
-    border-bottom: 1px solid var(--classic-gold); padding-bottom: 15px;
-  }
+  .logo-img { max-width: 260px; width: 100%; display: block; margin: 0 auto 15px; }
 
-  /* INPUTS: Gold/Chrome Focus */
-  input, select, textarea { 
-    width: 100%; padding: 16px; margin-bottom: 18px; 
-    border: 2px solid #ccc; border-radius: 4px; /* Squarer corners for retro feel */
-    font-size: 16px; font-weight: 600; background: #fffcf5; /* Slight cream tint */
-    transition: all 0.3s;
-  }
-  input:focus, select:focus, textarea:focus { 
-    border-color: var(--classic-gold); 
-    outline: none; background: #fff;
-    box-shadow: 0 0 0 4px rgba(197, 160, 89, 0.2); 
+  /* FORM INPUTS */
+  label { 
+    font-weight: 800; font-size: 0.75rem; text-transform: uppercase; 
+    display: block; margin-bottom: 5px; color: var(--primary); letter-spacing: 0.5px;
   }
   
-  label { font-weight: 700; font-size: 0.8rem; text-transform: uppercase; display: block; margin-bottom: 8px; color: var(--classic-dark); letter-spacing: 1px; }
-  .row { display: flex; gap: 15px; } .col { flex: 1; } .hidden { display: none; }
+  input, select { 
+    width: 100%; padding: 14px; margin-bottom: 12px;
+    border: 2px solid #ccc; border-radius: 8px; 
+    box-sizing: border-box; font-size: 16px; font-weight: 700;
+  }
+  input:focus, select:focus { border-color: var(--primary); outline: none; box-shadow: 0 0 0 3px rgba(0, 74, 173, 0.2); }
   
-  /* NOTES AREA */
-  textarea { resize: vertical; min-height: 120px; font-family: inherit; }
+  .row { display: flex; gap: 10px; } .col { flex: 1; }
+  .hidden { display: none; }
 
-  /* BUTTON: Keeps the Action Red */
-  button[type="submit"] { 
-    width: 100%; background: var(--red); color: white; padding: 20px; border: none; 
-    font-size: 1.3rem; font-weight: 900; border-radius: 4px; cursor: pointer; margin-top: 10px; 
-    text-transform: uppercase; letter-spacing: 1px;
-    box-shadow: 0 5px 20px rgba(0,0,0,0.3);
-  }
-  button:hover { background: #b30000; transform: translateY(-2px); }
-
-  /* PAYMENT SELECTOR (Classy Style) */
-  .pay-box { display: flex; gap: 10px; margin-top: 10px; }
-  .pay-opt { 
-    flex: 1; text-align: center; border: 2px solid #ccc; padding: 15px; 
-    cursor: pointer; font-weight: bold; color: #666; transition: 0.2s;
-  }
-  .pay-opt:hover { border-color: var(--classic-gold); color: var(--classic-dark); }
-  .pay-opt.selected { background: var(--classic-gold); color: white; border-color: var(--classic-gold); }
-  .pay-opt input { display: none; }
-
-  /* INFO BADGE */
-  .info-box { 
-    width: 100%; max-width: 400px; background: rgba(0, 0, 0, 0.9); color: #c5a059; 
-    padding: 30px; border: 2px solid var(--classic-gold); 
-    text-align: center; margin-top: 20px; 
+  /* BOX STYLES */
+  .options-box { background: #f0f7ff; padding: 15px; border-radius: 8px; border: 1px solid #cce4ff; margin-bottom: 15px; }
+  
+  /* ANTI-STEERING WARNING */
+  .alert-box { 
+    background: #fff5f5; color: #b91c1c; 
+    padding: 12px; border-left: 4px solid var(--red); 
+    font-size: 0.85rem; margin-bottom: 15px; line-height: 1.4;
   }
 
-  @media (min-width: 900px) { .main-wrapper { flex-direction: row; justify-content: center; align-items: flex-start; gap: 50px; } }
+  /* SUBMIT BUTTON */
+  button[type="button"], button[type="submit"] { 
+    width: 100%; background: var(--red); color: white; 
+    padding: 18px; border: none; font-size: 1.2rem; 
+    font-weight: 900; border-radius: 6px; cursor: pointer; 
+    text-transform: uppercase; margin-top: 10px;
+    transition: background 0.3s;
+  }
+  button:hover { background: #cc0000; }
+  button:disabled { background: #999; cursor: not-allowed; }
+
+  /* FOOTER */
+  .info-box {
+    width: 100%; max-width: 500px;
+    background: rgba(0, 0, 0, 0.85);
+    color: white; padding: 25px;
+    border-radius: 12px; text-align: center;
+    border: 1px solid rgba(255,255,255,0.2);
+    backdrop-filter: blur(5px);
+  }
+  .footer-img { width: 100%; border-radius: 6px; border: 1px solid #555; margin-top: 15px; }
+
+  /* AFTERPAY GREEN TEXT */
+  .afterpay-green { color: #00c853; font-weight: 900; font-size: 1.1rem; text-transform: uppercase; margin-top: 8px; }
+  
+  /* HONEYPOT (Spam Trap) */
+  .antispam { position: absolute; left: -9999px; opacity: 0; }
+
+  /* TERMS MODAL */
+  .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 1000; justify-content: center; align-items: center; padding: 20px; }
+  .modal-content { background: white; padding: 25px; border-radius: 12px; max-width: 500px; width: 100%; max-height: 80vh; overflow-y: auto; text-align: left; border: 4px solid var(--red); }
+  .terms-list li { margin-bottom: 10px; font-size: 0.9rem; line-height: 1.4; color: #444; }
+  .terms-heading { color: var(--red); font-weight: 900; text-transform: uppercase; margin-top: 15px; border-bottom: 2px solid #eee; padding-bottom: 5px; }
+
+  @media (min-width: 900px) {
+    .main-wrapper { flex-direction: row; justify-content: center; align-items: flex-start; gap: 40px; }
+    .info-box { margin-top: 0; position: sticky; top: 50px; }
+  }
 </style>
 </head>
 <body>
 
-<div class="main-wrapper">
-  <div class="container">
-    <img src="https://m.zionautoglass.com/zionlogo.jpg" alt="Zion Auto Glass" class="logo-img">
-    <h2 class="form-header">Restoration Quote</h2>
+<div id="termsModal" class="modal-overlay">
+  <div class="modal-content">
+    <h2 style="color:var(--primary); margin-top:0; text-align:center;">SERVICE AGREEMENT</h2>
     
-    <form id="zionForm">
-      <input type="hidden" name="glassPart" value="Classic Car">
+    <div class="terms-heading">🛑 ABSOLUTELY NOTS</div>
+    <ul class="terms-list">
+      <li><strong>NO HIGH PRESSURE WASHERS</strong> for 7 Days after replacement.</li>
+      <li><strong>DO NOT</strong> slam doors with windows rolled up for 48 hours.</li>
+      <li><strong>Classic/Gasket Install:</strong> Rubber seals require time to seat. Leak checks are performed, but avoid direct water pressure.</li>
+    </ul>
+
+    <div class="terms-heading">ℹ️ BOOKING POLICY</div>
+    <ul class="terms-list">
+      <li>All appointments are requests until confirmed by the owner.</li>
+      <li>We are a dedicated "Mom & Pop" shop striving for perfection.</li>
+    </ul>
+
+    <div style="background:#f9f9f9; padding:15px; border-radius:8px; text-align:center; margin-top:20px;">
+      <label><input type="checkbox" id="agreeCheck"> I AGREE TO THESE TERMS</label>
+      <button onclick="finalSubmit()" id="confirmBtn" disabled style="margin-top:10px; font-size:1rem; padding:12px;">ACCEPT & SUBMIT</button>
+      <button onclick="document.getElementById('termsModal').style.display='none'" style="background:#ccc; margin-top:10px; font-size:0.9rem; padding:10px;">CANCEL</button>
+    </div>
+  </div>
+</div>
+
+<div class="main-wrapper">
+  
+  <div class="container">
+    <img src="zionlogo.jpg" alt="Zion Auto Glass" class="logo-img">
+    
+    <form id="zionForm" onsubmit="event.preventDefault(); openTerms();">
       <input type="hidden" name="gclid" id="gclid">
       <input type="hidden" name="user_ip" id="user_ip">
-      <div style="position:absolute; left:-9999px;"><input type="text" id="honey_trap" name="website_url" tabindex="-1"></div>
+      <input type="hidden" name="user_agent" id="user_agent">
+      <div class="antispam"><input type="text" name="website_url" id="honey_trap" tabindex="-1" autocomplete="off"></div>
+
+      <div class="row">
+        <div class="col"><label>First Name</label><input type="text" name="firstName" placeholder="Jane" required></div>
+        <div class="col"><label>Last Name</label><input type="text" name="lastName" placeholder="Doe" required></div>
+      </div>
       
-      <div class="row">
-        <div class="col"><label>First Name</label><input type="text" name="firstName" required></div>
-        <div class="col"><label>Last Name</label><input type="text" name="lastName" required></div>
-      </div>
-      <div class="row">
-        <div class="col"><label>Phone</label><input type="tel" name="phone" required></div>
-        <div class="col"><label>Zip</label><input type="tel" name="zip" required></div>
-      </div>
-      <label>Email Address</label><input type="email" name="email" id="emailInput" onchange="validateEmail()" required>
-      <div id="emailError" class="hidden" style="color:var(--red); font-size:0.8rem; margin-top:-15px; margin-bottom:10px;">Invalid Email</div>
+      <label>Mobile Phone</label><input type="tel" name="phone" placeholder="(936) 555-0199" required>
+      <label>Email Address</label><input type="email" name="email" placeholder="jane@example.com" required>
+      <label>Zip Code</label><input type="tel" name="zip" id="zipInput" placeholder="75901" maxlength="5" required>
 
-      <hr style="border:0; border-top:1px solid #ddd; margin: 30px 0;">
+      <hr style="border:0; border-top:1px solid #eee; margin: 15px 0;">
 
       <div class="row">
-        <div class="col" style="flex:0 0 30%;">
-            <label>Year</label>
-            <select id="year" name="year" required><option value="">---</option></select>
+        <div class="col">
+          <label>Year</label>
+          <select id="year" name="year" required onchange="loadMakes()"><option value="">Year</option></select>
         </div>
         <div class="col">
-            <label>Make & Model</label>
-            <input type="text" name="make_model" placeholder="e.g. 1965 Ford Mustang" required>
+          <label>Make</label>
+          <select id="make" name="make" required disabled onchange="loadModels()"><option>-- Select Year --</option></select>
         </div>
       </div>
       
-      <label>Body Style / Trim</label>
-      <input type="text" name="bodyStyle" placeholder="e.g. Fastback, Convertible, 2-Door Post" required>
+      <label>Model</label>
+      <select id="model" name="model" required disabled><option>-- Select Make --</option></select>
 
-      <label>Project Notes & Condition</label>
-      <textarea name="notes" placeholder="Tell us about the car. Is it original? Custom chop? Is the glass flat or curved? Do you need new rubber seals?"></textarea>
+      <label style="margin-top:10px;">Service Type</label>
+      <select id="glassPart" name="glassPart" required onchange="handleServiceChange()">
+        <option value="">-- Select Service --</option>
+        <option value="Classic Car" selected>Classic Car Restoration</option>
+        <option value="Windshield">Windshield Replacement/Repair</option>
+        <option value="Back Glass">Back Glass</option>
+        <option value="Door Glass">Door Glass</option>
+        <option value="Vent/Quarter">Vent / Quarter Glass</option>
+        <option value="Regulator">Window Motor / Regulator</option>
+        <option value="Leak Diag">Leak Diagnostic</option>
+        <option value="Heavy Equipment">Heavy Equipment</option>
+      </select>
 
-      <label style="margin-top:15px;">Payment Preference</label>
-      <div class="pay-box">
-        <label class="pay-opt selected" onclick="togglePay(this)"><input type="radio" name="pay_type" value="Self Pay" checked> Self Pay</label>
-        <label class="pay-opt" onclick="togglePay(this)"><input type="radio" name="pay_type" value="Insurance"> Insurance</label>
+      <div id="windshieldOptions" class="hidden options-box">
+        <label>Service Detail</label>
+        <select name="ws_service" id="wsService" onchange="checkBrain()">
+          <option value="Replace">Full Replacement</option>
+          <option value="Repair">Rock Chip Repair</option>
+        </select>
+        
+        <div id="vinContainer" class="hidden" style="margin-top:10px;">
+          <label>VIN (Required for ADAS Safety Check)</label>
+          <input type="text" name="vin" id="vinInput" placeholder="17 Digit VIN" maxlength="17">
+        </div>
       </div>
 
-      <div class="cf-turnstile
+      <div id="brainBox" class="hidden" style="border:2px solid var(--primary); padding:15px; text-align:center; margin-top:15px; border-radius:8px;">
+        <span style="font-size:0.8rem; text-transform:uppercase; color:#666;">Estimated Quote</span>
+        <div id="brainPrice" style="font-size:2rem; font-weight:900; color:var(--primary);">Calculated...</div>
+        <div id="afterpayText" class="afterpay-green"></div>
+        <div id="brainNote" style="font-size:0.75rem; color:#555; margin-top:5px;"></div>
+      </div>
+
+      <label style="margin-top:15px;">Payment Method</label>
+      <select name="pay_type" id="payType" onchange="toggleInsurance()">
+        <option value="Self Pay">Self Pay / Card / Afterpay</option>
+        <option value="Insurance">Insurance Claim</option>
+      </select>
+
+      <div id="insuranceAlert" class="hidden alert-box">
+        <strong>YOUR RIGHTS:</strong> It is unlawful for an insurance company to pressure you to use a specific shop. You have the legal right to choose Zion Auto Glass.
+      </div>
+
+      <button type="submit" id="submitBtn">GET MY CLASSIC QUOTE</button>
+      <p style="text-align:center; font-size:0.75rem; color:#888; margin-top:10px;">Secure SSL Submission</p>
+    </form>
+  </div>
+
+  <div class="info-box">
+    <h3 style="margin-top:0; color:#4da6ff; text-transform:uppercase; letter-spacing:1px;">Classic & Restoration</h3>
+    <p>Specializing in <strong>Vintage Glass & Rubber Seals</strong>.</p>
+    <p>#1 on Google for Auto Glass services.</p>
+    <hr style="border-color:rgba(255,255,255,0.2);">
+    <p style="font-size:1.2rem; font-weight:bold; color:#4da6ff;">1-936-707-7105</p>
+    <p>1500 Atkinson Drive, Lufkin, TX 75901</p>
+    <img src="shopshineyrain.jpg" class="footer-img" alt="Zion Shop">
+  </div>
+
+</div>
+
+<script>
+  // --- CONFIGURATION ---
+  const CONFIG = {
+    VPN_KEY: 'ad27e9e886c443d39ea71cd9aed6ea20',
+    BRAIN_URL: 'https://zion-brain.zion-auto-glass.workers.dev/',
+    DB_URL: 'https://script.google.com/macros/s/AKfycbzy3anFgwk-7c1UFr9J0Qb8D4h5awGmVlsLjW_uAs0qRfusgJQSqsQllQk0FZtTTR0l/exec'
+  };
+
+  // --- 1. INITIAL SETUP & TRACKING ---
+  window.onload = function() {
+    // Capture GCLID & User Agent
+    const urlParams = new URLSearchParams(window.location.search);
+    const gclid = urlParams.get('gclid');
+    if (gclid) document.getElementById('gclid').value = gclid;
+    document.getElementById('user_agent').value = navigator.userAgent;
+
+    // Populate Years (Extended range for Classics: 2026 -> 1950)
+    const ySel = document.getElementById('year');
+    const cy = new Date().getFullYear() + 1;
+    for(let i=cy; i>=1950; i--) { let o=document.createElement('option'); o.value=i; o.text=i; ySel.add(o); }
+
+    // FORCE UPDATE FOR CLASSIC CAR
+    handleServiceChange();
+  };
+
+  // --- 2. VEHICLE API (NHTSA) ---
+  const mSel = document.getElementById('make');
+  const modSel = document.getElementById('model');
+
+  function loadMakes() {
+    const year = document.getElementById('year').value;
+    if(!year) return;
+    mSel.disabled = true; mSel.innerHTML = '<option>Loading...</option>';
+    
+    fetch(`https://vpic.nhtsa.dot.gov/api/vehicles/GetMakesForManufacturerAndYear/mer?year=${year}&format=json`)
+    .then(r=>r.json()).then(d=>{
+      mSel.innerHTML = '<option value="">Select Make</option>';
+      let makes = [...new Set(d.Results.map(x=>x.MakeName))].sort();
+      makes.forEach(m=>{ let o=document.createElement('option'); o.value=m; o.text=m; mSel.add(o); });
+      mSel.disabled = false;
+    }).catch(e=>alert("API Error: Please refresh"));
+  }
+
+  function loadModels() {
+    const year = document.getElementById('year').value;
+    const make = mSel.value;
+    modSel.disabled = true; modSel.innerHTML = '<option>Loading...</option>';
+    
+    fetch(`https://vpic.nhtsa.dot.gov/api/vehicles/GetModelsForMakeYear/make/${make}/modelyear/${year}?format=json`)
+    .then(r=>r.json()).then(d=>{
+      modSel.innerHTML = '<option value="">Select Model</option>';
+      let models = [...new Set(d.Results.map(x=>x.Model_Name))].sort();
+      models.forEach(m=>{ let o=document.createElement('option'); o.value=m; o.text=m; modSel.add(o); });
+      modSel.disabled = false;
+    });
+  }
+
+  // --- 3. DYNAMIC LOGIC & BACKGROUNDS ---
+  function handleServiceChange() {
+    const part = document.getElementById('glassPart').value;
+    const wsOpts = document.getElementById('windshieldOptions');
+    
+    // Dynamic Background Logic (Default to Classic if selected)
+    if(part === 'Classic Car') document.body.style.backgroundImage = "url('MainPageClassicChevyTruck.jpg')";
+    else document.body.style.backgroundImage = "url('Background.jpg')";
+
+    // Show/Hide Options
+    if(part === 'Windshield') {
+      wsOpts.classList.remove('hidden');
+      checkBrain();
+    } else {
+      wsOpts.classList.add('hidden');
+      checkBrain();
+    }
+    
+    // VIN Logic
+    const vinCont = document.getElementById('vinContainer');
+    const wsType = document.getElementById('wsService').value;
+    if(part === 'Windshield' && wsType === 'Replace') vinCont.classList.remove('hidden');
+    else vinCont.classList.add('hidden');
+  }
+
+  function toggleInsurance() {
+    const type = document.getElementById('payType').value;
+    if(type === 'Insurance') document.getElementById('insuranceAlert').classList.remove('hidden');
+    else document.getElementById('insuranceAlert').classList.add('hidden');
+  }
+
+  // --- 4. THE BRAIN (Pricing Engine) ---
+  let rateLimitTimer = null; 
+
+  function checkBrain() {
+    if(rateLimitTimer) clearTimeout(rateLimitTimer);
+    rateLimitTimer = setTimeout(fetchQuote, 800); 
+  }
+
+  function fetchQuote() {
+    const part = document.getElementById('glassPart').value;
+    const zip = document.getElementById('zipInput').value;
+    const make = mSel.value;
+    
+    // Classic car bypasses brain check if incomplete data, but allows it if data exists
+    if(part === 'Classic Car' && (!zip || zip.length < 5)) return; 
+    if(!part || zip.length < 5 || !make) return;
+
+    document.getElementById('brainBox').classList.remove('hidden');
+    document.getElementById('brainPrice').innerText = "Calculating...";
+
+    const payload = {
+        service: part,
+        zip: zip,
+        make: make,
+        year: document.getElementById('year').value,
+        chip_count: 1
+    };
+
+    fetch(CONFIG.BRAIN_URL, {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(payload)
+    })
+    .then(r=>r.json()).then(d=>{
+        document.getElementById('brainPrice').innerText = "$" + d.price + (d.isEstimate ? "+" : "");
+        document.getElementById('brainNote').innerText = d.note || "";
+        
+        if(d.afterpay) {
+           document.getElementById('afterpayText').innerText = `OR 4 PAYMENTS OF $${d.afterpay.monthly} WITH AFTERPAY`;
+        } else {
+           document.getElementById('afterpayText').innerText = "";
+        }
+    })
+    .catch(e => console.log("Brain connection silent fail")); 
+  }
+
+  // --- 5. SECURITY, MODAL & SUBMIT ---
+  
+  // A. Trigger Modal first
+  function openTerms() {
+    const btn = document.getElementById('submitBtn');
+    
+    // Bot Trap
+    if(document.getElementById('honey_trap').value !== "") { console.log("Bot detected"); return; }
+    
+    // Basic Validation
+    if(!document.getElementById('zionForm').checkValidity()) {
+        alert("Please fill in all required fields."); return;
+    }
+
+    document.getElementById('termsModal').style.display = 'flex';
+  }
+
+  // B. Enable Confirm Button
+  document.getElementById('agreeCheck').addEventListener('change', function() {
+    document.getElementById('confirmBtn').disabled = !this.checked;
+  });
+
+  // C. Final Submit (After Terms)
+  function finalSubmit() {
+    const btn = document.getElementById('confirmBtn');
+    btn.innerText = "VERIFYING...";
+    btn.disabled = true;
+
+    // VPN Check
+    fetch(`https://vpnapi.io/api/?key=${CONFIG.VPN_KEY}`)
+    .then(r => r.json())
+    .then(secData => {
+        if(secData.security.vpn || secData.security.proxy || secData.security.tor) {
+            alert("Security System: VPNs are not allowed.");
+            btn.innerText = "TRY AGAIN";
+            btn.disabled = false;
+            return;
+        }
+        document.getElementById('user_ip').value = secData.ip;
+        sendToDatabase();
+    }).catch(err => {
+        console.log("Security API down, proceeding");
+        sendToDatabase();
+    });
+  }
+
+  function sendToDatabase() {
+    const btn = document.getElementById('confirmBtn');
+    btn.innerText = "SENDING...";
+    
+    const fd = new FormData(document.getElementById('zionForm'));
+    fd.append('quoted_price', document.getElementById('brainPrice').innerText);
+
+    fetch(CONFIG.DB_URL, { method: 'POST', body: fd, mode: 'no-cors' })
+    .then(() => {
+        // SET KEY FOR THANK YOU PAGE
+        sessionStorage.setItem('zion_valid', 'true');
+        
+        // CONVERSION TRACKING
+        gtag('event', 'conversion', {'send_to': 'AW-870403519/YOUR_LABEL_HERE'}); 
+        
+        window.location.href = 'thankyou.html';
+    })
+    .catch(err => {
+        alert("Transmission Error. Please call 936-707-7105");
+        btn.innerText = "SUBMIT";
+        btn.disabled = false;
+    });
+  }
+
+  document.getElementById('vinInput').addEventListener('input', function() {
+    this.value = this.value.toUpperCase().replace(/[^A-Z0-9]/g, ''); 
+  });
+</script>
+</body>
+</html>
