@@ -39,6 +39,7 @@
     display: flex; flex-direction: column; align-items: center;
     padding: 20px; width: 100%; box-sizing: border-box;
     padding-top: 40px;
+    padding-bottom: 80px; /* Space for sticky button */
   }
 
   /* FORM CONTAINER */
@@ -73,7 +74,16 @@
   /* OPTIONS BOXES */
   .options-box { background: #f0f7ff; padding: 15px; border-radius: 8px; border: 1px solid #cce4ff; margin-bottom: 15px; }
   
-  /* ALERT BOXES (Anti-Steering / Legal) */
+  /* MOBILE CHECKBOX STYLE */
+  .mobile-option {
+    background: #fff; border: 2px solid var(--primary); 
+    padding: 10px; border-radius: 8px; margin-bottom: 15px;
+    display: flex; align-items: center; gap: 10px; cursor: pointer;
+  }
+  .mobile-option input { width: 20px; height: 20px; margin: 0; }
+  .mobile-option span { font-weight: bold; font-size: 0.9rem; color: var(--primary); }
+
+  /* ALERT BOXES */
   .alert-box { 
     background: #fff5f5; color: #b91c1c; 
     padding: 12px; border-left: 4px solid var(--red); 
@@ -102,20 +112,38 @@
   }
   .footer-img { width: 100%; border-radius: 6px; border: 1px solid #555; margin-top: 15px; }
 
-  /* AFTERPAY TEXT */
   .afterpay-green { color: #00c853; font-weight: 900; font-size: 1.1rem; text-transform: uppercase; margin-top: 8px; }
-  
-  /* HONEYPOT (Spam Trap) */
   .antispam { position: absolute; left: -9999px; opacity: 0; }
 
-  /* DESKTOP LAYOUT */
+  /* STICKY CALL BUTTON (Mobile Only) */
+  .sticky-call {
+    display: none; /* Hidden on desktop */
+    position: fixed; bottom: 20px; right: 20px; left: 20px;
+    background: #00c853; color: white;
+    text-align: center; padding: 15px;
+    border-radius: 50px; font-weight: 900; font-size: 1.2rem;
+    text-decoration: none; box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+    z-index: 1000; text-transform: uppercase;
+    animation: bounce 2s infinite;
+  }
+  @keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
+    40% {transform: translateY(-10px);}
+    60% {transform: translateY(-5px);}
+  }
+
   @media (min-width: 900px) {
-    .main-wrapper { flex-direction: row; justify-content: center; align-items: flex-start; gap: 40px; }
+    .main-wrapper { flex-direction: row; justify-content: center; align-items: flex-start; gap: 40px; padding-bottom: 20px; }
     .info-box { margin-top: 0; position: sticky; top: 50px; }
+  }
+  @media (max-width: 899px) {
+    .sticky-call { display: block; } /* Show on mobile */
   }
 </style>
 </head>
 <body>
+
+<a href="tel:9362552215" class="sticky-call">📞 Call 936-255-2215</a>
 
 <div class="main-wrapper">
   
@@ -133,8 +161,8 @@
         <div class="col"><label>Last Name</label><input type="text" name="lastName" placeholder="Doe" required></div>
       </div>
       
-      <label>Mobile Phone</label><input type="tel" name="phone" placeholder="(936) 555-0199" required>
-      <label>Email Address</label><input type="email" name="email" placeholder="jane@example.com" required>
+      <label>Mobile Phone</label><input type="tel" name="phone" id="phoneInput" placeholder="(936) 555-0199" required>
+      <label>Email Address</label><input type="email" name="email" id="emailInput" placeholder="jane@example.com" required>
       <label>Zip Code</label><input type="tel" name="zip" id="zipInput" placeholder="75901" maxlength="5" required>
 
       <hr style="border:0; border-top:1px solid #eee; margin: 15px 0;">
@@ -178,6 +206,11 @@
           <input type="text" name="vin" id="vinInput" placeholder="17 Digit VIN" maxlength="17">
         </div>
       </div>
+      
+      <label class="mobile-option" id="mobileBox">
+        <input type="checkbox" id="mobileCheck" onchange="checkBrain()">
+        <span>I need Mobile Service (We come to you)</span>
+      </label>
 
       <div id="brainBox" class="hidden" style="border:2px solid var(--primary); padding:15px; text-align:center; margin-top:15px; border-radius:8px;">
         <span style="font-size:0.8rem; text-transform:uppercase; color:#666;">Estimated Quote</span>
@@ -206,7 +239,7 @@
     <p>Voted <strong>Best of Lufkin 2025</strong> for Auto Glass Repair.</p>
     <p>#1 on Google for Auto Glass services.</p>
     <hr style="border-color:rgba(255,255,255,0.2);">
-    <p style="font-size:1.2rem; font-weight:bold; color:#4da6ff;">1-936-707-7105</p>
+    <p style="font-size:1.2rem; font-weight:bold; color:#4da6ff;"><a href="tel:9362552215" style="color:#4da6ff; text-decoration:none;">936-255-2215</a></p>
     <p>1500 Atkinson Drive, Lufkin, TX 75901</p>
     <img src="shopshineyrain.jpg" class="footer-img" alt="Zion Shop">
   </div>
@@ -216,31 +249,31 @@
 <script>
   // --- CONFIGURATION ---
   const CONFIG = {
-    // Your paid key for security checks
     VPN_KEY: 'ad27e9e886c443d39ea71cd9aed6ea20',
-    // Your Cloudflare Worker for pricing
     BRAIN_URL: 'https://zion-brain.zion-auto-glass.workers.dev/',
-    // Your Google Script for database
     DB_URL: 'https://script.google.com/macros/s/AKfycbzy3anFgwk-7c1UFr9J0Qb8D4h5awGmVlsLjW_uAs0qRfusgJQSqsQllQk0FZtTTR0l/exec'
   };
 
   // --- 1. INITIAL SETUP & TRACKING ---
   window.onload = function() {
-    // Capture GCLID
+    // A. BLACK WIDOW HANDSHAKE (Ping the Brain immediately)
+    fetch(CONFIG.BRAIN_URL + 'init').catch(e => console.log("Init Ping"));
+
+    // B. Capture GCLID
     const urlParams = new URLSearchParams(window.location.search);
     const gclid = urlParams.get('gclid');
     if (gclid) document.getElementById('gclid').value = gclid;
     
-    // Capture User Agent
+    // C. Capture User Agent
     document.getElementById('user_agent').value = navigator.userAgent;
 
-    // Populate Years
+    // D. Populate Years
     const ySel = document.getElementById('year');
     const cy = new Date().getFullYear() + 1;
     for(let i=cy; i>=1990; i--) { let o=document.createElement('option'); o.value=i; o.text=i; ySel.add(o); }
   };
 
-  // --- 2. VEHICLE API (NHTSA) ---
+  // --- 2. VEHICLE API (FIXED NHTSA URL) ---
   const mSel = document.getElementById('make');
   const modSel = document.getElementById('model');
 
@@ -250,7 +283,8 @@
     
     mSel.disabled = true; mSel.innerHTML = '<option>Loading...</option>';
     
-    fetch(`https://vpic.nhtsa.dot.gov/api/vehicles/GetMakesForManufacturerAndYear/mer?year=${year}&format=json`)
+    // UPDATED URL: Using "GetMakesForVehicleType/car"
+    fetch(`https://vpic.nhtsa.dot.gov/api/vehicles/GetMakesForVehicleType/car?year=${year}&format=json`)
     .then(r=>r.json()).then(d=>{
       mSel.innerHTML = '<option value="">Select Make</option>';
       let makes = [...new Set(d.Results.map(x=>x.MakeName))].sort();
@@ -306,21 +340,23 @@
   }
 
   // --- 4. THE BRAIN (Pricing) ---
-  let rateLimitTimer = null; // Basic client-side rate limit
+  let rateLimitTimer = null; 
 
   function checkBrain() {
-    // Debounce to prevent API Spam
     if(rateLimitTimer) clearTimeout(rateLimitTimer);
     rateLimitTimer = setTimeout(fetchQuote, 800); 
   }
 
-  function fetchQuote() {
+function fetchQuote() {
     const part = document.getElementById('glassPart').value;
     const zip = document.getElementById('zipInput').value;
-    const make = mSel.value;
+    const make = document.getElementById('make').value;
+    const model = document.getElementById('model').value;
+    const vin = document.getElementById('vinInput').value;
+    const isMobile = document.getElementById('mobileCheck') ? document.getElementById('mobileCheck').checked : false;
     
-    // Only call if we have enough info
-    if(!part || zip.length < 5 || !make) return;
+    // VALIDATION
+    if(!part || zip.length < 5 || !make || !model || model.includes("Select")) return;
 
     document.getElementById('brainBox').classList.remove('hidden');
     document.getElementById('brainPrice').innerText = "Calculating...";
@@ -335,8 +371,12 @@
         service: brainService,
         zip: zip,
         make: make,
+        model: model,
         year: document.getElementById('year').value,
-        chip_count: 1
+        vin: vin,
+        chip_count: 1,
+        // DYNAMIC SERVICE LOCATION
+        service_loc: isMobile ? "Mobile" : "Shop"
     };
 
     fetch(CONFIG.BRAIN_URL, {
@@ -345,9 +385,11 @@
         body: JSON.stringify(payload)
     })
     .then(r=>r.json()).then(d=>{
+        // Display Price
         document.getElementById('brainPrice').innerText = "$" + d.price + (d.isEstimate ? "+" : "");
         document.getElementById('brainNote').innerText = d.note || "";
         
+        // Afterpay Logic
         if(d.afterpay) {
            document.getElementById('afterpayText').innerText = `OR 4 PAYMENTS OF $${d.afterpay.monthly} WITH AFTERPAY`;
         } else {
@@ -364,7 +406,7 @@
     
     // HONEYPOT CHECK
     if(document.getElementById('honey_trap').value !== "") {
-        console.log("Bot detected"); return; // Silent fail
+        console.log("Bot detected"); return; 
     }
 
     btn.innerText = "VERIFYING...";
@@ -387,7 +429,6 @@
         sendToDatabase();
 
     }).catch(err => {
-        // Fail open if security API is down (don't lose the customer)
         console.log("Security API down, proceeding");
         sendToDatabase();
     });
@@ -397,9 +438,14 @@
     const btn = document.getElementById('submitBtn');
     btn.innerText = "SENDING...";
     
+    // SAVE DATA FOR GOOGLE CONVERSION ON THANK YOU PAGE
+    sessionStorage.setItem('zion_valid', 'true');
+    sessionStorage.setItem('zion_email', document.getElementById('emailInput').value);
+    sessionStorage.setItem('zion_phone', document.getElementById('phoneInput').value);
+
     const fd = new FormData(document.getElementById('zionForm'));
-    // Add the price the user saw
     fd.append('quoted_price', document.getElementById('brainPrice').innerText);
+    fd.append('service_location', document.getElementById('mobileCheck').checked ? "Mobile" : "In-Shop");
 
     fetch(CONFIG.DB_URL, {
         method: 'POST',
@@ -408,11 +454,11 @@
     })
     .then(() => {
         // GOOGLE ADS CONVERSION
-        gtag('event', 'conversion', {'send_to': 'AW-870403519/YOUR_LABEL_HERE'}); 
+        gtag('event', 'conversion', {'send_to': 'AW-870403519/6SA0CKnQ8t4bEL-bhZ8D'}); 
         window.location.href = 'thankyou.html';
     })
     .catch(err => {
-        alert("Transmission Error. Please call 936-707-7105");
+        alert("Transmission Error. Please call 936-255-2215");
         btn.innerText = "SUBMIT";
         btn.disabled = false;
     });
