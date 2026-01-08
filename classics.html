@@ -103,8 +103,6 @@
 
   /* AFTERPAY GREEN TEXT */
   .afterpay-green { color: #00c853; font-weight: 900; font-size: 1.1rem; text-transform: uppercase; margin-top: 8px; }
-  
-  /* HONEYPOT (Spam Trap) */
   .antispam { position: absolute; left: -9999px; opacity: 0; }
 
   /* TERMS MODAL */
@@ -162,8 +160,8 @@
         <div class="col"><label>Last Name</label><input type="text" name="lastName" placeholder="Doe" required></div>
       </div>
       
-      <label>Mobile Phone</label><input type="tel" name="phone" placeholder="(936) 555-0199" required>
-      <label>Email Address</label><input type="email" name="email" placeholder="jane@example.com" required>
+      <label>Mobile Phone</label><input type="tel" name="phone" id="phoneInput" placeholder="(936) 555-0199" required>
+      <label>Email Address</label><input type="email" name="email" id="emailInput" placeholder="jane@example.com" required>
       <label>Zip Code</label><input type="tel" name="zip" id="zipInput" placeholder="75901" maxlength="5" required>
 
       <hr style="border:0; border-top:1px solid #eee; margin: 15px 0;">
@@ -235,7 +233,7 @@
     <p>Specializing in <strong>Vintage Glass & Rubber Seals</strong>.</p>
     <p>#1 on Google for Auto Glass services.</p>
     <hr style="border-color:rgba(255,255,255,0.2);">
-    <p style="font-size:1.2rem; font-weight:bold; color:#4da6ff;">1-936-707-7105</p>
+    <p style="font-size:1.2rem; font-weight:bold; color:#4da6ff;"><a href="tel:9362552215" style="color:#4da6ff; text-decoration:none;">936-255-2215</a></p>
     <p>1500 Atkinson Drive, Lufkin, TX 75901</p>
     <img src="shopshineyrain.jpg" class="footer-img" alt="Zion Shop">
   </div>
@@ -252,22 +250,24 @@
 
   // --- 1. INITIAL SETUP & TRACKING ---
   window.onload = function() {
-    // Capture GCLID & User Agent
+    // A. BLACK WIDOW INIT
+    fetch(CONFIG.BRAIN_URL + 'init').catch(e => console.log("Init Ping"));
+
+    // B. Capture GCLID & UA
     const urlParams = new URLSearchParams(window.location.search);
     const gclid = urlParams.get('gclid');
     if (gclid) document.getElementById('gclid').value = gclid;
     document.getElementById('user_agent').value = navigator.userAgent;
 
-    // Populate Years (Extended range for Classics: 2026 -> 1950)
+    // C. Populate Years (Extended for Classics)
     const ySel = document.getElementById('year');
     const cy = new Date().getFullYear() + 1;
     for(let i=cy; i>=1950; i--) { let o=document.createElement('option'); o.value=i; o.text=i; ySel.add(o); }
 
-    // FORCE UPDATE FOR CLASSIC CAR
-    handleServiceChange();
+    handleServiceChange(); // Set initial background
   };
 
-  // --- 2. VEHICLE API (NHTSA) ---
+  // --- 2. VEHICLE API (FIXED URL) ---
   const mSel = document.getElementById('make');
   const modSel = document.getElementById('model');
 
@@ -276,7 +276,8 @@
     if(!year) return;
     mSel.disabled = true; mSel.innerHTML = '<option>Loading...</option>';
     
-    fetch(`https://vpic.nhtsa.dot.gov/api/vehicles/GetMakesForManufacturerAndYear/mer?year=${year}&format=json`)
+    // UPDATED URL: Shows ALL makes for the year (Fixes Ford bug)
+    fetch(`https://vpic.nhtsa.dot.gov/api/vehicles/GetMakesForVehicleType/car?year=${year}&format=json`)
     .then(r=>r.json()).then(d=>{
       mSel.innerHTML = '<option value="">Select Make</option>';
       let makes = [...new Set(d.Results.map(x=>x.MakeName))].sort();
@@ -338,24 +339,37 @@
     rateLimitTimer = setTimeout(fetchQuote, 800); 
   }
 
-  function fetchQuote() {
+function fetchQuote() {
     const part = document.getElementById('glassPart').value;
     const zip = document.getElementById('zipInput').value;
-    const make = mSel.value;
+    const make = document.getElementById('make').value;
+    const model = document.getElementById('model').value; 
+    const vin = document.getElementById('vinInput').value;
+    // Note: Classic page defaults to In-Shop (checkbox hidden)
+    const isMobile = document.getElementById('mobileCheck') ? document.getElementById('mobileCheck').checked : false;
     
-    // Classic car bypasses brain check if incomplete data, but allows it if data exists
-    if(part === 'Classic Car' && (!zip || zip.length < 5)) return; 
-    if(!part || zip.length < 5 || !make) return;
+    // VALIDATION
+    if(!part || zip.length < 5 || !make || !model || model.includes("Select")) return;
 
     document.getElementById('brainBox').classList.remove('hidden');
     document.getElementById('brainPrice').innerText = "Calculating...";
 
+    // Determine specific service string for Brain
+    let brainService = part;
+    if(part === 'Windshield' && document.getElementById('wsService').value === 'Repair') {
+        brainService = 'Chip Repair';
+    }
+
     const payload = {
-        service: part,
+        service: brainService,
         zip: zip,
         make: make,
+        model: model,
         year: document.getElementById('year').value,
-        chip_count: 1
+        vin: vin,
+        chip_count: 1,
+        // DYNAMIC SERVICE LOCATION
+        service_loc: isMobile ? "Mobile" : "Shop"
     };
 
     fetch(CONFIG.BRAIN_URL, {
@@ -364,9 +378,11 @@
         body: JSON.stringify(payload)
     })
     .then(r=>r.json()).then(d=>{
+        // Display Price
         document.getElementById('brainPrice').innerText = "$" + d.price + (d.isEstimate ? "+" : "");
         document.getElementById('brainNote').innerText = d.note || "";
         
+        // Afterpay Logic
         if(d.afterpay) {
            document.getElementById('afterpayText').innerText = `OR 4 PAYMENTS OF $${d.afterpay.monthly} WITH AFTERPAY`;
         } else {
@@ -377,11 +393,7 @@
   }
 
   // --- 5. SECURITY, MODAL & SUBMIT ---
-  
-  // A. Trigger Modal first
   function openTerms() {
-    const btn = document.getElementById('submitBtn');
-    
     // Bot Trap
     if(document.getElementById('honey_trap').value !== "") { console.log("Bot detected"); return; }
     
@@ -393,12 +405,10 @@
     document.getElementById('termsModal').style.display = 'flex';
   }
 
-  // B. Enable Confirm Button
   document.getElementById('agreeCheck').addEventListener('change', function() {
     document.getElementById('confirmBtn').disabled = !this.checked;
   });
 
-  // C. Final Submit (After Terms)
   function finalSubmit() {
     const btn = document.getElementById('confirmBtn');
     btn.innerText = "VERIFYING...";
@@ -426,21 +436,23 @@
     const btn = document.getElementById('confirmBtn');
     btn.innerText = "SENDING...";
     
+    // SAVE DATA FOR GOOGLE CONVERSION
+    sessionStorage.setItem('zion_valid', 'true');
+    sessionStorage.setItem('zion_email', document.getElementById('emailInput').value);
+    sessionStorage.setItem('zion_phone', document.getElementById('phoneInput').value);
+
     const fd = new FormData(document.getElementById('zionForm'));
     fd.append('quoted_price', document.getElementById('brainPrice').innerText);
+    fd.append('service_location', 'In-Shop'); // Hardcoded for Classics
 
     fetch(CONFIG.DB_URL, { method: 'POST', body: fd, mode: 'no-cors' })
     .then(() => {
-        // SET KEY FOR THANK YOU PAGE
-        sessionStorage.setItem('zion_valid', 'true');
-        
-        // CONVERSION TRACKING
-        gtag('event', 'conversion', {'send_to': 'AW-870403519/YOUR_LABEL_HERE'}); 
-        
+        // GOOGLE ADS CONVERSION
+        gtag('event', 'conversion', {'send_to': 'AW-870403519/6SA0CKnQ8t4bEL-bhZ8D'}); 
         window.location.href = 'thankyou.html';
     })
     .catch(err => {
-        alert("Transmission Error. Please call 936-707-7105");
+        alert("Transmission Error. Please call 936-255-2215");
         btn.innerText = "SUBMIT";
         btn.disabled = false;
     });
