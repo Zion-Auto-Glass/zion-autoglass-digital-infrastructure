@@ -2,134 +2,122 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Request Received | Zion Auto Glass</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Order Confirmed | Zion Auto Glass</title>
 
 <script async src="https://www.googletagmanager.com/gtag/js?id=AW-870403519"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
-
-  // RETRIEVE USER DATA (Saved from the previous page)
-  const userEmail = sessionStorage.getItem('zion_email');
-  const userPhone = sessionStorage.getItem('zion_phone');
-
-  // CONFIGURE TAG WITH ENHANCED DATA
-  // This matches the ad click to this specific person using the data we saved
-  gtag('config', 'AW-870403519', {
-    'allow_enhanced_conversions': true,
-    'user_data': {
-      'email': userEmail,
-      'phone_number': userPhone
-    }
-  });
-</script>
-
-<script>
-  // SECURITY: Only run if they actually came from the form (prevents fake stats on refresh)
-  if (sessionStorage.getItem('zion_valid') === 'true') {
-      
-      // FIRE THE SIGNAL TO GOOGLE ADS
-      gtag('event', 'conversion', {
-          'send_to': 'AW-870403519/gXEmCNu4_d0bEL-bhZ8D'  /* <--- PASTE LABEL HERE */
-      });
-
-      // CLEANUP: Wipe the data so it doesn't count twice if they refresh
-      setTimeout(() => {
-        sessionStorage.removeItem('zion_valid');
-        sessionStorage.removeItem('zion_email');
-        sessionStorage.removeItem('zion_phone');
-      }, 500); // Small delay to ensure the tag fires first
-
-  } else {
-      // If they didn't fill out the form, kick them back to start
-      window.location.replace('index.html');
-  }
+  gtag('config', 'AW-870403519');
 </script>
 
 <style>
-  /* --- SHARED DESIGN SYSTEM (Your Original Style) --- */
   :root { 
     --primary: #004aad; 
-    --glass-bg: rgba(255, 255, 255, 0.95); 
-    --glass-border: 1px solid rgba(255, 255, 255, 0.6);
-    --shadow: 0 20px 50px rgba(0,0,0,0.5);
+    --glass: rgba(255, 255, 255, 0.96); 
+    --overlay: rgba(0,0,0,0.6);
   }
   
   body { 
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; 
+    font-family: -apple-system, system-ui, sans-serif; 
     margin: 0; padding: 0; color: #333;
-    /* The Classic Chevy Background */
-    background-image: url('https://m.zionautoglass.com/MainPageClassicChevyTruck.jpg'); 
+    /* MATCHING INDEX.HTML BACKGROUND */
+    background-image: url('Background.jpg');
     background-size: cover; background-position: center; background-attachment: fixed;
     min-height: 100vh;
     display: flex; justify-content: center; align-items: center;
   }
-
-  /* GLASS CONTAINER */
-  .container { 
-    width: 90%; max-width: 480px; 
-    background: var(--glass-bg); 
-    backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
-    padding: 40px 30px; 
-    border-radius: 16px; 
-    box-shadow: var(--shadow); 
-    text-align: center;
-    border: var(--glass-border);
-    animation: popUp 0.4s ease-out;
-  }
-
-  @keyframes popUp { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
-
-  .logo-img { max-width: 220px; width: 100%; margin-bottom: 20px; }
-
-  h1 { 
-    color: var(--primary); margin: 10px 0; 
-    text-transform: uppercase; letter-spacing: 1px; font-weight: 900; 
-  }
   
-  p { font-size: 1.1rem; line-height: 1.5; color: #555; margin-bottom: 25px; }
+  body::before { content:""; position:fixed; top:0; left:0; right:0; bottom:0; background: var(--overlay); z-index:-1; }
 
-  /* SUCCESS ICON */
-  .checkmark {
-    width: 80px; height: 80px; border-radius: 50%;
-    background: #4CAF50; color: white;
-    font-size: 50px; line-height: 80px;
-    margin: 0 auto 20px;
-    box-shadow: 0 5px 15px rgba(76, 175, 80, 0.4);
+  .container { 
+    width: 100%; max-width: 450px; 
+    background: var(--glass); 
+    padding: 40px 30px; 
+    border-radius: 12px; 
+    text-align: center;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+    margin: 20px;
+    border: 1px solid rgba(255,255,255,0.4);
   }
 
-  /* BUTTONS */
-  .btn {
-    display: inline-block; width: 100%; box-sizing: border-box;
-    padding: 15px; border-radius: 50px; text-decoration: none;
-    font-weight: bold; font-size: 1.1rem; margin-top: 10px;
+  h1 { color: var(--primary); margin: 0 0 10px 0; font-size: 2.2rem; text-transform: uppercase; letter-spacing: 1px; }
+  
+  .check-icon { font-size: 60px; color: #00c853; margin-bottom: 20px; display: block; }
+  
+  .steps-box { text-align: left; background: #f0f7ff; padding: 20px; border-radius: 8px; margin: 25px 0; border: 1px solid #cce4ff; }
+  .step-item { display: flex; gap: 10px; margin-bottom: 15px; }
+  .step-num { background: var(--primary); color: white; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.8rem; flex-shrink: 0; }
+  .step-text { font-size: 0.95rem; line-height: 1.4; color: #444; }
+  .step-text strong { color: var(--primary); }
+
+  button { 
+    width: 100%; background: var(--primary); color: white; 
+    padding: 16px; border: none; font-size: 1.1rem; 
+    font-weight: 900; border-radius: 50px; cursor: pointer; 
+    text-transform: uppercase; box-shadow: 0 5px 15px rgba(0, 74, 173, 0.3);
     transition: transform 0.2s;
   }
-  .btn-primary { background: var(--primary); color: white; box-shadow: 0 4px 15px rgba(0, 74, 173, 0.3); }
-  .btn-secondary { background: white; color: #666; border: 2px solid #ddd; margin-top: 15px; }
+  button:hover { transform: translateY(-2px); background: #003380; }
   
-  .btn:hover { transform: translateY(-2px); }
+  .footer-img { width: 100%; border-radius: 6px; margin-top: 25px; border: 1px solid #ddd; }
+  
+  .contact-link { display: block; margin-top: 15px; color: #666; text-decoration: none; font-size: 0.9rem; }
 </style>
 </head>
 <body>
 
-  <div class="container">
-    <div class="checkmark">✓</div>
-    
-    <img src="https://m.zionautoglass.com/zionlogo.jpg" alt="Zion Auto Glass" class="logo-img">
-    
-    <h1>Request Received!</h1>
-    <p>Thank you for choosing Zion Auto Glass.<br>We are reviewing your details and will be in touch shortly.</p>
-    
-    <div style="background:#f0f7ff; padding:15px; border-radius:10px; border:1px solid #cce0ff; margin-bottom:20px;">
-        <p style="margin:0; font-size:0.9rem; color:#004aad;">Need immediate help?</p>
-        <a href="tel:936-255-2215" style="display:block; font-size:1.6rem; font-weight:bold; color:#004aad; text-decoration:none; margin-top:5px;">936-255-2215</a>
-    </div>
+<div class="container">
+  <span class="check-icon">✓</span>
+  <h1>Request Received!</h1>
+  <p style="font-size:1.1rem; color:#555;">Hang tight, we are checking stock.</p>
 
-    <a href="index.html" class="btn btn-secondary">Return to Home Page</a>
+  <div class="steps-box">
+    <div class="step-item">
+      <div class="step-num">1</div>
+      <div class="step-text"><strong>Review:</strong> Our team is verifying your vehicle details and glass availability right now.</div>
+    </div>
+    <div class="step-item">
+      <div class="step-num">2</div>
+      <div class="step-text"><strong>Approval:</strong> You will receive a text or call confirming the exact price and time slot.</div>
+    </div>
+    <div class="step-item">
+      <div class="step-num">3</div>
+      <div class="step-text"><strong>Confirmation:</strong> Once you approve, we'll send a Square invoice to lock in your appointment.</div>
+    </div>
   </div>
+
+  <button onclick="openMaps()">Get Directions to Shop</button>
+  
+  <a href="tel:9367077105" class="contact-link">Questions? Call (936) 707-7105</a>
+  
+  <img src="shopshineyrain.jpg" class="footer-img" alt="Zion Auto Glass Location">
+</div>
+
+<script>
+  // 1. SECURITY REDIRECT
+  // If they didn't come from the form, kick them back to start
+  if (!sessionStorage.getItem('zion_valid')) {
+    window.location.href = 'index.html';
+  }
+
+  // 2. SMART MAPS LOGIC
+  function openMaps() {
+    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    const lat = 31.3386;
+    const lon = -94.7291;
+    
+    if (isMobile) {
+      // Opens Native Maps App
+      window.location.href = `geo:${lat},${lon}?q=1500+Atkinson+Dr,+Lufkin,+TX+75901`;
+    } else {
+      // Opens Browser Google Maps
+      window.open('https://www.google.com/maps/dir/?api=1&destination=1500+Atkinson+Dr,+Lufkin,+TX+75901');
+    }
+  }
+</script>
 
 </body>
 </html>
