@@ -10,7 +10,7 @@
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
-  gtag('config', 'AW-870403519');
+  gtag('config', 'AW-870403519', {'allow_enhanced_conversions': true});
 </script>
 
 <style>
@@ -91,30 +91,45 @@
 
   <button onclick="openMaps()">Get Directions to Shop</button>
   
-  <a href="tel:9367077105" class="contact-link">Questions? Call (936) 707-7105</a>
+  <a href="tel:9362552215" class="contact-link">Questions? Call (936) 255-2215</a>
   
   <img src="shopshineyrain.jpg" class="footer-img" alt="Zion Auto Glass Location">
 </div>
 
 <script>
-  // 1. SECURITY REDIRECT
-  // If they didn't come from the form, kick them back to start
-  if (!sessionStorage.getItem('zion_valid')) {
+  // 1. SECURITY & DATA RETRIEVAL
+  const isValid = sessionStorage.getItem('zion_valid');
+  const userEmail = sessionStorage.getItem('zion_email');
+  const userPhone = sessionStorage.getItem('zion_phone');
+
+  // If they didn't come from the form, kick them back
+  if (!isValid) {
     window.location.href = 'index.html';
+  } else {
+    // 2. SEND ENHANCED CONVERSION DATA TO GOOGLE
+    // This connects the ad click to this specific person
+    gtag('set', 'user_data', {
+      "email": userEmail,
+      "phone_number": userPhone
+    });
+    // Fire the conversion event
+    gtag('event', 'conversion', {'send_to': 'AW-870403519/6SA0CKnQ8t4bEL-bhZ8D'});
+    
+    // Clear storage so a refresh doesn't count as a second sale
+    sessionStorage.removeItem('zion_valid');
   }
 
-  // 2. SMART MAPS LOGIC
+  // 3. SMART MAPS LOGIC
   function openMaps() {
     const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-    const lat = 31.3386;
-    const lon = -94.7291;
+    const address = "1500+Atkinson+Dr,+Lufkin,+TX+75901";
     
     if (isMobile) {
       // Opens Native Maps App
-      window.location.href = `geo:${lat},${lon}?q=1500+Atkinson+Dr,+Lufkin,+TX+75901`;
+      window.location.href = `geo:0,0?q=${address}`;
     } else {
-      // Opens Browser Google Maps
-      window.open('https://www.google.com/maps/dir/?api=1&destination=1500+Atkinson+Dr,+Lufkin,+TX+75901');
+      // Opens Browser Google Maps (Fixed Link)
+      window.open(`https://www.google.com/maps/search/?api=1&query=${address}`);
     }
   }
 </script>
