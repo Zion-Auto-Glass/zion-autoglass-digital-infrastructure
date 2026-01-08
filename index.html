@@ -340,28 +340,28 @@
   }
 
   // --- 4. THE BRAIN (Pricing) ---
-  let rateLimitTimer = null; 
-
+  let rateLimitTimer = null;
   function checkBrain() {
     if(rateLimitTimer) clearTimeout(rateLimitTimer);
-    rateLimitTimer = setTimeout(fetchQuote, 800); 
+    rateLimitTimer = setTimeout(fetchQuote, 800);
   }
 
-function fetchQuote() {
+  function fetchQuote() {
     const part = document.getElementById('glassPart').value;
     const zip = document.getElementById('zipInput').value;
     const make = document.getElementById('make').value;
-    const model = document.getElementById('model').value;
-    const vin = document.getElementById('vinInput').value;
-    const isMobile = document.getElementById('mobileCheck') ? document.getElementById('mobileCheck').checked : false;
+    const model = document.getElementById('model').value; // <--- CRITICAL FIX
+    const vin = document.getElementById('vinInput') ? document.getElementById('vinInput').value : ""; 
+    const isMobile = document.getElementById('mobileCheck').checked;
     
-    // VALIDATION
+    // Validation: Don't talk to brain until we have a Model
     if(!part || zip.length < 5 || !make || !model || model.includes("Select")) return;
 
     document.getElementById('brainBox').classList.remove('hidden');
-    document.getElementById('brainPrice').innerText = "Calculating...";
+    document.getElementById('brainPrice').innerText = "Checking...";
+    document.getElementById('brainNote').innerText = "";
 
-    // Determine specific service string for Brain
+    // Normalize Service Name
     let brainService = part;
     if(part === 'Windshield' && document.getElementById('wsService').value === 'Repair') {
         brainService = 'Chip Repair';
@@ -371,11 +371,10 @@ function fetchQuote() {
         service: brainService,
         zip: zip,
         make: make,
-        model: model,
+        model: model,        // <--- Sending Model to Brain
         year: document.getElementById('year').value,
         vin: vin,
         chip_count: 1,
-        // DYNAMIC SERVICE LOCATION
         service_loc: isMobile ? "Mobile" : "Shop"
     };
 
@@ -385,18 +384,28 @@ function fetchQuote() {
         body: JSON.stringify(payload)
     })
     .then(r=>r.json()).then(d=>{
-        // Display Price
-        document.getElementById('brainPrice').innerText = "$" + d.price + (d.isEstimate ? "+" : "");
-        document.getElementById('brainNote').innerText = d.note || "";
-        
-        // Afterpay Logic
-        if(d.afterpay) {
-           document.getElementById('afterpayText').innerText = `OR 4 PAYMENTS OF $${d.afterpay.monthly} WITH AFTERPAY`;
+        // --- SAFETY LOGIC UPDATE ---
+        // If price is 0, it means the Brain didn't find a match in your CSV.
+        if (d.price === "0.00" || d.price === 0) {
+            document.getElementById('brainPrice').innerText = "Call for Price";
+            document.getElementById('brainNote').innerText = "Manual Verification Required";
+            document.getElementById('afterpayText').innerText = ""; 
         } else {
-           document.getElementById('afterpayText').innerText = "";
+            // We have a verified price
+            document.getElementById('brainPrice').innerText = "$" + d.price;
+            document.getElementById('brainNote').innerText = d.note || "";
+            
+            if(d.afterpay) {
+               document.getElementById('afterpayText').innerText = `OR 4 PAYMENTS OF $${d.afterpay.monthly} WITH AFTERPAY`;
+            } else {
+               document.getElementById('afterpayText').innerText = "";
+            }
         }
     })
-    .catch(e => console.log("Brain connection silent fail")); 
+    .catch(e => {
+        console.log("Brain connection silent fail");
+        document.getElementById('brainPrice').innerText = "Call for Price";
+    });
   }
 
   // --- 5. SECURITY & SUBMIT ---
