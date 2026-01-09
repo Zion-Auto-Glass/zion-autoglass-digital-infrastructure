@@ -1,233 +1,122 @@
-// --- ZION BRAIN 2.1 (Diamond Edition - Pre-Loaded) ---
+// --- ZION BRAIN: MASTER LOGIC (DIAMOND EDITION - FINAL) ---
+// INTEGRATIONS: CSV Pricing Data + VPNAPI.io Security + Chip Repair Safety
 
-// 1. YOUR PRICING DATABASE
-// I generated this from your 'PGW_ARG_...csv' file.
-// It maps the "MakeModel" to your Cost and calculated Quote.
+// 1. SECURITY CONFIGURATION
+const VPNAPI_KEY = "ad27e9e886c443d39ea71cd9aed6ea20"; 
+
+// 2. SMART PRICING DATABASE (Windshield Replacements Only)
 const PRICING_DB = {
-  "BMWX3": { "y_start": 2018, "y_end": 2024, "cost": 165.0, "quote": 430.0 },
-  "KIAK5": { "y_start": 2021, "y_end": 2025, "cost": 100.0, "quote": 300.0 },
-  "TOYOTTACOMA": { "y_start": 2016, "y_end": 2023, "cost": 85.0, "quote": 270.0 },
-  "HONDACIVIC2DCOUPE": { "y_start": 2001, "y_end": 2005, "cost": 53.0, "quote": 205.0 },
-  "DODGTRAM150025003500": { "y_start": 2013, "y_end": 2018, "cost": 56.0, "quote": 210.0 },
-  "CHEVMALIBU": { "y_start": 2016, "y_end": 2022, "cost": 73.0, "quote": 245.0 },
-  "CHEVTIMPALA": { "y_start": 2014, "y_end": 2020, "cost": 114.0, "quote": 330.0 },
-  "CHEVTC/KPICK-UP": { "y_start": 1995, "y_end": 2003, "cost": 62.0, "quote": 225.0 },
-  "NISSNALTIMA": { "y_start": 2019, "y_end": 2024, "cost": 94.0, "quote": 290.0 },
-  "LFREIGCASCADIACONVCAB": { "y_start": 2008, "y_end": 2016, "cost": 41.0, "quote": 180.0 },
-  "FORDFUSION/MILAN": { "y_start": 2006, "y_end": 2012, "cost": 31.0, "quote": 160.0 },
-  "CHEVTC/KSERIESPICKUP": { "y_start": 2004, "y_end": 2007, "cost": 48.0, "quote": 195.0 },
-  "FORDTFSERIESPICKUP": { "y_start": 1997, "y_end": 2004, "cost": 57.0, "quote": 215.0 },
-  "DODGJOURNEY": { "y_start": 2011, "y_end": 2020, "cost": 56.0, "quote": 210.0 },
-  "KIASORENTO": { "y_start": 2021, "y_end": 2025, "cost": 113.0, "quote": 325.0 },
-  "JEEPWRANGLER2DR/4DR": { "y_start": 2007, "y_end": 2018, "cost": 30.0, "quote": 160.0 },
-  "HONDAACCORD": { "y_start": 2018, "y_end": 2022, "cost": 125.0, "quote": 350.0 },
-  "BMWX54DRUTILITY": { "y_start": 2007, "y_end": 2013, "cost": 80.0, "quote": 260.0 },
-  "HONDAODYSSEY": { "y_start": 2014, "y_end": 2017, "cost": 139.0, "quote": 380.0 },
-  "NISSNFRONTIER2DSTDCAB": { "y_start": 2001, "y_end": 2008, "cost": 41.0, "quote": 180.0 },
-  "NAVISCONVENTIONALCAB": { "y_start": 2006, "y_end": 2014, "cost": 132.0, "quote": 365.0 },
-  "FORDTFSERIES": { "y_start": 2015, "y_end": 2020, "cost": 60.0, "quote": 220.0 },
-  "MAZDA3": { "y_start": 2004, "y_end": 2009, "cost": 63.0, "quote": 225.0 },
-  "TOYOT4RUNNER4DSUV": { "y_start": 1996, "y_end": 2002, "cost": 38.0, "quote": 175.0 },
-  "JEEPCHEROKEEDODGDURA": { "y_start": 2014, "y_end": 2020, "cost": 93.0, "quote": 285.0 },
-  "NISSNMAXIMA": { "y_start": 2019, "y_end": 2023, "cost": 104.0, "quote": 310.0 },
-  "FORDESCAPE4DUTILITY": { "y_start": 2003, "y_end": 2007, "cost": 61.0, "quote": 220.0 },
-  "CHEVTRAVERSE": { "y_start": 2018, "y_end": 2023, "cost": 87.0, "quote": 275.0 },
-  "GMCTERRAIN": { "y_start": 2018, "y_end": 2023, "cost": 76.0, "quote": 250.0 },
-  "LINCMKS": { "y_start": 2013, "y_end": 2016, "cost": 145.0, "quote": 390.0 },
-  "JEEPGRANDCHERDURANG": { "y_start": 2016, "y_end": 2021, "cost": 110.0, "quote": 320.0 },
-  "MITSULANCERGTS4DRSDN": { "y_start": 2008, "y_end": 2015, "cost": 54.0, "quote": 210.0 },
-  "FORDTFRDTRK/BRONCO": { "y_start": 1990, "y_end": 1998, "cost": 46.0, "quote": 190.0 },
-  "CADILXT4": { "y_start": 2019, "y_end": 2023, "cost": 99.0, "quote": 300.0 },
-  "VOLVOVNSERIES": { "y_start": 2003, "y_end": 2018, "cost": 81.0, "quote": 260.0 },
-  "ACURAILX": { "y_start": 2016, "y_end": 2022, "cost": 120.0, "quote": 340.0 },
-  "HYUNDSONATAHYBRID": { "y_start": 2011, "y_end": 2015, "cost": 61.0, "quote": 220.0 },
-  "FORDTEXPEDITIONEL/MAX": { "y_start": 2010, "y_end": 2017, "cost": 101.0, "quote": 300.0 },
-  "FORDTEXPEDNNAVIGATOR": { "y_start": 2010, "y_end": 2017, "cost": 62.0, "quote": 225.0 },
-  "ACURATSX": { "y_start": 2004, "y_end": 2008, "cost": 56.0, "quote": 210.0 },
-  "KIATELLURIDE": { "y_start": 2020, "y_end": 2024, "cost": 140.0, "quote": 380.0 },
-  "VOLKSATLAS": { "y_start": 2018, "y_end": 2023, "cost": 93.0, "quote": 285.0 },
-  "TOYOTTACOMAPICKUP": { "y_start": 2005, "y_end": 2015, "cost": 40.0, "quote": 180.0 },
-  "FORDBRONCOSPORT": { "y_start": 2021, "y_end": 2024, "cost": 185.0, "quote": 470.0 },
-  "TOYOT4RUNNER": { "y_start": 2003, "y_end": 2009, "cost": 47.0, "quote": 195.0 },
-  "AUDIAUDIA3S3": { "y_start": 2017, "y_end": 2020, "cost": 150.0, "quote": 400.0 },
-  "CHEVTSILVERADO/SIERRA": { "y_start": 2007, "y_end": 2014, "cost": 48.0, "quote": 195.0 },
-  "INFINQX56": { "y_start": 2011, "y_end": 2013, "cost": 81.0, "quote": 260.0 },
-  "KIASPORTAGE": { "y_start": 2017, "y_end": 2022, "cost": 132.0, "quote": 365.0 },
-  "FORDECONOLINEEXTVAN": { "y_start": 2009, "y_end": 2014, "cost": 59.0, "quote": 220.0 },
-  "HONDACIVIC4DRSDN": { "y_start": 2006, "y_end": 2011, "cost": 64.0, "quote": 230.0 },
-  "VOLKSJETTA": { "y_start": 2019, "y_end": 2024, "cost": 125.0, "quote": 350.0 },
-  "MITSULANCERGTS4DRSDN": { "y_start": 2008, "y_end": 2015, "cost": 54.0, "quote": 210.0 },
-  "SCIONTCCPE": { "y_start": 2005, "y_end": 2010, "cost": 61.0, "quote": 220.0 },
-  "HYUNDSONATA": { "y_start": 2011, "y_end": 2014, "cost": 52.0, "quote": 205.0 },
-  "HONDACIVIC": { "y_start": 2016, "y_end": 2021, "cost": 100.0, "quote": 300.0 },
-  "CHRYS300C4DSEDAN": { "y_start": 2005, "y_end": 2010, "cost": 51.0, "quote": 200.0 },
-  "CHEVTSILVERADOSIERRA": { "y_start": 2019, "y_end": 2024, "cost": 87.0, "quote": 275.0 },
-  "FORDTF250": { "y_start": 2017, "y_end": 2022, "cost": 130.0, "quote": 360.0 },
-  "ACURARDX": { "y_start": 2013, "y_end": 2018, "cost": 61.0, "quote": 220.0 },
-  "JEEPWRANGLER": { "y_start": 2018, "y_end": 2024, "cost": 62.0, "quote": 225.0 },
-  "FORDF150": { "y_start": 2021, "y_end": 2024, "cost": 160.0, "quote": 420.0 },
-  "KIAFORTE": { "y_start": 2019, "y_end": 2023, "cost": 161.0, "quote": 420.0 },
-  "DODGT1500HYBRID": { "y_start": 2009, "y_end": 2012, "cost": 57.0, "quote": 215.0 },
-  "DODGCHALLENGER": { "y_start": 2015, "y_end": 2023, "cost": 95.0, "quote": 290.0 },
-  "HYUNDELANTRA": { "y_start": 2011, "y_end": 2016, "cost": 58.0, "quote": 215.0 },
-  "KIAOPTIMA": { "y_start": 2011, "y_end": 2015, "cost": 57.0, "quote": 215.0 },
-  "FORDMUSTANG": { "y_start": 2000, "y_end": 2004, "cost": 65.0, "quote": 230.0 },
-  "HONDAPILOT": { "y_start": 2009, "y_end": 2015, "cost": 64.0, "quote": 230.0 },
-  "SUBARLEGACYOUTBACK": { "y_start": 2015, "y_end": 2019, "cost": 84.0, "quote": 270.0 },
-  "FORDFOCUS": { "y_start": 2008, "y_end": 2011, "cost": 66.0, "quote": 230.0 },
-  "SUZUKGRANDVITARA4DR": { "y_start": 1999, "y_end": 2005, "cost": 58.0, "quote": 215.0 },
-  "DODGDURANGO": { "y_start": 2004, "y_end": 2009, "cost": 75.0, "quote": 250.0 },
-  "FORDESCAPE": { "y_start": 2013, "y_end": 2019, "cost": 92.0, "quote": 285.0 },
-  "TOYOTRAV4": { "y_start": 2019, "y_end": 2024, "cost": 120.0, "quote": 340.0 },
-  "NISSNALTIMA4DRSDN": { "y_start": 2007, "y_end": 2012, "cost": 60.0, "quote": 220.0 },
-  "CHEVTLUMINA4-DR": { "y_start": 1997, "y_end": 2001, "cost": 65.0, "quote": 230.0 },
-  "TOYOTRAV4HYBRID": { "y_start": 2018, "y_end": 2018, "cost": 100.0, "quote": 300.0 },
-  "JEEPGRANDCHEROKEE": { "y_start": 2011, "y_end": 2021, "cost": 165.0, "quote": 430.0 },
-  "AUDIQ5": { "y_start": 2009, "y_end": 2017, "cost": 95.0, "quote": 290.0 },
-  "TOYOT4RUNNER": { "y_start": 2010, "y_end": 2023, "cost": 110.0, "quote": 320.0 },
-  "NISSNTITANARMADA": { "y_start": 2004, "y_end": 2015, "cost": 57.0, "quote": 215.0 },
-  "TOYOTCAMRY": { "y_start": 2018, "y_end": 2023, "cost": 85.0, "quote": 270.0 },
-  "CHRYS200": { "y_start": 2015, "y_end": 2017, "cost": 85.0, "quote": 270.0 },
-  "HYUNDSANTAFE": { "y_start": 2019, "y_end": 2023, "cost": 100.0, "quote": 300.0 },
-  "DODGDAKOTAPICKUP": { "y_start": 1997, "y_end": 2004, "cost": 65.0, "quote": 230.0 },
-  "DODGCHARGERAND300": { "y_start": 2011, "y_end": 2023, "cost": 95.0, "quote": 290.0 },
-  "CHEVCOLORADOCANYON": { "y_start": 2015, "y_end": 2022, "cost": 100.0, "quote": 300.0 },
-  "PONTSOLSTICE2DCONV": { "y_start": 2006, "y_end": 2010, "cost": 65.0, "quote": 230.0 },
-  "GENESG70": { "y_start": 2019, "y_end": 2023, "cost": 220.0, "quote": 540.0 },
-  "FORDEXPEDITION": { "y_start": 2018, "y_end": 2021, "cost": 175.0, "quote": 450.0 },
-  "HONDACIVICSEDAN": { "y_start": 2012, "y_end": 2015, "cost": 60.0, "quote": 220.0 },
-  "JEEPGLADIATOR": { "y_start": 2020, "y_end": 2023, "cost": 76.0, "quote": 250.0 },
-  "TOYOTCOROLLA": { "y_start": 2014, "y_end": 2019, "cost": 100.0, "quote": 300.0 },
-  "TOYOTCAMRY": { "y_start": 2012, "y_end": 2017, "cost": 70.0, "quote": 240.0 },
-  "HYUNDSANTACRUZ/TUCSON": { "y_start": 2022, "y_end": 2024, "cost": 43.0, "quote": 185.0 },
-  "CHEVTS-10PICKUP": { "y_start": 1994, "y_end": 2004, "cost": 56.0, "quote": 210.0 },
-  "HYUNDELANTRA": { "y_start": 2021, "y_end": 2024, "cost": 110.0, "quote": 320.0 },
-  "TOYOTHIGHLANDER": { "y_start": 2014, "y_end": 2019, "cost": 91.0, "quote": 280.0 },
-  "TOYOTCOROLLA": { "y_start": 2020, "y_end": 2024, "cost": 100.0, "quote": 300.0 },
-  "MITSUBISHIOUTLANDER": { "y_start": 2014, "y_end": 2020, "cost": 46.0, "quote": 190.0 },
-  "DODGEPICKUP": { "y_start": 1994, "y_end": 2001, "cost": 62.0, "quote": 225.0 },
-  "GMCSIERRA/SILVERADO": { "y_start": 2019, "y_end": 2024, "cost": 125.0, "quote": 350.0 },
-  "FORDTRANGER": { "y_start": 2019, "y_end": 2023, "cost": 140.0, "quote": 380.0 },
-  "KIASELTOS": { "y_start": 2021, "y_end": 2024, "cost": 150.0, "quote": 400.0 },
-  "HYUNDPALISADES": { "y_start": 2020, "y_end": 2024, "cost": 304.0, "quote": 710.0 },
-  "FORDT250": { "y_start": 2017, "y_end": 2022, "cost": 65.0, "quote": 230.0 },
-  "TOYOTCOROLLA4DSEDAN": { "y_start": 1998, "y_end": 2002, "cost": 50.0, "quote": 200.0 },
-  "CADILXT5": { "y_start": 2017, "y_end": 2023, "cost": 140.0, "quote": 380.0 },
-  "THOMASAF-T-LINERC2": { "y_start": 2005, "y_end": 2012, "cost": 175.0, "quote": 450.0 },
-  "DODGTRAM150025003500": { "y_start": 2014, "y_end": 2022, "cost": 95.0, "quote": 290.0 },
-  "JEEPGLADIATORWRANGLR": { "y_start": 2019, "y_end": 2023, "cost": 80.0, "quote": 260.0 },
-  "JEEPRENEGADE": { "y_start": 2015, "y_end": 2022, "cost": 85.0, "quote": 270.0 },
-  "LEXUSES3004DSDN": { "y_start": 1997, "y_end": 2001, "cost": 64.0, "quote": 230.0 },
-  "CHEVTS-10PICKUP": { "y_start": 1993, "y_end": 1994, "cost": 70.0, "quote": 240.0 },
-  "NISSNSENTRA": { "y_start": 2007, "y_end": 2012, "cost": 61.0, "quote": 220.0 },
-  "JEEPCOMPASS": { "y_start": 2017, "y_end": 2022, "cost": 110.0, "quote": 320.0 },
-  "TOYOTRAV4": { "y_start": 2016, "y_end": 2018, "cost": 85.0, "quote": 270.0 },
-  "DODGEPICKUP": { "y_start": 2002, "y_end": 2002, "cost": 62.0, "quote": 225.0 },
-  "FORDTF250ANDABOVE": { "y_start": 2011, "y_end": 2016, "cost": 65.0, "quote": 230.0 },
-  "CHEVTCHEVROLET-GMCTRK": { "y_start": 1973, "y_end": 1990, "cost": 48.0, "quote": 195.0 },
-  "TOYOTTUNDRA&SEQUOIA": { "y_start": 2007, "y_end": 2021, "cost": 75.0, "quote": 250.0 },
-  "CHEVCRUZE": { "y_start": 2016, "y_end": 2019, "cost": 80.0, "quote": 260.0 },
-  "TOYOTSOLARA2DRCPE": { "y_start": 1999, "y_end": 2003, "cost": 52.0, "quote": 205.0 },
-  "CADILESVSUBYUKTAHOE": { "y_start": 2015, "y_end": 2020, "cost": 105.0, "quote": 310.0 },
-  "MITSUBISHIOUTLANDER": { "y_start": 2020, "y_end": 2024, "cost": 80.0, "quote": 260.0 },
-  "CHEVACADIATRAVERSE": { "y_start": 2014, "y_end": 2017, "cost": 95.0, "quote": 290.0 },
-  "BMWZ4": { "y_start": 2003, "y_end": 2008, "cost": 17.0, "quote": 135.0 },
-  "HONDACIVICCOUPE": { "y_start": 2012, "y_end": 2015, "cost": 65.0, "quote": 230.0 },
-  "PETER386,327,337": { "y_start": 2012, "y_end": 2020, "cost": 130.0, "quote": 360.0 },
-  "HONDAPILOTRIDGELINE": { "y_start": 2017, "y_end": 2022, "cost": 95.0, "quote": 290.0 },
-  "BUICKENCORE": { "y_start": 2013, "y_end": 2016, "cost": 102.0, "quote": 305.0 },
-  "HONDACIVICSEDAN": { "y_start": 2012, "y_end": 2015, "cost": 65.0, "quote": 230.0 }
+  // --- TRUCKS & SUVS ---
+  "FORDF150": { "y_start": 2021, "y_end": 2026, "cost": 185.0, "quote": 470.0 },
+  "FORDF150_OLD": { "y_start": 2015, "y_end": 2020, "cost": 92.0, "quote": 285.0 },
+  "CHEVTSILVERADO": { "y_start": 2019, "y_end": 2026, "cost": 87.0, "quote": 275.0 },
+  "DODGTRAM1500": { "y_start": 2019, "y_end": 2026, "cost": 105.0, "quote": 310.0 },
+  "TOYOTTACOMA": { "y_start": 2016, "y_end": 2024, "cost": 85.0, "quote": 270.0 },
+  "JEEPWRANGLER": { "y_start": 2018, "y_end": 2025, "cost": 64.0, "quote": 230.0 },
+  "TOYOTHIGHLANDER": { "y_start": 2020, "y_end": 2025, "cost": 130.0, "quote": 360.0 },
+  "HONDAODYSSEY": { "y_start": 2014, "y_end": 2018, "cost": 139.0, "quote": 380.0 },
+  
+  // --- SEDANS ---
+  "KIAK5": { "y_start": 2021, "y_end": 2026, "cost": 100.0, "quote": 300.0 },
+  "TOYOTCAMRY": { "y_start": 2018, "y_end": 2025, "cost": 85.0, "quote": 270.0 },
+  "HONDACIVIC": { "y_start": 2016, "y_end": 2022, "cost": 100.0, "quote": 300.0 },
+  "NISSNALTIMA": { "y_start": 2019, "y_end": 2025, "cost": 94.0, "quote": 290.0 },
+  
+  // --- LUXURY ---
+  "BMWX3": { "y_start": 2018, "y_end": 2025, "cost": 165.0, "quote": 430.0 },
+  "GENESG70": { "y_start": 2019, "y_end": 2024, "cost": 220.0, "quote": 540.0 }
 };
 
-export default {
-  async fetch(request, env) {
-    // CORS Headers
-    const corsHeaders = {
-      "Access-Control-Allow-Origin": "*",
-      "Access-Control-Allow-Methods": "POST, OPTIONS",
-      "Access-Control-Allow-Headers": "Content-Type",
-    };
+// 3. MAIN WORKER LOGIC
+addEventListener('fetch', event => {
+  event.respondWith(handleRequest(event.request))
+})
 
-    if (request.method === "OPTIONS") {
-      return new Response("OK", { headers: corsHeaders });
-    }
+async function handleRequest(request) {
+  const url = new URL(request.url);
+  
+  // CORS HEADERS
+  const corsHeaders = {
+    "Access-Control-Allow-Origin": "*",
+    "Access-Control-Allow-Methods": "POST, GET, OPTIONS",
+    "Access-Control-Allow-Headers": "Content-Type",
+  };
 
-    const url = new URL(request.url);
-    if (url.pathname === "/init") {
-       return new Response(JSON.stringify({ status: "Green", ip: request.headers.get("CF-Connecting-IP") }), {
-         headers: { ...corsHeaders, "Content-Type": "application/json" }
-       });
-    }
-
-    if (request.method === "POST") {
-      try {
-        const data = await request.json();
-        
-        const service = data.service || "Windshield";
-        const year = parseInt(data.year) || 2024;
-        const make = (data.make || "").toUpperCase().replace(/\s/g, "");
-        const model = (data.model || "").toUpperCase().replace(/\s/g, "");
-        const isMobile = data.service_loc === "Mobile";
-
-        let price = 0;
-        let note = "";
-        let monthly = null;
-
-        // 1. CHIP REPAIR (Always Standard)
-        if (service.includes("Chip")) {
-            price = 60.00;
-            note = "Mobile Chip Repair";
-        } 
-        // 2. SEARCH DATABASE (The "Sniper" Check)
-        else {
-            const searchKey = make + model; 
-            let dbMatch = null;
-            
-            // Search Logic
-            for (const key in PRICING_DB) {
-                // We check if the KEY contains the Make AND Model from the user
-                // Example: User "Ford" "F-150" -> matches Key "FORDF150" or "FORDTFSERIES"
-                // Using "includes" allows fuzzy matching (e.g. TOYOTA vs TOYOT)
-                if (key.includes(make) && key.includes(model)) {
-                    // Check Year Compatibility (Exact range + 2 years leeway)
-                    if (year >= PRICING_DB[key].y_start - 2 && year <= PRICING_DB[key].y_end + 3) {
-                       dbMatch = PRICING_DB[key];
-                       break;
-                    }
-                }
-            }
-
-            if (dbMatch) {
-                // FOUND IN HISTORY
-                price = dbMatch.quote;
-                note = "Verified Part Match";
-            } else {
-                // NOT FOUND -> SAFETY MODE
-                // Return 0 so the frontend shows "Call for Price"
-                price = 0; 
-                note = "Call for Quote";
-            }
-        }
-
-        // 3. ADD ONS (Only if we have a base price)
-        if (price > 0) {
-            if (isMobile) price += 40.00;
-            monthly = (price / 4).toFixed(2);
-        }
-
-        return new Response(JSON.stringify({
-          price: price > 0 ? price.toFixed(2) : 0,
-          note: note,
-          afterpay: monthly ? { monthly: monthly } : null
-        }), { 
-          headers: { ...corsHeaders, "Content-Type": "application/json" } 
-        });
-
-      } catch (err) {
-        return new Response(JSON.stringify({ error: err.message }), { headers: corsHeaders });
-      }
-    }
-
-    return new Response("Zion Brain Online", { headers: corsHeaders });
+  if (request.method === "OPTIONS") {
+    return new Response("OK", { headers: corsHeaders });
   }
-};
+
+  // --- ROUTE 1: /init (Black Widow Security Check) ---
+  if (url.pathname.includes("init")) {
+    const clientIP = request.headers.get("CF-Connecting-IP");
+    
+    try {
+        const secResp = await fetch(`https://vpnapi.io/api/${clientIP}?key=${VPNAPI_KEY}`);
+        const secData = await secResp.json();
+        
+        // BLOCK PROXIES OR VPNS
+        if (secData.security.vpn || secData.security.proxy || secData.security.tor) {
+            return new Response(JSON.stringify({ status: "BLOCKED", msg: "Security Alert" }), {
+                status: 403, headers: corsHeaders
+            });
+        }
+    } catch(e) {
+        // Fail Open if API breaks
+        console.log("Security API Error", e);
+    }
+    
+    return new Response(JSON.stringify({ status: "GREEN", ip: clientIP }), {
+      headers: { ...corsHeaders, "Content-Type": "application/json" }
+    });
+  }
+
+  // --- ROUTE 2: /quote (Pricing Engine) ---
+  if (request.method === "POST") {
+    try {
+      const data = await request.json();
+      const { make, year, model, service } = data;
+      
+      // --- SAFETY CHECK: CHIP REPAIR ---
+      if (service === "Chip Repair") {
+         return new Response(JSON.stringify({ price: 60.00 }), {
+            headers: { ...corsHeaders, "Content-Type": "application/json" }
+         });
+      }
+
+      // --- WINDSHIELD PRICING LOGIC ---
+      let lookupKey = (make + model).toUpperCase().replace(/[^A-Z0-9]/g, '');
+      const vehicleYear = parseInt(year);
+
+      // F150 Logic Override
+      if (lookupKey.includes("FORDF150") && vehicleYear <= 2020) {
+        lookupKey = "FORDF150_OLD";
+      }
+
+      // Check DB (Only if Service is Windshield)
+      let price = 0;
+      if (service === "Windshield" && PRICING_DB[lookupKey]) {
+        const record = PRICING_DB[lookupKey];
+        if (vehicleYear >= record.y_start && vehicleYear <= record.y_end) {
+            price = record.quote;
+        }
+      }
+
+      // Fallback Logic (If not in DB or other service type)
+      if (price === 0) {
+        if (service === "Windshield") price = (vehicleYear >= 2019) ? 450.00 : 250.00;
+        else if (service === "Door Glass") price = 250.00;
+        else if (service === "Back Glass") price = 450.00;
+        else price = 60.00; 
+      }
+
+      return new Response(JSON.stringify({ price: price }), {
+        headers: { ...corsHeaders, "Content-Type": "application/json" }
+      });
+
+    } catch (err) {
+      return new Response(JSON.stringify({ error: "Invalid Data" }), { status: 400, headers: corsHeaders });
+    }
+  }
+
+  return new Response("Zion Brain Online", { status: 200 });
+}
