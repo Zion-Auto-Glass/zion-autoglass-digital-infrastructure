@@ -249,7 +249,7 @@
 <script>
   // --- CONFIGURATION ---
   const CONFIG = {
-    VPN_KEY: 'ad27e9e886c443d39ea71cd9aed6ea20',
+    // VPN KEY REMOVED FOR SECURITY (Brain handles it now)
     BRAIN_URL: 'https://zion-brain.zion-auto-glass.workers.dev/',
     DB_URL: 'https://script.google.com/macros/s/AKfycbzy3anFgwk-7c1UFr9J0Qb8D4h5awGmVlsLjW_uAs0qRfusgJQSqsQllQk0FZtTTR0l/exec'
   };
@@ -283,7 +283,6 @@
     
     mSel.disabled = true; mSel.innerHTML = '<option>Loading...</option>';
     
-    // UPDATED URL: Using "GetMakesForVehicleType/car"
     fetch(`https://vpic.nhtsa.dot.gov/api/vehicles/GetMakesForVehicleType/car?year=${year}&format=json`)
     .then(r=>r.json()).then(d=>{
       mSel.innerHTML = '<option value="">Select Make</option>';
@@ -313,20 +312,17 @@
     const part = document.getElementById('glassPart').value;
     const wsOpts = document.getElementById('windshieldOptions');
     
-    // Dynamic Background
     if(part === 'Classic Car') document.body.style.backgroundImage = "url('MainPageClassicChevyTruck.jpg')";
     else document.body.style.backgroundImage = "url('Background.jpg')";
 
-    // Show/Hide Options
     if(part === 'Windshield') {
       wsOpts.classList.remove('hidden');
-      checkBrain(); // Trigger pricing
+      checkBrain(); 
     } else {
       wsOpts.classList.add('hidden');
       checkBrain();
     }
     
-    // Check VIN Requirement
     const vinCont = document.getElementById('vinContainer');
     const wsType = document.getElementById('wsService').value;
     if(part === 'Windshield' && wsType === 'Replace') vinCont.classList.remove('hidden');
@@ -350,18 +346,16 @@
     const part = document.getElementById('glassPart').value;
     const zip = document.getElementById('zipInput').value;
     const make = document.getElementById('make').value;
-    const model = document.getElementById('model').value; // <--- CRITICAL FIX
+    const model = document.getElementById('model').value; 
     const vin = document.getElementById('vinInput') ? document.getElementById('vinInput').value : ""; 
     const isMobile = document.getElementById('mobileCheck').checked;
     
-    // Validation: Don't talk to brain until we have a Model
     if(!part || zip.length < 5 || !make || !model || model.includes("Select")) return;
 
     document.getElementById('brainBox').classList.remove('hidden');
     document.getElementById('brainPrice').innerText = "Checking...";
     document.getElementById('brainNote').innerText = "";
 
-    // Normalize Service Name
     let brainService = part;
     if(part === 'Windshield' && document.getElementById('wsService').value === 'Repair') {
         brainService = 'Chip Repair';
@@ -371,7 +365,7 @@
         service: brainService,
         zip: zip,
         make: make,
-        model: model,        // <--- Sending Model to Brain
+        model: model, 
         year: document.getElementById('year').value,
         vin: vin,
         chip_count: 1,
@@ -384,14 +378,11 @@
         body: JSON.stringify(payload)
     })
     .then(r=>r.json()).then(d=>{
-        // --- SAFETY LOGIC UPDATE ---
-        // If price is 0, it means the Brain didn't find a match in your CSV.
         if (d.price === "0.00" || d.price === 0) {
             document.getElementById('brainPrice').innerText = "Call for Price";
             document.getElementById('brainNote').innerText = "Manual Verification Required";
             document.getElementById('afterpayText').innerText = ""; 
         } else {
-            // We have a verified price
             document.getElementById('brainPrice').innerText = "$" + d.price;
             document.getElementById('brainNote').innerText = d.note || "";
             
@@ -403,7 +394,6 @@
         }
     })
     .catch(e => {
-        console.log("Brain connection silent fail");
         document.getElementById('brainPrice').innerText = "Call for Price";
     });
   }
@@ -418,36 +408,15 @@
         console.log("Bot detected"); return; 
     }
 
-    btn.innerText = "VERIFYING...";
+    btn.innerText = "SENDING...";
     btn.disabled = true;
 
-    // 1. VPN/PROXY CHECK
-    fetch(`https://vpnapi.io/api/?key=${CONFIG.VPN_KEY}`)
-    .then(r => r.json())
-    .then(secData => {
-        
-        if(secData.security.vpn || secData.security.proxy || secData.security.tor) {
-            alert("Security System: VPNs are not allowed. Please disable and try again.");
-            btn.innerText = "TRY AGAIN";
-            btn.disabled = false;
-            return;
-        }
-
-        // 2. SUCCESS - CAPTURE IP & SEND
-        document.getElementById('user_ip').value = secData.ip;
-        sendToDatabase();
-
-    }).catch(err => {
-        console.log("Security API down, proceeding");
-        sendToDatabase();
-    });
+    // DIRECT SEND (Security handled by Brain/Server)
+    sendToDatabase();
   };
 
   function sendToDatabase() {
-    const btn = document.getElementById('submitBtn');
-    btn.innerText = "SENDING...";
-    
-    // SAVE DATA FOR GOOGLE CONVERSION ON THANK YOU PAGE
+    // SAVE DATA FOR GOOGLE CONVERSION
     sessionStorage.setItem('zion_valid', 'true');
     sessionStorage.setItem('zion_email', document.getElementById('emailInput').value);
     sessionStorage.setItem('zion_phone', document.getElementById('phoneInput').value);
@@ -462,14 +431,13 @@
         mode: 'no-cors'
     })
     .then(() => {
-        // GOOGLE ADS CONVERSION
         gtag('event', 'conversion', {'send_to': 'AW-870403519/6SA0CKnQ8t4bEL-bhZ8D'}); 
         window.location.href = 'thankyou.html';
     })
     .catch(err => {
         alert("Transmission Error. Please call 936-255-2215");
-        btn.innerText = "SUBMIT";
-        btn.disabled = false;
+        document.getElementById('submitBtn').innerText = "SUBMIT";
+        document.getElementById('submitBtn').disabled = false;
     });
   }
 
