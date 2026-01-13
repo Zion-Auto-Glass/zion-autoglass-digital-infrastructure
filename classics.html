@@ -25,7 +25,6 @@
   body { 
     font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; 
     margin: 0; padding: 0; color: #333;
-    /* DYNAMIC BACKGROUND - PRE-SET FOR CLASSIC */
     background-image: url('MainPageClassicChevyTruck.jpg');
     background-size: cover; background-position: center; background-attachment: fixed;
     min-height: 100vh;
@@ -40,7 +39,6 @@
     padding-top: 40px;
   }
 
-  /* MAIN CONTAINER */
   .container { 
     width: 100%; max-width: 500px; 
     background: var(--glass); 
@@ -53,59 +51,28 @@
 
   .logo-img { max-width: 260px; width: 100%; display: block; margin: 0 auto 15px; }
 
-  /* FORM INPUTS */
-  label { 
-    font-weight: 800; font-size: 0.75rem; text-transform: uppercase; 
-    display: block; margin-bottom: 5px; color: var(--primary); letter-spacing: 0.5px;
-  }
-  
-  input, select { 
-    width: 100%; padding: 14px; margin-bottom: 12px;
-    border: 2px solid #ccc; border-radius: 8px; 
-    box-sizing: border-box; font-size: 16px; font-weight: 700;
-  }
+  label { font-weight: 800; font-size: 0.75rem; text-transform: uppercase; display: block; margin-bottom: 5px; color: var(--primary); letter-spacing: 0.5px; }
+  input, select { width: 100%; padding: 14px; margin-bottom: 12px; border: 2px solid #ccc; border-radius: 8px; box-sizing: border-box; font-size: 16px; font-weight: 700; }
   input:focus, select:focus { border-color: var(--primary); outline: none; box-shadow: 0 0 0 3px rgba(0, 74, 173, 0.2); }
   
   .row { display: flex; gap: 10px; } .col { flex: 1; }
   .hidden { display: none; }
-
-  /* BOX STYLES */
   .options-box { background: #f0f7ff; padding: 15px; border-radius: 8px; border: 1px solid #cce4ff; margin-bottom: 15px; }
-  
-  /* ANTI-STEERING WARNING */
-  .alert-box { 
-    background: #fff5f5; color: #b91c1c; 
-    padding: 12px; border-left: 4px solid var(--red); 
-    font-size: 0.85rem; margin-bottom: 15px; line-height: 1.4;
-  }
+  .alert-box { background: #fff5f5; color: #b91c1c; padding: 12px; border-left: 4px solid var(--red); font-size: 0.85rem; margin-bottom: 15px; line-height: 1.4; }
 
-  /* SUBMIT BUTTON */
   button[type="button"], button[type="submit"] { 
-    width: 100%; background: var(--red); color: white; 
-    padding: 18px; border: none; font-size: 1.2rem; 
-    font-weight: 900; border-radius: 6px; cursor: pointer; 
-    text-transform: uppercase; margin-top: 10px;
-    transition: background 0.3s;
+    width: 100%; background: var(--red); color: white; padding: 18px; border: none; font-size: 1.2rem; font-weight: 900; border-radius: 6px; cursor: pointer; text-transform: uppercase; margin-top: 10px; transition: background 0.3s;
   }
   button:hover { background: #cc0000; }
   button:disabled { background: #999; cursor: not-allowed; }
 
-  /* FOOTER */
   .info-box {
-    width: 100%; max-width: 500px;
-    background: rgba(0, 0, 0, 0.85);
-    color: white; padding: 25px;
-    border-radius: 12px; text-align: center;
-    border: 1px solid rgba(255,255,255,0.2);
-    backdrop-filter: blur(5px);
+    width: 100%; max-width: 500px; background: rgba(0, 0, 0, 0.85); color: white; padding: 25px; border-radius: 12px; text-align: center; border: 1px solid rgba(255,255,255,0.2); backdrop-filter: blur(5px);
   }
   .footer-img { width: 100%; border-radius: 6px; border: 1px solid #555; margin-top: 15px; }
-
-  /* AFTERPAY GREEN TEXT */
   .afterpay-green { color: #00c853; font-weight: 900; font-size: 1.1rem; text-transform: uppercase; margin-top: 8px; }
   .antispam { position: absolute; left: -9999px; opacity: 0; }
 
-  /* TERMS MODAL */
   .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 1000; justify-content: center; align-items: center; padding: 20px; }
   .modal-content { background: white; padding: 25px; border-radius: 12px; max-width: 500px; width: 100%; max-height: 80vh; overflow-y: auto; text-align: left; border: 4px solid var(--red); }
   .terms-list li { margin-bottom: 10px; font-size: 0.9rem; line-height: 1.4; color: #444; }
@@ -243,31 +210,24 @@
 <script>
   // --- CONFIGURATION ---
   const CONFIG = {
-    VPN_KEY: 'ad27e9e886c443d39ea71cd9aed6ea20',
+    // VPN_KEY is now hidden in the Cloudflare Worker!
     BRAIN_URL: 'https://zion-brain.zion-auto-glass.workers.dev/',
     DB_URL: 'https://script.google.com/macros/s/AKfycbzy3anFgwk-7c1UFr9J0Qb8D4h5awGmVlsLjW_uAs0qRfusgJQSqsQllQk0FZtTTR0l/exec'
   };
 
-  // --- 1. INITIAL SETUP & TRACKING ---
   window.onload = function() {
-    // A. BLACK WIDOW INIT
     fetch(CONFIG.BRAIN_URL + 'init').catch(e => console.log("Init Ping"));
-
-    // B. Capture GCLID & UA
     const urlParams = new URLSearchParams(window.location.search);
     const gclid = urlParams.get('gclid');
     if (gclid) document.getElementById('gclid').value = gclid;
     document.getElementById('user_agent').value = navigator.userAgent;
 
-    // C. Populate Years (Extended for Classics)
     const ySel = document.getElementById('year');
     const cy = new Date().getFullYear() + 1;
     for(let i=cy; i>=1950; i--) { let o=document.createElement('option'); o.value=i; o.text=i; ySel.add(o); }
-
-    handleServiceChange(); // Set initial background
+    handleServiceChange();
   };
 
-  // --- 2. VEHICLE API (FIXED URL) ---
   const mSel = document.getElementById('make');
   const modSel = document.getElementById('model');
 
@@ -275,8 +235,6 @@
     const year = document.getElementById('year').value;
     if(!year) return;
     mSel.disabled = true; mSel.innerHTML = '<option>Loading...</option>';
-    
-    // UPDATED URL: Shows ALL makes for the year (Fixes Ford bug)
     fetch(`https://vpic.nhtsa.dot.gov/api/vehicles/GetMakesForVehicleType/car?year=${year}&format=json`)
     .then(r=>r.json()).then(d=>{
       mSel.innerHTML = '<option value="">Select Make</option>';
@@ -290,7 +248,6 @@
     const year = document.getElementById('year').value;
     const make = mSel.value;
     modSel.disabled = true; modSel.innerHTML = '<option>Loading...</option>';
-    
     fetch(`https://vpic.nhtsa.dot.gov/api/vehicles/GetModelsForMakeYear/make/${make}/modelyear/${year}?format=json`)
     .then(r=>r.json()).then(d=>{
       modSel.innerHTML = '<option value="">Select Model</option>';
@@ -300,25 +257,15 @@
     });
   }
 
-  // --- 3. DYNAMIC LOGIC & BACKGROUNDS ---
   function handleServiceChange() {
     const part = document.getElementById('glassPart').value;
     const wsOpts = document.getElementById('windshieldOptions');
-    
-    // Dynamic Background Logic (Default to Classic if selected)
     if(part === 'Classic Car') document.body.style.backgroundImage = "url('MainPageClassicChevyTruck.jpg')";
     else document.body.style.backgroundImage = "url('Background.jpg')";
-
-    // Show/Hide Options
-    if(part === 'Windshield') {
-      wsOpts.classList.remove('hidden');
-      checkBrain();
-    } else {
-      wsOpts.classList.add('hidden');
-      checkBrain();
-    }
     
-    // VIN Logic
+    if(part === 'Windshield') { wsOpts.classList.remove('hidden'); checkBrain(); }
+    else { wsOpts.classList.add('hidden'); checkBrain(); }
+    
     const vinCont = document.getElementById('vinContainer');
     const wsType = document.getElementById('wsService').value;
     if(part === 'Windshield' && wsType === 'Replace') vinCont.classList.remove('hidden');
@@ -331,34 +278,27 @@
     else document.getElementById('insuranceAlert').classList.add('hidden');
   }
 
-  // --- 4. THE BRAIN (Pricing Engine) ---
   let rateLimitTimer = null; 
-
   function checkBrain() {
     if(rateLimitTimer) clearTimeout(rateLimitTimer);
     rateLimitTimer = setTimeout(fetchQuote, 800); 
   }
 
-function fetchQuote() {
+  function fetchQuote() {
     const part = document.getElementById('glassPart').value;
     const zip = document.getElementById('zipInput').value;
     const make = document.getElementById('make').value;
     const model = document.getElementById('model').value; 
     const vin = document.getElementById('vinInput').value;
-    // Note: Classic page defaults to In-Shop (checkbox hidden)
     const isMobile = document.getElementById('mobileCheck') ? document.getElementById('mobileCheck').checked : false;
     
-    // VALIDATION
     if(!part || zip.length < 5 || !make || !model || model.includes("Select")) return;
 
     document.getElementById('brainBox').classList.remove('hidden');
     document.getElementById('brainPrice').innerText = "Calculating...";
 
-    // Determine specific service string for Brain
     let brainService = part;
-    if(part === 'Windshield' && document.getElementById('wsService').value === 'Repair') {
-        brainService = 'Chip Repair';
-    }
+    if(part === 'Windshield' && document.getElementById('wsService').value === 'Repair') { brainService = 'Chip Repair'; }
 
     const payload = {
         service: brainService,
@@ -368,7 +308,6 @@ function fetchQuote() {
         year: document.getElementById('year').value,
         vin: vin,
         chip_count: 1,
-        // DYNAMIC SERVICE LOCATION
         service_loc: isMobile ? "Mobile" : "Shop"
     };
 
@@ -378,30 +317,17 @@ function fetchQuote() {
         body: JSON.stringify(payload)
     })
     .then(r=>r.json()).then(d=>{
-        // Display Price
         document.getElementById('brainPrice').innerText = "$" + d.price + (d.isEstimate ? "+" : "");
         document.getElementById('brainNote').innerText = d.note || "";
-        
-        // Afterpay Logic
-        if(d.afterpay) {
-           document.getElementById('afterpayText').innerText = `OR 4 PAYMENTS OF $${d.afterpay.monthly} WITH AFTERPAY`;
-        } else {
-           document.getElementById('afterpayText').innerText = "";
-        }
+        if(d.afterpay) { document.getElementById('afterpayText').innerText = `OR 4 PAYMENTS OF $${d.afterpay.monthly} WITH AFTERPAY`; } 
+        else { document.getElementById('afterpayText').innerText = ""; }
     })
     .catch(e => console.log("Brain connection silent fail")); 
   }
 
-  // --- 5. SECURITY, MODAL & SUBMIT ---
   function openTerms() {
-    // Bot Trap
     if(document.getElementById('honey_trap').value !== "") { console.log("Bot detected"); return; }
-    
-    // Basic Validation
-    if(!document.getElementById('zionForm').checkValidity()) {
-        alert("Please fill in all required fields."); return;
-    }
-
+    if(!document.getElementById('zionForm').checkValidity()) { alert("Please fill in all required fields."); return; }
     document.getElementById('termsModal').style.display = 'flex';
   }
 
@@ -414,20 +340,21 @@ function fetchQuote() {
     btn.innerText = "VERIFYING...";
     btn.disabled = true;
 
-    // VPN Check
-    fetch(`https://vpnapi.io/api/?key=${CONFIG.VPN_KEY}`)
+    // --- SECURE BACKEND CHECK ---
+    fetch(CONFIG.BRAIN_URL + 'security-check', { method: 'POST' })
     .then(r => r.json())
     .then(secData => {
-        if(secData.security.vpn || secData.security.proxy || secData.security.tor) {
-            alert("Security System: VPNs are not allowed.");
+        if(secData.blocked) {
+            alert("Security System: VPNs/Proxies are not allowed.");
             btn.innerText = "TRY AGAIN";
             btn.disabled = false;
             return;
         }
         document.getElementById('user_ip').value = secData.ip;
         sendToDatabase();
-    }).catch(err => {
-        console.log("Security API down, proceeding");
+    })
+    .catch(err => {
+        console.log("Security check fail-open", err);
         sendToDatabase();
     });
   }
@@ -436,18 +363,16 @@ function fetchQuote() {
     const btn = document.getElementById('confirmBtn');
     btn.innerText = "SENDING...";
     
-    // SAVE DATA FOR GOOGLE CONVERSION
     sessionStorage.setItem('zion_valid', 'true');
     sessionStorage.setItem('zion_email', document.getElementById('emailInput').value);
     sessionStorage.setItem('zion_phone', document.getElementById('phoneInput').value);
 
     const fd = new FormData(document.getElementById('zionForm'));
     fd.append('quoted_price', document.getElementById('brainPrice').innerText);
-    fd.append('service_location', 'In-Shop'); // Hardcoded for Classics
+    fd.append('service_location', 'In-Shop'); 
 
     fetch(CONFIG.DB_URL, { method: 'POST', body: fd, mode: 'no-cors' })
     .then(() => {
-        // GOOGLE ADS CONVERSION
         gtag('event', 'conversion', {'send_to': 'AW-870403519/6SA0CKnQ8t4bEL-bhZ8D'}); 
         window.location.href = 'thankyou.html';
     })
